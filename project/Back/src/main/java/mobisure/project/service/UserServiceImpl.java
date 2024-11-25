@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import mobisure.project.dto.UserDto;
 import mobisure.project.entity.User;
 import mobisure.project.repository.UserRepository;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired

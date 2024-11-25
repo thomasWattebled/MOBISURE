@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import mobisure.project.dto.UserDto;
 import mobisure.project.entity.User;
 
-@Service
 public interface UserService {
 
 	public List<UserDto> getAllUsers();
