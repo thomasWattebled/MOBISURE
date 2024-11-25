@@ -1,41 +1,10 @@
 import React, { useState } from 'react';
-import { useAuth } from './AuthContext'; 
-import AuthService from '../services/AuthService.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import AuthService from './AuthService';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export const LoginComponent = () => {
-    const Auth = useAuth();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-    const navigate = useNavigate();
-
-    const handleLogin = async (username, password) => {
-        try {
-            const response = await AuthService.login({ username, password });
-            const userDetails = await response.json()
-            console.log(userDetails)
-            if (userDetails !== null) {
-                
-                Auth.userLogin(userDetails)
-          
-                setUsername('')
-                setPassword('')
-                navigate('/');
-            } else {
-                setMessage('Invalid credentials - null details');
-            }
-        } catch (error) {
-            setMessage('Invalid credentials');
-        }   
-    };
-    return (
-        <LoginForm handleLogin={handleLogin} message={message}   /> 
-    );
-}  
-
-const LoginForm = ({handleLogin, message}) => {
+export const LoginForm = ({handleLogin, message}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -73,12 +42,19 @@ const LoginForm = ({handleLogin, message}) => {
                                 </div>
                                 <button type="submit" className="btn btn-primary">Login</button>
                             </form>
+                            <div className="mt-3">
+                                <span>Not registered? <Link to="/register">Register here</Link></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default LoginForm;
+
+
+
+
