@@ -2,13 +2,16 @@ package mobisure.project.security;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,10 +23,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import mobisure.project.repository.UserRepository;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
+	
+	@Autowired
+	private UserRepository repoUser;
 
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception{
@@ -53,14 +61,19 @@ public class SecurityConfig {
 	@Bean
 	 public UserDetailsService userDetailsService() {
 		 
-		 UserDetails theUser = User.withUsername("user")
-				 .passwordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder()::encode)
-				 .password("user").roles("USER").build();
-		 
-		 InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-		 userDetailsManager.createUser(theUser);
-		 
-		 return userDetailsManager;
+		return username -> {
+	        mobisure.project.entity.User user = repoUser.findByMail(username)
+	                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
+	        
+	        return new org.springframework.security.core.userdetails.User(
+	                user.getMail(),
+	                user.getMdp(),
+	                user.getRoles().stream()
+	                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))  // Ajout du préfixe "ROLE_" pour Spring Security
+	                    .collect(Collectors.toList())
+	        );
+	    };
 		 
 	 }
 	 

@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.security.AuthController.LoginRequest;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -108,9 +105,9 @@ public class AuthController {
 		   UserAuthDto user = new UserAuthDto();
 		   
 		   user.setUsername(userDetails.getUsername());
-		   user.setRoles(
-				   userDetails.getAuthorities().stream().map( authority -> authority.getAuthority() ).toList()
-				   );
+		   user.setRoles(userDetails.getAuthorities().stream()
+		            .map(authority -> authority.getAuthority().replace("ROLE_", ""))
+		            .collect(Collectors.toList()));
 		   
 		   return user;
 	   }

@@ -14,7 +14,10 @@ public interface UserService {
 	
 	public Optional<UserDto> getUserById(Long id);
 	
+	void registerUser(UserDto userDto);
+	
 	UserDto convertToDto(User user);
 	
 	User convertToEntity(UserDto userDto);
+
 }

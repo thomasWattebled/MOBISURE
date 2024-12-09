@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import mobisure.project.dto.UserDto;
+import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
 import mobisure.project.repository.UserRepository;
 
@@ -15,11 +17,14 @@ import mobisure.project.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepository repo;
+	private UserRepository repoUser;
+	
+	 @Autowired
+	 private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<UserDto> getAllUsers() {
-		List<User> users = repo.findAll();
+		List<User> users = repoUser.findAll();
 		List<UserDto> usersDto = new ArrayList<>();
 		
 		for(User user:users) {
@@ -31,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Optional<UserDto> getUserById(Long id) {
-		Optional<User> users = repo.findById(id);
+		Optional<User> users = repoUser.findById(id);
 		
 		if(users.isPresent()) {
 			UserDto userDto = convertToDto(users.get());
@@ -67,6 +72,23 @@ public class UserServiceImpl implements UserService {
 		user.setPrenom(userDto.getPrenom());
 		
 		return user;
+	}
+
+	@Override
+	public void registerUser(UserDto userDto) {
+		
+		User user = convertToEntity(userDto);
+		
+		if(repoUser.findByMail(user.getMail()).isPresent()) {
+			throw new RuntimeException("L'utilisateur avec cet email existe déjà.");
+		}
+		
+		user.setMdp(passwordEncoder.encode(userDto.getMdp()));
+		
+		user.addRole(RoleName.USER);
+		
+		repoUser.save(user);
+		
 	}
 
 }
