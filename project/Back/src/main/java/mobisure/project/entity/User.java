@@ -1,9 +1,14 @@
 package mobisure.project.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class User {
@@ -15,6 +20,8 @@ public class User {
 	private String prenom;
 	private String mail;
 	private String mdp;
+	private Set<RoleName> roles = new HashSet<>();
+
 	
 	public User(){}
 
@@ -65,7 +72,18 @@ public class User {
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
+
+	public Set<RoleName> getRoles() {
+		return roles;
+	}
 	
+	public void addRole(RoleName role) {
+		this.roles.add(role);
+	}
+
+	public void setRoles(Set<RoleName> roles) {
+		this.roles = roles;
+	}
 	
 	
 }
