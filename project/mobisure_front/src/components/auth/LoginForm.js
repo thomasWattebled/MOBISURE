@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthService from './AuthService';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../css/login.css';
 
 
 export const LoginForm = ({handleLogin, message}) => {
@@ -18,12 +19,12 @@ export const LoginForm = ({handleLogin, message}) => {
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div className="card">
-                        <div className="card-header">Login Form</div>
+                        <div className="card-header">Connexion Mobisure</div>
                         <div className="card-body">
                             {message && <div className="alert alert-danger">{message}</div>}
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label>Username</label>
+                                    <label>Adresse mail</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -32,7 +33,7 @@ export const LoginForm = ({handleLogin, message}) => {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Password</label>
+                                    <label>Mot de passe</label>
                                     <input
                                         type="password"
                                         className="form-control"
@@ -43,7 +44,7 @@ export const LoginForm = ({handleLogin, message}) => {
                                 <button type="submit" className="btn btn-primary">Login</button>
                             </form>
                             <div className="mt-3">
-                                <span>Not registered? <Link to="/register">Register here</Link></span>
+                                <span>Pas de compte ? <Link to="/register">créer un compte</Link></span>
                             </div>
                         </div>
                     </div>

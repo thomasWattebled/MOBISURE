@@ -31,6 +31,12 @@ export function WhenUserIsAuthenticated({ children }) {
   return userIsAuthenticated() ? children : <></>
 }
 
+export function WhenUserIsNotAuthenticated({ children }) {
+  const { userIsAuthenticated } = useAuth()
+
+  return !userIsAuthenticated() ? children : <></>
+}
+
 /**
  * Children of this component are rendered if user is in specified role.
  * 
