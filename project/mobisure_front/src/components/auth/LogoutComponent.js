@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
-import AuthService from './AuthService';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 import { useAuth } from './AuthContext';
 
 /**
  * A component used to perform logout.
  * 
- * This component perform the logout, and then redirect to home page.
+ * This component performs the logout, and then redirects to the home page.
  * 
  * @returns JSX
  */
-export const LogoutComponent = () => {
+const LogoutComponent = () => {
+   const Auth = useAuth();
+   AuthService.logout(Auth);
 
-   const Auth = useAuth()
+   return <Navigate to="/" />;
+};
 
-   AuthService.logout(Auth )
-
-   return (
-    <Navigate to="/" />
-   )
-
-}
+export default LogoutComponent; 

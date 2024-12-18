@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthService from './AuthService';
+import AuthService from '../../services/AuthService'
 import { useAuth } from './AuthContext';
 import LoginForm from './LoginForm'; // Assurez-vous que ce composant existe
 

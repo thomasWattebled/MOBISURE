@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import AuthService from './AuthService';
+import {  Link } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../css/login.css';
+import '../../assets/css/login.css';
 
 
 export const LoginForm = ({handleLogin, message}) => {
