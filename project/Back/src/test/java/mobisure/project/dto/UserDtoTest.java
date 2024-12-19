@@ -1,6 +1,9 @@
-package mobisure.project.entity;
+package mobisure.project.dto;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,13 +11,16 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserTest {
+import mobisure.project.entity.RoleName;
 
-	private User user;
+
+public class UserDtoTest {
+
+private UserDto user;
 	
 	@BeforeEach
 	public void setUp() {
-		user = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		user = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
 	}
 	
 	@Test
@@ -87,7 +93,7 @@ public class UserTest {
 	public void testEquals() {
 		
 		assertTrue(user.equals(user));
-		User user2 = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		UserDto user2 = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
 		assertTrue(user.equals(user2));
 		
 		assertFalse(user.equals(null));
@@ -98,10 +104,9 @@ public class UserTest {
 	@Test 
 	public void testHashCode() {
 		
-		User user2 = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		UserDto user2 = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
 		assertEquals(user.hashCode(),user2.hashCode());
 		
 	}
-	
 	
 }

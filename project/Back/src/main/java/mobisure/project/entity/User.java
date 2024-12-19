@@ -1,6 +1,7 @@
 package mobisure.project.entity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -84,6 +85,26 @@ public class User {
 	public void setRoles(Set<RoleName> roles) {
 		this.roles = roles;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, mail, mdp, nom, prenom, roles);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(id, other.id) && Objects.equals(mail, other.mail) && Objects.equals(mdp, other.mdp)
+				&& Objects.equals(nom, other.nom) && Objects.equals(prenom, other.prenom)
+				&& Objects.equals(roles, other.roles);
+	}
+	
 	
 	
 }

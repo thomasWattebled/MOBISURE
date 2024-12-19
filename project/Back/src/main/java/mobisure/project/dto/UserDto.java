@@ -1,5 +1,11 @@
 package mobisure.project.dto;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import mobisure.project.entity.RoleName;
+
 public class UserDto {
 
 	private Long id;
@@ -7,6 +13,7 @@ public class UserDto {
 	private String prenom;
 	private String mail;
 	private String mdp;
+	private Set<RoleName> roles = new HashSet<>();
 	
 	public UserDto(){}
 
@@ -16,6 +23,7 @@ public class UserDto {
 		this.prenom = prenom;
 		this.mail = mail;
 		this.mdp = mdp;
+		Set<RoleName> roles = new HashSet<>();
 	}
 
 	public Long getId() {
@@ -56,6 +64,38 @@ public class UserDto {
 
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
+	}
+	
+	public Set<RoleName> getRoles() {
+		return roles;
+	}
+	
+	public void addRole(RoleName role) {
+		this.roles.add(role);
+	}
+
+	public void setRoles(Set<RoleName> roles) {
+		this.roles = roles;
+	}
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, mail, mdp, nom, prenom, roles);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDto other = (UserDto) obj;
+		return Objects.equals(id, other.id) && Objects.equals(mail, other.mail) && Objects.equals(mdp, other.mdp)
+				&& Objects.equals(nom, other.nom) && Objects.equals(prenom, other.prenom)
+				&& Objects.equals(roles, other.roles);
 	}
 
 	@Override
