@@ -1,3 +1,4 @@
+/* Global styles for the app */
 .App {
   text-align: center;
 }
@@ -13,8 +14,9 @@
   }
 }
 
+/* Header section with a calm blue gradient */
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,12 +24,148 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.App-link {
-  color: #61dafb;
+/* Navigation Bar */
+.navbar {
+  background-color: #00aaff;
+  padding: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.navbar-links li {
+  display: inline-block;
+}
+
+.navbar-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navbar-links li a:hover {
+  background-color: #ffdd57;
+  color: #003366;
+  text-decoration: none;
+}
+
+/* Footer Section */
+footer {
+  background-color: #003366;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Carousel Section */
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 30px 0;
+}
+
+.carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.carousel-image-container {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image {
+  width: 90%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Carousel Buttons */
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 170, 255, 0.7);
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: rgba(255, 221, 87, 0.7);
+}
+
+.carousel-button.prev {
+  left: 15px;
+}
+
+.carousel-button.next {
+  right: 15px;
+}
+
+/* Indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #cfd9df;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+  background-color: #00aaff;
+}
+
+/* Keyframes for animations */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,49 +174,3 @@
     transform: rotate(360deg);
   }
 }
-
-.navbar {
-  background-color: #007bff;
-  padding: 10px;
-  display: flex; 
-  justify-content: center; 
-  align-items: center;
-}
-
-.navbar-links {
-  list-style: none;
-  display: flex; 
-  gap: 30px; /* Espace entre chaque lien */
-  margin: 0;
-  padding: 0;
-  flex-grow: 1; /* Les liens prennent tout l'espace disponible */
-  justify-content: center; /* Centrer les liens */
-}
-
-.navbar-links li {
-  display: inline-block; 
-}
-
-.navbar-links li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-.navbar-links li a:hover {
-  color: #ffdd57;
-  text-decoration: underline;
-}
-
-.navbar-text {
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-left: auto; /* Pousse le texte à droite */
-}
-
-
-
-
