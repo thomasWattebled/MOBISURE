@@ -22,7 +22,7 @@ import mobisure.project.service.UserService;
 
 public class UserControllerTest {
 	
-	 private MockMvc mockMvc;
+	 	private MockMvc mockMvc;
 
 	    @InjectMocks
 	    private UserController userController;

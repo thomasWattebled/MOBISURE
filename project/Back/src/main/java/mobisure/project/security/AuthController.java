@@ -88,7 +88,7 @@ public class AuthController {
 			 +", roles: "
 			 + existingUser.getAuthorities().stream()
 			 	.map( authority-> authority.getAuthority() + ", ")
-			 	.collect( Collectors.joining(", ") ) ;
+			 	.collect( Collectors.joining() ) ;
 		 } 
 		 else {
 			 return "Can't find principal for " + principal.getName();
