@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import RegistrationFormView from './RegistrationFormView';
+import SuccessModal from './SuccessModal';
+
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     nom: '',
-	  prenom: '',
+    prenom: '',
     mail: '',
     mdp: '',
     sexe: '',
@@ -12,6 +14,7 @@ const RegistrationForm = () => {
     adresse: '', 
     telephone: '',
   });
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,21 +35,27 @@ const RegistrationForm = () => {
       },
       body: JSON.stringify(formDataWithDate),
     })
-      .then((response) => response.text())
-      .then((data) => {
-        alert(data); // Affiche la réponse du backend
-      })
-      .catch((error) => {
-        console.error('Erreur :', error);
-      });
+    .then((response) => {
+      if (response.ok) {
+        setModalVisible(true); // Ouvre le modal si la soumission est un succès
+      }
+      return response.text();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Erreur :', error);
+    });
   };
-  
 
   return (
     <RegistrationFormView
       formData={formData}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
+      isModalVisible={isModalVisible}
+      setModalVisible={setModalVisible} 
     />
   );
 };

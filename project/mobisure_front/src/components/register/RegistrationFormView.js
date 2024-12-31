@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FormField from './FormField';
+import SuccessModal from './SuccessModal';
 
-const RegistrationFormView = ({ formData, handleChange, handleSubmit }) => {
+const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVisible,setModalVisible }) => {
+
+  const handleModalClose = () => {
+    setModalVisible(false); // Fermer le modal
+  };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -10,7 +16,7 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit }) => {
             <div className="card-body">
               <h2 className="card-title text-center">Inscription</h2>
               <form onSubmit={handleSubmit}>
-              <div className="mb-3">
+                <div className="mb-3">
                   <label className="form-label">Sexe :</label>
                   <div>
                     <div className="form-check form-check-inline">
@@ -121,6 +127,7 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit }) => {
           </div>
         </div>
       </div>
+      <SuccessModal show={isModalVisible} onClose={handleModalClose} />
     </div>
   );
 };
