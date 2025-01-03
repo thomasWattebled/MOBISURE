@@ -1,5 +1,6 @@
 package mobisure.project.dto;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -13,16 +14,27 @@ public class UserDto {
 	private String prenom;
 	private String mail;
 	private String mdp;
+	private String sexe;
+	private Date dateNaissance;
+	private String adresse;
+	private String telephone;
+	private Date date_creation;
 	private Set<RoleName> roles = new HashSet<>();
 	
 	public UserDto(){}
 
-	public UserDto(String nom, String prenom, String mail, String mdp) {
+	public UserDto(String nom, String prenom, String mail, String mdp, String sexe, Date dateNaissance, String adresse,
+			String telephone, Date date_creation) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
 		this.mdp = mdp;
+		this.sexe = sexe;
+		this.dateNaissance = dateNaissance;
+		this.adresse = adresse;
+		this.telephone = telephone;
+		this.date_creation = date_creation;
 		Set<RoleName> roles = new HashSet<>();
 	}
 
@@ -77,11 +89,50 @@ public class UserDto {
 	public void setRoles(Set<RoleName> roles) {
 		this.roles = roles;
 	}
-	
+
+	public String getSexe() {
+		return sexe;
+	}
+
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public Date getDate_creation() {
+		return date_creation;
+	}
+
+	public void setDate_creation(Date date_creation) {
+		this.date_creation = date_creation;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, mail, mdp, nom, prenom, roles);
+		return Objects.hash(adresse, dateNaissance, date_creation, id, mail, mdp, nom, prenom, roles, sexe, telephone);
 	}
 
 	@Override
@@ -93,15 +144,20 @@ public class UserDto {
 		if (getClass() != obj.getClass())
 			return false;
 		UserDto other = (UserDto) obj;
-		return Objects.equals(id, other.id) && Objects.equals(mail, other.mail) && Objects.equals(mdp, other.mdp)
-				&& Objects.equals(nom, other.nom) && Objects.equals(prenom, other.prenom)
-				&& Objects.equals(roles, other.roles);
+		return Objects.equals(adresse, other.adresse) && Objects.equals(dateNaissance, other.dateNaissance)
+				&& Objects.equals(date_creation, other.date_creation) && Objects.equals(id, other.id)
+				&& Objects.equals(mail, other.mail) && Objects.equals(mdp, other.mdp) && Objects.equals(nom, other.nom)
+				&& Objects.equals(prenom, other.prenom) && Objects.equals(roles, other.roles)
+				&& Objects.equals(sexe, other.sexe) && Objects.equals(telephone, other.telephone);
 	}
 
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
+		return "UserDto [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", mdp=" + mdp
+				+ ", sexe=" + sexe + ", dateNaissance=" + dateNaissance + ", adresse=" + adresse + ", telephone="
+				+ telephone + ", date_creation=" + date_creation + ", roles=" + roles + "]";
 	}
+
 	
 	
 	

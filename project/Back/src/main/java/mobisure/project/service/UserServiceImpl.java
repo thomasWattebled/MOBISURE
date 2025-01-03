@@ -56,6 +56,12 @@ public class UserServiceImpl implements UserService {
 		userDto.setMdp(user.getMdp());
 		userDto.setNom(user.getNom());
 		userDto.setPrenom(user.getPrenom());
+		userDto.setAdresse(user.getAdresse());
+		userDto.setDate_creation(user.getDate_creation());
+		userDto.setDateNaissance(user.getDateNaissance());
+		userDto.setSexe(user.getSexe());
+		userDto.setTelephone(user.getTelephone());
+		userDto.setRoles(user.getRoles());
 		
 		return userDto;
 	}
@@ -70,6 +76,12 @@ public class UserServiceImpl implements UserService {
 		user.setMdp(userDto.getMdp());
 		user.setNom(userDto.getNom());
 		user.setPrenom(userDto.getPrenom());
+		user.setAdresse(userDto.getAdresse());
+		user.setDate_creation(userDto.getDate_creation());
+		user.setDateNaissance(userDto.getDateNaissance());
+		user.setSexe(userDto.getSexe());
+		user.setTelephone(userDto.getTelephone());
+		user.setRoles(userDto.getRoles());
 		
 		return user;
 	}
@@ -78,7 +90,7 @@ public class UserServiceImpl implements UserService {
 	public void registerUser(UserDto userDto) {
 		
 		User user = convertToEntity(userDto);
-		
+		System.out.print(user.toString());
 		if(repoUser.findByMail(user.getMail()).isPresent()) {
 			throw new RuntimeException("L'utilisateur avec cet email existe déjà.");
 		}
