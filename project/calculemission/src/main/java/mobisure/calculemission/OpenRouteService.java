@@ -35,7 +35,7 @@ public class OpenRouteService {
             distance = json.getJSONArray("features").getJSONObject(0)
                     .getJSONObject("properties").getJSONObject("summary").getDouble("distance");
 
-            System.out.println("Distance : " + distance + " km");
+            System.out.println("Distance : " + distance + " m");
 
         } catch (Exception e) {
             System.err.println("Une erreur s'est produite : " + e.getMessage());
