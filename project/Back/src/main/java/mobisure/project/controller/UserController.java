@@ -35,6 +35,7 @@ public class UserController {
 	
 	@PostMapping("users/register")
 	public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
+		System.out.println(userDto);
 		try {
 			service.registerUser(userDto);
 			return ResponseEntity.status(HttpStatus.CREATED).body("Utilisateur créé avec succès.");
