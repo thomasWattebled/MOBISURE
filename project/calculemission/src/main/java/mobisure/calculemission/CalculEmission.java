@@ -34,7 +34,7 @@ public class CalculEmission {
     	
     	double distance = this.openRouteService.getDistance(gpsStart, gpsEnd);
     	
-    	emission = this.impactCOD.getEmission(transport, distance);
+    	emission = this.impactCOD.getEmission(transport, distance/1000);
     	
         return emission;
     }
