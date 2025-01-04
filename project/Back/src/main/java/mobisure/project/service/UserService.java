@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import mobisure.project.dto.UserDto;
+import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
 
 public interface UserService {
@@ -20,4 +21,5 @@ public interface UserService {
 	
 	User convertToEntity(UserDto userDto);
 
+	void updateRoleUser(long userId , List<String> list);
 }

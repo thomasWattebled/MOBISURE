@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import mobisure.project.dto.UserDto;
+import mobisure.project.request.UserRoleUpdateRequest;
 import mobisure.project.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -44,7 +45,13 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 		
-
 	}
+	
+	@PostMapping("/users/updateRole")
+	public void updateRole(@RequestBody UserRoleUpdateRequest request){
+		service.updateRoleUser(request.getUserId(),request.getRoles());
+	}
+	
+	
 	
 }
