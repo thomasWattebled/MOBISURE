@@ -1,8 +1,10 @@
 package mobisure.project.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -100,6 +102,26 @@ public class UserServiceImpl implements UserService {
 		user.addRole(RoleName.USER);
 		
 		repoUser.save(user);
+		
+	}
+
+	@Override
+	public void updateRoleUser(long userId, List<String> role) {
+		System.out.println(userId);
+		System.out.println(role);
+		Set<RoleName> roles = new HashSet<>();
+		
+		if(role.contains("USER")) {roles.add(RoleName.USER);}
+		if(role.contains("ADMIN")) {roles.add(RoleName.ADMIN);}
+		
+		System.out.println(roles);
+		
+		Optional<User> user = repoUser.findById(userId);
+		
+		if(user.isPresent()) {
+			user.get().setRoles(roles);
+			repoUser.save(user.get());
+		}
 		
 	}
 

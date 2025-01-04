@@ -13,6 +13,8 @@ import Contact from './pages/Contact.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import Footer from './components/Footer.jsx';
 import travelImage7 from './assets/image/logo.png';
+import PageUser from './components/admin/pageUser';
+import {WhenUserIsInRole} from './components/security/PrivateRoute.js';
 
 export const Layout = () => (
   <div className="d-flex flex-column min-vh-100">
@@ -28,6 +30,9 @@ export const Layout = () => (
         <WhenUserIsAuthenticated>
           <Link to="/home" className="text-white text-decoration-none">Home</Link>
           <Link to="/plans" className="text-white text-decoration-none">Plans</Link>
+		  <WhenUserIsInRole role="ADMIN">
+		  	<Link to="/pageUser" className="text-white text-decoration-none">Admin</Link>
+		  </WhenUserIsInRole>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
         </WhenUserIsAuthenticated>
       </Nav>
@@ -54,6 +59,7 @@ export default function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
+			<Route path="/pageUser" element={<PageUser />} />
           </Route>
         </Routes>
       </BrowserRouter>
