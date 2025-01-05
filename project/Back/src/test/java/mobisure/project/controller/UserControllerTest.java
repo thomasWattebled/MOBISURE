@@ -41,8 +41,8 @@ public class UserControllerTest {
 	    @Test
 	    void testGetAllUser_Success() throws Exception {
 	        // Arrange
-	        UserDto user1 = new UserDto("John", "Doe", "johndoe@example.com","mdp");
-	        UserDto user2 = new UserDto("Jane", "Doe", "janedoe@example.com","mdp2");
+	        UserDto user1 = new UserDto("John", "Doe", "johndoe@example.com","mdp", null, null, null, null, null);
+	        UserDto user2 = new UserDto("Jane", "Doe", "janedoe@example.com","mdp2", null, null, null, null, null);
 	        when(userService.getAllUsers()).thenReturn(Arrays.asList(user1, user2));
 
 	      
@@ -56,7 +56,7 @@ public class UserControllerTest {
 	    @Test
 	    void testGetUserById_Found() throws Exception {
 	        // Arrange
-	        UserDto user = new UserDto("John", "Doe", "johndoe@example.com","mdp");
+	        UserDto user = new UserDto("John", "Doe", "johndoe@example.com","mdp", null, null, null, null, null);
 	        when(userService.getUserById(1L)).thenReturn(Optional.of(user));
 
 	        // Act & Assert
@@ -68,7 +68,7 @@ public class UserControllerTest {
 	    @Test
 	    void testRegisterUser_Success() throws Exception {
 	        // Arrange
-	        UserDto user = new UserDto(null, "John", "Doe", "johndoe@example.com");
+	        UserDto user = new UserDto(null, "John", "Doe", "johndoe@example.com", null, null, null, null, null);
 	        doNothing().when(userService).registerUser(any(UserDto.class));
 
 	        // Act & Assert
@@ -82,7 +82,7 @@ public class UserControllerTest {
 	    @Test
 	    void testRegisterUser_Failure() throws Exception {
 	        // Arrange
-	        UserDto user = new UserDto(null, "John", "Doe", "johndoe@example.com");
+	        UserDto user = new UserDto(null, "John", "Doe", "johndoe@example.com", null, null, null, null, null);
 	        doThrow(new RuntimeException("Email already in use")).when(userService).registerUser(any(UserDto.class));
 
 	        // Act & Assert

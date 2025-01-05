@@ -20,7 +20,7 @@ private UserDto user;
 	
 	@BeforeEach
 	public void setUp() {
-		user = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		user = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp", null, null, null, null, null);
 	}
 	
 	@Test
@@ -93,7 +93,7 @@ private UserDto user;
 	public void testEquals() {
 		
 		assertTrue(user.equals(user));
-		UserDto user2 = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		UserDto user2 = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp", null, null, null, null, null);
 		assertTrue(user.equals(user2));
 		
 		assertFalse(user.equals(null));
@@ -104,7 +104,7 @@ private UserDto user;
 	@Test 
 	public void testHashCode() {
 		
-		UserDto user2 = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		UserDto user2 = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp", null, null, null, null, null);
 		assertEquals(user.hashCode(),user2.hashCode());
 		
 	}
