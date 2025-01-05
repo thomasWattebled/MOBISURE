@@ -14,7 +14,7 @@ public class UserTest {
 	
 	@BeforeEach
 	public void setUp() {
-		user = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		user = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp", null, null, null, null, null, null, null);
 	}
 	
 	@Test
@@ -87,7 +87,7 @@ public class UserTest {
 	public void testEquals() {
 		
 		assertTrue(user.equals(user));
-		User user2 = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		User user2 = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp", null, null, null, null, null, null, null);
 		assertTrue(user.equals(user2));
 		
 		assertFalse(user.equals(null));
@@ -98,7 +98,7 @@ public class UserTest {
 	@Test 
 	public void testHashCode() {
 		
-		User user2 = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp");
+		User user2 = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp", null, null, null, null, null, null, null);
 		assertEquals(user.hashCode(),user2.hashCode());
 		
 	}
