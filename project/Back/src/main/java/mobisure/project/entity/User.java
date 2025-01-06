@@ -70,6 +70,7 @@ public class User {
 		this.numero_client = numero_client;
 		this.telephone = telephone;
 		this.date_creation = date_creation;
+		
 		this.roles = roles;
 	}
 
@@ -120,10 +121,16 @@ public class User {
 	}
 	
 	public void addRole(RoleName role) {
+		if (this.roles == null) {
+			this.roles =  new HashSet<>();		
+			}
 		this.roles.add(role);
 	}
 
 	public void setRoles(Set<RoleName> roles) {
+		if (this.roles == null) {
+			this.roles =  new HashSet<>();
+		}
 		this.roles = roles;
 	}
 
