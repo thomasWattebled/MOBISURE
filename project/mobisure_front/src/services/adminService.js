@@ -26,6 +26,18 @@ class adminService {
 		});
 	}
 	
+	async deleteById(id){
+		return await fetch(SERVER_URL + '/users/delete/'+id, {
+			method: 'DELETE',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+
+		})
+	}
+	
 }
 
 export default new adminService();

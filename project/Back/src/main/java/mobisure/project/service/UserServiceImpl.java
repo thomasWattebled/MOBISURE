@@ -113,6 +113,8 @@ public class UserServiceImpl implements UserService {
 		
 		if(role.contains("USER")) {roles.add(RoleName.USER);}
 		if(role.contains("ADMIN")) {roles.add(RoleName.ADMIN);}
+		if(role.contains("PARTENAIRE")) {roles.add(RoleName.PARTENAIRE);}
+		if(role.contains("MEDECIN")) {roles.add(RoleName.MEDECIN);}
 		
 		System.out.println(roles);
 		
@@ -123,6 +125,11 @@ public class UserServiceImpl implements UserService {
 			repoUser.save(user.get());
 		}
 		
+	}
+
+	@Override
+	public void delete(Long id) {
+		repoUser.deleteById(id);
 	}
 
 }

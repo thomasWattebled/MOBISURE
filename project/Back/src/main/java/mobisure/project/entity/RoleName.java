@@ -1,5 +1,5 @@
 package mobisure.project.entity;
 
 public enum RoleName {
-	USER, ADMIN;
+	USER, ADMIN, PARTENAIRE, MEDECIN;
 }
