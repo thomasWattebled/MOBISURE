@@ -22,4 +22,6 @@ public interface UserService {
 	User convertToEntity(UserDto userDto);
 
 	void updateRoleUser(long userId , List<String> list);
+
+	public void delete(Long id);
 }

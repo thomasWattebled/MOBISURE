@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import adminService from '../../services/adminService';
 
-function UserRow({ user, onRoleChange }) {
+function UserRow({ user, onRoleChange, fonctionDelete }) {
 	
 	const handleRoleChange = (role) => {
 	    const updatedRoles = user.roles.includes(role)
@@ -29,12 +29,30 @@ function UserRow({ user, onRoleChange }) {
 			onChange={() => handleRoleChange('ADMIN')}
 	  	/>
 	  </td>
+	  <td>
+	  	<input 
+	  		type="checkbox"
+	  	  	checked={user.roles.includes('PARTENAIRE')}
+	  		onChange={() => handleRoleChange('PARTENAIRE')}
+	  	/>
+	  </td>
+	  <td>
+	  	<input 
+	  		type="checkbox"
+	  	  	checked={user.roles.includes('MEDECIN')}
+	  		onChange={() => handleRoleChange('MEDECIN')}
+	  	/>
+	  </td>
+	  <td>
+	  	<button id="btn-delete" type="button" onClick={() => fonctionDelete(user.id)}>Supprimer</button>
+	  </td>
+
 	  
     </tr>
   );
 }
 
-function UserTable({ users, onRoleChange }) {
+function UserTable({ users, onRoleChange, fonctionDelete }) {
   return (
     <table>
       <thead>
@@ -43,11 +61,19 @@ function UserTable({ users, onRoleChange }) {
           <th>Prénom</th>
 		  <th>Rôle : USER</th>
 		  <th>Rôle : ADMIN</th>
+		  <th>Rôle : PARTENAIRE</th>
+		  <th>Rôle : MEDECIN</th>
+		  <th>Supprimer</th>
         </tr>
       </thead>
       <tbody>
         {users.map((user, index) => (
-          <UserRow key={user.id || index} user={user} onRoleChange={onRoleChange} />
+          <UserRow 
+		  	key={user.id || index} 
+			user={user} 
+			onRoleChange={onRoleChange} 
+			fonctionDelete = {fonctionDelete}
+			/>
         ))}
       </tbody>
     </table>
@@ -74,6 +100,13 @@ export default function PageUser() {
 	);
 	adminService.updateUserRoles(userId, updateRoles);
   }
+  
+  const deleteUser = async (id) => {
+	adminService.deleteById(id).then(() => {
+		let updateUsers = [...listeUsers].filter(user => user.id !== id);
+		setUsers(updateUsers);
+	});
+  }
 
   if (loading) {
     return <p>Loading ...</p>;
@@ -81,7 +114,11 @@ export default function PageUser() {
 
   return (
     <div>
-      <UserTable users={listeUsers} onRoleChange={handleRoleChange} />
+      <UserTable 
+	  	users={listeUsers} 
+		onRoleChange={handleRoleChange} 
+		fonctionDelete = {deleteUser}
+		/>
     </div>
   );
 }
