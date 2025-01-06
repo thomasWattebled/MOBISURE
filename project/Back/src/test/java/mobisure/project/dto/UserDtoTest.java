@@ -67,6 +67,7 @@ private UserDto user;
 		assertEquals("benj2@gmail.com", user.getMail());
 	}
 	
+	
 	@Test
 	public void testAddRole() {
 		assertNotNull(user.getRoles());

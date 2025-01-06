@@ -8,6 +8,10 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserTest {
 
 	private User user;
@@ -23,8 +27,7 @@ public class UserTest {
         assertEquals("Benjamin", user.getPrenom());
         assertEquals("benj@gmail.com", user.getMail());
         assertEquals("mdp", user.getMdp());
-        //assertNotNull(user.getRoles());
-        //assertTrue(user.getRoles().isEmpty());
+        assertNull(user.getRoles());
 	}
 	
 	@Test
@@ -63,26 +66,60 @@ public class UserTest {
 	
 	@Test
 	public void testAddRole() {
-		/*
-		//assertNotNull(user.getRoles());
-        assertTrue(user.getRoles().isEmpty());
+		assertNull(user.getRoles());
         user.addRole(RoleName.USER);
         assertFalse(user.getRoles().isEmpty());
         assertTrue(user.getRoles().contains(RoleName.USER));
-        assertFalse(user.getRoles().contains(RoleName.ADMIN));*/
+        assertFalse(user.getRoles().contains(RoleName.ADMIN));
 	}
 	
 	@Test
-	public void testSetRoles() {/*
-		//assertNotNull(user.getRoles());
-        assertTrue(user.getRoles().isEmpty());
+	public void testSetRoles() {
+		assertNull(user.getRoles());
         Set<RoleName> roles = new HashSet<>();
         roles.add(RoleName.USER);
         user.setRoles(roles);
         assertFalse(user.getRoles().isEmpty());
         assertTrue(user.getRoles().contains(RoleName.USER));
-        assertFalse(user.getRoles().contains(RoleName.ADMIN)); */
+        assertFalse(user.getRoles().contains(RoleName.ADMIN)); 
 	}
+	
+	@Test
+	public void testSexe() {
+		assertNull(user.getSexe());
+        user.setSexe("Monsieur");
+        assertNotNull(user.getSexe());
+        assertEquals(user.getSexe(),"Monsieur");
+	}
+	
+	@Test
+	public void testAdresse() {
+		String adresse = "2 rue JeanBouin";
+		assertNull( user.getAdresse());
+		user.setAdresse(adresse);
+		assertNotNull(user.getAdresse());
+		assertEquals(adresse, user.getAdresse());
+	}
+	
+	@Test
+	public void testTelephone() {
+		String telephone = "0607091011";
+		assertNull( user.getTelephone());
+		user.setTelephone(telephone);
+		assertNotNull(user.getTelephone());
+		assertEquals(telephone, user.getTelephone());
+	}
+	
+	@Test
+	public void testDateNaissance() throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateNaissance = dateFormat.parse("15/08/1990");
+		assertNull(user.getDateNaissance());
+        user.setDateNaissance(dateNaissance);
+        assertNotNull(user.getDateNaissance());
+        assertEquals(user.getDateNaissance(),dateNaissance);
+	}
+	
 	
 	@Test
 	public void testEquals() {
