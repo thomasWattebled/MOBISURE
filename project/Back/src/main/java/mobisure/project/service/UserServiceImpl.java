@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
 	 @Autowired
 	 private PasswordEncoder passwordEncoder;
 	
+	 /**
+	  * Retrieve all User entities and convert them to DTOs.
+	  *
+	  * @return a list of UserDto objects representing all users.
+	  */
 	@Override
 	public List<UserDto> getAllUsers() {
 		List<User> users = repoUser.findAll();
@@ -36,6 +41,12 @@ public class UserServiceImpl implements UserService {
 		return usersDto;
 	}
 
+	/**
+     * Retrieve a User by its ID and convert it to a DTO.
+     *
+     * @param id the ID of the User to retrieve.
+     * @return an Optional containing the UserDto if found, or empty if not found.
+     */
 	@Override
 	public Optional<UserDto> getUserById(Long id) {
 		Optional<User> users = repoUser.findById(id);
@@ -48,6 +59,12 @@ public class UserServiceImpl implements UserService {
 		return Optional.empty();
 	}
 
+	/**
+     * Convert a User entity to a UserDto.
+     *
+     * @param user the User entity to be converted.
+     * @return the corresponding UserDto object.
+     */
 	@Override
 	public UserDto convertToDto(User user) {
 		
@@ -68,6 +85,12 @@ public class UserServiceImpl implements UserService {
 		return userDto;
 	}
 
+	/**
+     * Convert a UserDto to a User entity.
+     *
+     * @param userDto the UserDto object to be converted.
+     * @return the corresponding User entity.
+     */
 	@Override
 	public User convertToEntity(UserDto userDto) {
 		
@@ -88,6 +111,11 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	/**
+     * Register a new User by converting a UserDto to an entity and saving it.
+     *
+     * @param userDto the UserDto object containing the data of the User to be registered.
+     */
 	@Override
 	public void registerUser(UserDto userDto) {
 		
@@ -105,6 +133,12 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	/**
+     * Update the roles of a User by their ID.
+     *
+     * @param userId the ID of the User whose roles will be updated.
+     * @param list a list of role names to assign to the User.
+     */
 	@Override
 	public void updateRoleUser(long userId, List<String> role) {
 		System.out.println(userId);
@@ -127,6 +161,11 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	/**
+     * Delete a User by their ID.
+     *
+     * @param id the ID of the User to be deleted.
+     */
 	@Override
 	public void delete(Long id) {
 		repoUser.deleteById(id);

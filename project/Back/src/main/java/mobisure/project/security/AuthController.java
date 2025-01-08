@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/*
+ * Controller to manage routes for the identification
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -43,6 +46,17 @@ public class AuthController {
 
 	 public AuthController() {}
 	 
+	 
+	 /**
+	  *	Authenticates a user using their username and password.
+	  * If authentication is successful, a security token is created and the security context is updated.
+	  *
+	  * @param loginRequest Login information (username and password).
+	  * @param request the HTTP request to save the security context.
+	  * @param response the HTTP response to record the security context.
+	  * @return a UserAuthDto object containing the authenticated user information.
+	  * @throws InternalAuthenticationServiceException if the user is not found after authentication.
+	 */
 	 @PostMapping("/login")
 	 public UserAuthDto authenticateUser(@RequestBody LoginRequest loginRequest, 
 			 HttpServletRequest request, HttpServletResponse response) {
@@ -72,7 +86,12 @@ public class AuthController {
 
 	 }
 
-	 
+	 /**
+	  * Gets information about the currently authenticated user.
+	  * 
+	  * @param principal the “Main” object representing the currently authenticated user.
+	  * @return a string containing user information (name and roles).
+	 */
 	 @GetMapping("/user")
 	 public String userPrincipal(Principal principal) {
 		 
@@ -95,11 +114,19 @@ public class AuthController {
 		 }
 	 }
 	 
-	 
+	 /**
+	  * Represents the user’s login information (username and password).
+	 */
 	 public record LoginRequest(String username, String password) {
 		}
 
 	 
+	 /**
+	  * Creates a UserAuthDto object containing the user name and roles.
+	  *
+	  * @param userDetails the details of the authenticated user.
+	  * @return a ‘UserAuthDto’ object containing the user’s information.
+	 */
 	 public UserAuthDto createUserAuthDto( UserDetails userDetails ) {
 		   
 		   UserAuthDto user = new UserAuthDto();

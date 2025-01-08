@@ -18,6 +18,9 @@ import mobisure.project.dto.UserDto;
 import mobisure.project.request.UserRoleUpdateRequest;
 import mobisure.project.service.UserService;
 
+/*
+ * Controller to manage routes for users
+ */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UserController {
@@ -25,16 +28,33 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	/**
+     * Retrieves the list of all users.
+     *
+     * @return a list containing all users as DTOs.
+     */
 	@GetMapping("/users")
 	public List<UserDto> getAllUser(){
 		return service.getAllUsers();
 	}
 	
+	/**
+     * Retrieves information of a specific user by its ID.
+     *
+     * @param id the user ID to retrieve.
+     * @return an “Optional” object containing the user’s DTO if found.
+     */
 	@GetMapping("users/{id}")
 	public Optional<UserDto> getUserById(@PathVariable Long id){
 		return service.getUserById(id);
 	}
 	
+	/**
+     * Register a new user.
+     *
+     * @param userDto an object containing the user information to be saved.
+     * @return an HTTP response indicating the status of the creation.
+     */
 	@PostMapping("users/register")
 	public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
 		System.out.println(userDto);
@@ -48,11 +68,21 @@ public class UserController {
 		
 	}
 	
+	/**
+     * Updates a user’s roles.
+     *
+     * @param request an object containing the user ID and list of new roles.
+     */
 	@PostMapping("/users/updateRole")
 	public void updateRole(@RequestBody UserRoleUpdateRequest request){
 		service.updateRoleUser(request.getUserId(),request.getRoles());
 	}
 	
+	/**
+     * Remove a user by their ID.
+     *
+     * @param id the user ID to be deleted.
+     */
 	@DeleteMapping("users/delete/{id}")
 	public void deleteUser(@PathVariable Long id) {
 		service.delete(id);
