@@ -14,6 +14,7 @@ import mobisure.project.dto.UserDto;
 import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
 import mobisure.project.repository.UserRepository;
+import mobisure.project.request.changeMdpRequest;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -169,6 +170,35 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(Long id) {
 		repoUser.deleteById(id);
+	}
+
+	@Override
+	public Optional<UserDto> getUserByEmail(String email) {
+		
+		Optional<User> user = repoUser.findByMail(email);
+		
+		if(user.isPresent()) {
+			UserDto userDto = convertToDto(user.get());
+			return Optional.of(userDto);
+		}
+		
+		return Optional.empty();
+	}
+
+	@Override
+	public void changeMdp(changeMdpRequest changeMdp) {
+		System.out.println(changeMdp.getMail());
+		System.out.println(changeMdp.getDate());
+		System.out.println(changeMdp.getMdp());
+		Optional<User> user = repoUser.findByMailAndDateNaissance(changeMdp.getMail(), changeMdp.getDate()); 
+		if(user.isPresent()) {
+			user.get().setMdp(passwordEncoder.encode(changeMdp.getMdp()));
+			repoUser.save(user.get());
+		}
+		else {
+			throw new RuntimeException("Ce compte n'existe pas.");
+		}
+		
 	}
 
 }

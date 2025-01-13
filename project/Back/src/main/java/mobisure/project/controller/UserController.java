@@ -1,6 +1,7 @@
 package mobisure.project.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mobisure.project.dto.UserDto;
 import mobisure.project.request.UserRoleUpdateRequest;
+import mobisure.project.request.changeMdpRequest;
 import mobisure.project.service.UserService;
 
 /*
@@ -88,6 +90,25 @@ public class UserController {
 		service.delete(id);
 	}
 	
+	@PostMapping("getUserEmail")
+	public Optional<UserDto> getUserByEmail(@RequestBody Map<String, String> body){
+		String email = body.get("email");
+		Optional<UserDto> test = service.getUserByEmail(email);
+		return service.getUserByEmail(email);
+	}
+	
+	
+	@PostMapping("users/changeMdp")
+	public ResponseEntity<String> changeMdp(@RequestBody changeMdpRequest changeMdp) {
+		try {
+			service.changeMdp(changeMdp);
+			return ResponseEntity.status(HttpStatus.CREATED).body("changement du mot de passe réussie");
+		}
+		catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+		
+	}
 	
 	
 }

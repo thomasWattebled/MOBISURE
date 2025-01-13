@@ -46,6 +46,9 @@ export const LoginForm = ({handleLogin, message}) => {
                             <div className="mt-3">
                                 <span>Pas de compte ? <Link to="/register">créer un compte</Link></span>
                             </div>
+							<div className="mt-3">
+								<span>Mot de passe oublié ? <Link to="/changeMdp">réinitialiser le mot de passe</Link></span>
+							</div>
                         </div>
                     </div>
                 </div>

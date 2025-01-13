@@ -112,7 +112,7 @@ public class AuthController {
 		 else {
 			 return "Can't find principal for " + principal.getName();
 		 }
-	 }
+	 } 
 	 
 	 /**
 	  * Represents the user’s login information (username and password).
