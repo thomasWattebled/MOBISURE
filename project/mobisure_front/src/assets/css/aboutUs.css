@@ -1,0 +1,116 @@
+/* Titre principal */
+#titre {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Sous-titre */
+#ss-titre {
+  font-size: 1.2rem;
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* Mission */
+.bloc {
+  background-color: #f4f4f4;
+  border-left: 5px solid #3498db;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Titres dans la mission */
+.bloc h2 {
+  font-size: 1.8rem;
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+/* Paragraphes dans la mission */
+.bloc p {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Bloc interview */
+.interview {
+  display: flex;
+  flex-direction: column; /* Les éléments sont empilés verticalement */
+  align-items: center; /* Centrer les éléments horizontalement */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Centrer le texte */
+}
+
+/* Nom */
+.interview span {
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* Image */
+.interview img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+  border: 2px solid #3498db;
+}
+
+/* Description */
+.interview p {
+  font-size: 0.95rem;
+  color: #555555;
+  line-height: 1.5;
+}
+
+/* Style global pour les paragraphes */
+p {
+  font-family: 'Arial', sans-serif; /* Police simple et lisible */
+  font-size: 1rem; /* Taille standard */
+  line-height: 1.6; /* Espacement pour améliorer la lisibilité */
+  color: #333; /* Couleur de texte sombre */
+  margin-bottom: 1rem; /* Espacement entre les paragraphes */
+}
+
+/* Style pour les div contenant les solutions */
+.solutions {
+  background-color: #f9f9f9; /* Fond légèrement gris pour différencier */
+  border-left: 4px solid #007BFF; /* Bord gauche coloré pour mettre en évidence */
+  padding: 1rem; /* Espacement interne */
+  margin-bottom: 1.5rem; /* Espacement externe */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+/* Style spécifique pour les paragraphes à l'intérieur des solutions */
+.solutions p {
+  margin: 0; /* Supprime le marge interne des paragraphes */
+  font-size: 0.95rem; /* Taille légèrement réduite pour différencier */
+  color: #555; /* Couleur un peu plus claire */
+}
+
+/* Style pour le titre général (si ajouté ultérieurement) */
+h2 {
+  font-family: 'Georgia', serif; /* Police avec empattement pour les titres */
+  font-size: 1.5rem;
+  color: #007BFF; /* Couleur cohérente avec le bord gauche */
+  margin-bottom: 1rem;
+}
+
