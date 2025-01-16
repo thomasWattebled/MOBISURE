@@ -3,6 +3,10 @@ import '../assets/css/aboutUs.css';
 import suzanne from '../assets/image/aboutUs/suzanne.jpg';
 import hector from '../assets/image/aboutUs/hector.webp';
 import marius from '../assets/image/aboutUs/marius.png';
+import rapport from '../assets/image/aboutUs/rapport.png';
+import env from '../assets/image/aboutUs/env.png';
+import logistique from '../assets/image/aboutUs/logistique.jpg';
+import assistance from '../assets/image/aboutUs/assistance.webp';
 
 const AboutUs = () => (
   <div className="container mt-5">
@@ -71,24 +75,28 @@ const AboutUs = () => (
 		</p>
 		
 		<div className='solutions'>
+			<img src={assistance}/>
 			<p>
 				Assistance d'urgence : que vous soyez blessé ou malade, notre équipe médicale est disponible 24 h/24 et 7 j/7 pour fournir une consultation à distance ou déployer une assistance en cas de besoin.
 			</p>
 		</div>
 		
 		<div className='solutions'>
+			<img src={logistique}/>
 			<p>
 				Support logistique : nous aidons à résoudre les problèmes de transport, tels que les pannes de véhicule, la recherche d'un logement ou l'assistance au transport local comme les vélos ou les scooters.
 			</p>
 		</div>
 		
 		<div className='solutions'>
+			<img src={env}/>
 			<p>
 				Initiatives de développement durable : dans le cadre de notre engagement envers l'environnement, nous intégrons des options de réduction des émissions de carbone dans nos services et encourageons les clients à faire des choix durables.
 			</p>
 		</div>
 		
 		<div className='solutions'>
+			<img src={rapport}/>
 			<p>
 				Données et rapports : nos clients, qu'ils soient particuliers ou entreprises, peuvent suivre leur historique de voyage et d'assistance, recevoir des rapports détaillés et obtenir des informations sur l'impact environnemental de leurs décisions de voyage.
 			</p>

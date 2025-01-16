@@ -89,6 +89,10 @@ p {
   margin-bottom: 1rem; /* Espacement entre les paragraphes */
 }
 
+.solutions {
+  background-color: #f9f9f9; /* Fond légèrement gris */
+  border-left: 4px solid #007BFF; /* Bord gauche coloré */
+
 /* Style pour les div contenant les solutions */
 .solutions {
   background-color: #f9f9f9; /* Fond légèrement gris pour différencier */
@@ -97,6 +101,27 @@ p {
   margin-bottom: 1.5rem; /* Espacement externe */
   border-radius: 5px; /* Coins arrondis */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  gap: 1rem; /* Espacement entre les éléments */
+  display: flex; /* Aligne l'image et le texte horizontalement */
+  align-items: center; /* Centrer verticalement l'image et le texte */
+  gap: 15px; /* Espacement entre l'image et le texte */
+}
+
+.solutions img {
+  width: 100px; /* Limite la largeur de l'image */
+  height: auto; /* Respecte le ratio de l'image */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+.solutions p {
+  margin: 0; /* Supprime les marges du paragraphe */
+  font-size: 0.95rem; /* Taille du texte */
+  color: #555; /* Couleur du texte */
+  flex: 1; /* Permet au texte de prendre tout l'espace restant */
+  min-width: 0; /* Empêche le débordement du texte */
+  word-wrap: break-word; /* Permet au texte de passer à la ligne */
+}
+
 }
 
 /* Style spécifique pour les paragraphes à l'intérieur des solutions */
