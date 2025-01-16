@@ -1,0 +1,129 @@
+/* Titre principal */
+#titre {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Sous-titre */
+#ss-titre {
+  font-size: 1.2rem;
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* Mission */
+.bloc {
+  background-color: #f4f4f4;
+  border-left: 5px solid #3498db;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Titres dans la mission */
+.bloc h2 {
+  font-size: 1.8rem;
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+/* Paragraphes dans la mission */
+.bloc p {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Bloc interview */
+.interview {
+  display: flex;
+  flex-direction: column; /* Les éléments sont empilés verticalement */
+  align-items: center; /* Centrer les éléments horizontalement */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Centrer le texte */
+}
+
+/* Nom */
+.interview span {
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* Image */
+.interview img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+  border: 2px solid #3498db;
+}
+
+/* Description */
+.interview p {
+  font-size: 0.95rem;
+  color: #555555;
+  line-height: 1.5;
+}
+
+/* Style global pour les paragraphes */
+p {
+  font-family: 'Arial', sans-serif; /* Police simple et lisible */
+  font-size: 1rem; /* Taille standard */
+  line-height: 1.6; /* Espacement pour améliorer la lisibilité */
+  color: #333; /* Couleur de texte sombre */
+  margin-bottom: 1rem; /* Espacement entre les paragraphes */
+}
+
+.solutions {
+  background-color: #f9f9f9; /* Fond légèrement gris */
+  border-left: 4px solid #007BFF; /* Bord gauche coloré */
+  padding: 1rem; /* Espacement interne */
+  margin-bottom: 1.5rem; /* Espacement externe */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  gap: 1rem; /* Espacement entre les éléments */
+  display: flex; /* Aligne l'image et le texte horizontalement */
+  align-items: center; /* Centrer verticalement l'image et le texte */
+  gap: 15px; /* Espacement entre l'image et le texte */
+}
+
+.solutions img {
+  width: 100px; /* Limite la largeur de l'image */
+  height: auto; /* Respecte le ratio de l'image */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+.solutions p {
+  margin: 0; /* Supprime les marges du paragraphe */
+  font-size: 0.95rem; /* Taille du texte */
+  color: #555; /* Couleur du texte */
+  flex: 1; /* Permet au texte de prendre tout l'espace restant */
+  min-width: 0; /* Empêche le débordement du texte */
+  word-wrap: break-word; /* Permet au texte de passer à la ligne */
+}
+
+
+
+/* Style pour le titre général (si ajouté ultérieurement) */
+h2 {
+  font-family: 'Georgia', serif; /* Police avec empattement pour les titres */
+  font-size: 1.5rem;
+  color: #007BFF; /* Couleur cohérente avec le bord gauche */
+  margin-bottom: 1rem;
+}
+

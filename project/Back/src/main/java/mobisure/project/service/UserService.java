@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import mobisure.project.dto.UserDto;
 import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
+import mobisure.project.request.changeMdpRequest;
 
 /*
  * Service interface for managing User operations. 
@@ -66,4 +67,8 @@ public interface UserService {
      * @param id the ID of the User to be deleted.
      */
 	public void delete(Long id);
+
+	public Optional<UserDto> getUserByEmail(String email);
+
+	public void changeMdp(changeMdpRequest changeMdp);
 }
