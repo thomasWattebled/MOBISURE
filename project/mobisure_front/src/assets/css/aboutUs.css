@@ -92,6 +92,11 @@ p {
 .solutions {
   background-color: #f9f9f9; /* Fond légèrement gris */
   border-left: 4px solid #007BFF; /* Bord gauche coloré */
+
+/* Style pour les div contenant les solutions */
+.solutions {
+  background-color: #f9f9f9; /* Fond légèrement gris pour différencier */
+  border-left: 4px solid #007BFF; /* Bord gauche coloré pour mettre en évidence */
   padding: 1rem; /* Espacement interne */
   margin-bottom: 1.5rem; /* Espacement externe */
   border-radius: 5px; /* Coins arrondis */
@@ -117,7 +122,14 @@ p {
   word-wrap: break-word; /* Permet au texte de passer à la ligne */
 }
 
+}
 
+/* Style spécifique pour les paragraphes à l'intérieur des solutions */
+.solutions p {
+  margin: 0; /* Supprime le marge interne des paragraphes */
+  font-size: 0.95rem; /* Taille légèrement réduite pour différencier */
+  color: #555; /* Couleur un peu plus claire */
+}
 
 /* Style pour le titre général (si ajouté ultérieurement) */
 h2 {
