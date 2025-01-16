@@ -65,6 +65,11 @@ public class UserTest {
 	}
 	
 	@Test
+	public void testNumeroClient() {
+		
+	}
+	
+	@Test
 	public void testAddRole() {
 		assertNull(user.getRoles());
         user.addRole(RoleName.USER);

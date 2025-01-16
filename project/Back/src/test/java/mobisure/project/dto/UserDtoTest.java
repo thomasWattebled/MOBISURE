@@ -2,6 +2,7 @@ package mobisure.project.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -93,12 +94,16 @@ private UserDto user;
 	@Test
 	public void testEquals() {
 		
-		assertTrue(user.equals(user));
 		UserDto user2 = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp", null, null, null, null, null);
+		UserDto user3 = new UserDto("Test","Benjamin","benj@gmail.com","mdp", null, null, null, null, null);
+		
+		assertTrue(user.equals(user));
 		assertTrue(user.equals(user2));
 		
 		assertFalse(user.equals(null));
 		assertFalse(user.equals("user"));
+		assertNotEquals(user,user3);
+		assertEquals(user,user2);
 		
 	}
 	
