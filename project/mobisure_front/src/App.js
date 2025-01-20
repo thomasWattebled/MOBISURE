@@ -7,7 +7,7 @@ import LoginComponent from './components/auth/LoginComponent.js';
 import LogoutComponent from './components/auth/LogoutComponent.js';
 import RegistrationForm from './components/register/RegistrationForm.js';
 import Accueil from './pages/Accueil.jsx';
-import PlansSection from './components/plans/components/PlansSection.jsx';
+import PlansSection from './pages/PlansSection.jsx';
 import AboutUs from './pages/AboutUs.jsx';
 import Contact from './pages/Contact.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
