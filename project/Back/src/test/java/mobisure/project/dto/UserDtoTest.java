@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
@@ -17,15 +16,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import mobisure.project.entity.RoleName;
-import mobisure.project.entity.User;
 
 
-public class UserDtoTest {
+class UserDtoTest {
 
 private UserDto user;
 	
 	@BeforeEach
-	public void setUp() throws ParseException {
+	void setUp() throws ParseException {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date dateNaissance = dateFormat.parse("12/08/1990");
@@ -35,7 +33,7 @@ private UserDto user;
 	}
 	
 	@Test
-	public void testConstructor() throws ParseException {
+	void testConstructor() throws ParseException {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date dateNaissance = dateFormat.parse("12/08/1990");
@@ -54,34 +52,34 @@ private UserDto user;
 	}
 	
 	@Test
-	public void testId() {
+	void testId() {
 		user.setId((long) 2);
 		assertEquals((long) 2, user.getId());
 	}
 	
 	@Test
-	public void testNom() {
+	void testNom() {
 		assertEquals("ALEXANDRE", user.getNom());
 		user.setNom("Nom");
 		assertEquals("Nom", user.getNom());
 	}
 	
 	@Test
-	public void testPrenom() {
+	void testPrenom() {
 		assertEquals("Benjamin", user.getPrenom());
 		user.setPrenom("Prenom");
 		assertEquals("Prenom", user.getPrenom());
 	}
 	
 	@Test
-	public void testMdp() {
+	void testMdp() {
 		assertEquals("mdp", user.getMdp());
 		user.setMdp("mdp2");
 		assertEquals("mdp2", user.getMdp());
 	}
 	
 	@Test
-	public void testMail() {
+	void testMail() {
 		assertEquals("benj@gmail.com", user.getMail());
 		user.setMail("benj2@gmail.com");
 		assertEquals("benj2@gmail.com", user.getMail());
@@ -89,7 +87,7 @@ private UserDto user;
 	
 	
 	@Test
-	public void testAddRole() {
+	void testAddRole() {
 		assertNotNull(user.getRoles());
         assertTrue(user.getRoles().isEmpty());
         user.addRole(RoleName.USER);
@@ -99,7 +97,7 @@ private UserDto user;
 	}
 	
 	@Test
-	public void testSetRoles() {
+	void testSetRoles() {
 		assertNotNull(user.getRoles());
         assertTrue(user.getRoles().isEmpty());
         Set<RoleName> roles = new HashSet<>();
@@ -112,7 +110,7 @@ private UserDto user;
 	
 	
 	@Test 
-	public void testHashCode() throws ParseException {
+	void testHashCode() throws ParseException {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date dateNaissance = dateFormat.parse("12/08/1990");
