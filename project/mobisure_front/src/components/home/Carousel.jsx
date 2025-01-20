@@ -12,15 +12,22 @@ const Carousel = ({ images, visibleCount }) => {
   };
 
   return (
-    <div className="carousel">
+    <div className="carousel"  style={{ "--visible-count": visibleCount }} >
       {/* Images */}
       <div
         className="carousel-images"
-        style={{ transform: `translateX(-${currentIndex * (100 / visibleCount)}%)` }}
       >
         {images.map((image, index) => (
-          <div key={index} className="carousel-image-container">
-            <img src={image} alt={`Slide ${index + 1}`} className="carousel-image" />
+          <div key={index} className="carousel-image-container" style={{
+            transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
+          }}>
+            
+            <img src={image.image} alt={`Slide ${index + 1}`} className="carousel-image" />
+            {image.description && (
+              <div className="carousel-description">
+                {image.description}
+              </div>
+            )}
           </div>
         ))}
       </div>
