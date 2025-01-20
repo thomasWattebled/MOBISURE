@@ -1,5 +1,6 @@
 // VoyageProfessionnelForm.js
 import React, { useState } from 'react';
+import '../../style/form.css';
 
 const VoyageProfessionnelForm = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,6 @@ const VoyageProfessionnelForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form Data Submitted:', formData);
-    // Vous pouvez ajouter une action ici pour soumettre les données, comme un appel API.
   };
 
   return (

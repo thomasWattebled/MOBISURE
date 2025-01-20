@@ -7,6 +7,7 @@ import AssuranceVoyage from '../components/plans/components/AssuranceVoyage';
 import voyage_vacance from '../components/plans/images/voyage_vacance.jpg';
 import voyage_pro from '../components/plans/images/voyage_professionel.jpg';
 import VoyageProfessionnelForm from '../components/plans/components/formulaire/VoyageProForm';
+import AssuranceVehiculeForm from '../components/plans/components/formulaire/AssuranceVehiculeForm';
 import Recap from '../components/plans/components/Recap';
 
 const PlansSection = () => {
@@ -39,7 +40,10 @@ const PlansSection = () => {
           { label: "Voyage Professionnel", value: voyage_pro },
         ]);
         setIsOptionSelected(true);
-      } else {
+      }else if (plan === "Assurance Véhicule") {
+        setShowForm(true); 
+        setSubOptions(null);
+      }  else {
         setSubOptions(null);
       }
     };
@@ -75,7 +79,6 @@ const PlansSection = () => {
         </div>
       ) : null}
 
-      {/* Affichage des sous-options de voyage si aucune option n'est sélectionnée */}
       {subOptions  && !showForm ? (
         <div className="sub-options-container">
           <SubOptionList
@@ -85,8 +88,12 @@ const PlansSection = () => {
         </div>
       ) : null}
   
+
+      {showForm && selectedPlan === "Assurance Véhicule" && (
+      <AssuranceVehiculeForm />
+      )}
         {/* Formulaire pour "Voyage Professionnel" */}
-        {showForm && (
+        {showForm && selectedPlan === "Assurance Voyage" && (
          <VoyageProfessionnelForm/>
         )}
   
