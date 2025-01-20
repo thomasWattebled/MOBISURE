@@ -6,7 +6,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +24,9 @@ import mobisure.project.dto.UserDto;
 import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
 import mobisure.project.repository.UserRepository;
+import mobisure.project.request.changeMdpRequest;
 
-public class UserServiceImplTest {
+class UserServiceImplTest {
 	
 	@Mock
     private UserRepository repoUser;
@@ -37,7 +41,7 @@ public class UserServiceImplTest {
     private User user;
     
     @BeforeEach
-    public void setUp() {
+    void setUp() {
     	
     	MockitoAnnotations.openMocks(this);
     	
@@ -57,7 +61,7 @@ public class UserServiceImplTest {
     }
     
     @Test
-    public void testRegisterUser_MailExisting() {
+    void testRegisterUser_MailExisting() {
     	
     	when(repoUser.findByMail(user.getMail())).thenReturn(Optional.of(user));
     	
@@ -70,7 +74,7 @@ public class UserServiceImplTest {
     }
 	
     @Test
-    public void testRegisterUser_Success() {
+    void testRegisterUser_Success() {
         
         when(repoUser.findByMail(user.getMail())).thenReturn(Optional.empty());
         when(passwordEncoder.encode(userDto.getMdp())).thenReturn("encodedPassword");
@@ -81,18 +85,18 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserById_Found() {
+    void testGetUserById_Found() {
     	
     	when(repoUser.findById(user.getId())).thenReturn(Optional.of(user));
     	
     	Optional<UserDto> result = userService.getUserById(user.getId());
     	
-    	//assertTrue(result.isPresent());
-    	//assertEquals(userDto.getId(),result.get().getId());
+    	assertTrue(result.isPresent());
+    	assertEquals(userDto.getId(),result.get().getId());
     }
     
     @Test
-    public void testGetUserById_NotFound() {
+    void testGetUserById_NotFound() {
     	
     	when(repoUser.findById(user.getId())).thenReturn(Optional.empty());
     	
@@ -102,7 +106,7 @@ public class UserServiceImplTest {
     }
     
     @Test
-    public void testGetAllUser() {
+    void testGetAllUser() {
     	
     	when(repoUser.findAll()).thenReturn(List.of(user));
     	
@@ -117,7 +121,7 @@ public class UserServiceImplTest {
     }
     
     @Test
-    public void testconvertToDto() {
+    void testconvertToDto() {
     	
     	UserDto dto = userService.convertToDto(user);
     	
@@ -126,7 +130,7 @@ public class UserServiceImplTest {
     }
     
     @Test
-    public void convertToEntity() {
+    void convertToEntity() {
     	
     	
     	User entity = userService.convertToEntity(userDto);
@@ -134,4 +138,110 @@ public class UserServiceImplTest {
     	assertEquals(entity,user);
     }
     
+    @Test
+    void testUpdateRoleUser_UserExists(){
+    	
+    	long userId = 1L;
+        List<String> roles = List.of("USER", "ADMIN");
+
+        User existingUser = new User();
+        existingUser.setId(userId);
+        existingUser.setRoles(new HashSet<>());
+        
+        when(repoUser.findById(userId)).thenReturn(Optional.of(existingUser));
+        
+        userService.updateRoleUser(userId, roles);
+            	
+        assertTrue(existingUser.getRoles().contains(RoleName.USER));
+        assertTrue(existingUser.getRoles().contains(RoleName.ADMIN));
+        assertEquals(2, existingUser.getRoles().size());
+    }
+    
+    @Test
+    void testUpdateRoleUser_UserNotFound() {
+        long userId = 2L;
+        List<String> roles = List.of("USER");
+
+        when(repoUser.findById(userId)).thenReturn(Optional.empty());
+
+        userService.updateRoleUser(userId, roles);
+
+        verify(repoUser, times(0)).save(any(User.class)); // Vérifie que save() n'est jamais appelé
+    }
+    
+    @Test
+    void testDelete() {
+    	Long userId = 1L;
+        userService.delete(userId);
+        verify(repoUser, times(1)).deleteById(userId);
+    }
+    
+    @Test
+    void testGetUserByEmail_Found() {
+    	String email = "benj@mail.com";
+    	when(repoUser.findByMail(email)).thenReturn(Optional.of(user));
+    	
+    	Optional<UserDto> result = userService.getUserByEmail(email);
+    	assertTrue(result.isPresent());
+    	assertEquals(userDto.getMail(), result.get().getMail());
+    
+    	verify(repoUser, times(1)).findByMail(email);	
+    }
+    
+    @Test
+    void testGetUserByEmail_NotFound() {
+        String email = "unknown@mail.com";
+        when(repoUser.findByMail(email)).thenReturn(Optional.empty());
+
+        Optional<UserDto> result = userService.getUserByEmail(email);
+        assertFalse(result.isPresent());
+
+        verify(repoUser, times(1)).findByMail(email);
+    }
+
+    @Test
+    void testChangeMdp_Success() throws ParseException {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = dateFormat.parse("12/08/1990");
+        changeMdpRequest request = new changeMdpRequest();
+        request.setMail("benj@mail.com");
+        request.setDate(date);
+        request.setMdp("newpassword");
+
+        when(repoUser.findByMailAndDateNaissance(request.getMail(), request.getDate()))
+            .thenReturn(Optional.of(user));
+        when(passwordEncoder.encode(request.getMdp())).thenReturn("encodedPassword");
+
+        userService.changeMdp(request);
+
+        verify(repoUser, times(1)).findByMailAndDateNaissance(request.getMail(), request.getDate());
+        verify(passwordEncoder, times(1)).encode(request.getMdp());
+        verify(repoUser, times(1)).save(user);
+
+        assertEquals("encodedPassword", user.getMdp());
+    }
+    
+    @Test
+    void testChangeMdp_UserNotFound() throws ParseException {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = dateFormat.parse("12/08/1990");
+        changeMdpRequest request = new changeMdpRequest();
+        request.setMail("unknown@mail.com");
+        request.setDate(date);
+        request.setMdp("newpassword");
+
+        when(repoUser.findByMailAndDateNaissance(request.getMail(), request.getDate()))
+            .thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            userService.changeMdp(request);
+        });
+
+        assertEquals("Ce compte n'existe pas.", exception.getMessage());
+
+        verify(repoUser, times(1)).findByMailAndDateNaissance(request.getMail(), request.getDate());
+        verify(passwordEncoder, times(0)).encode(any());
+        verify(repoUser, times(0)).save(any());
+    }
+
 }
