@@ -44,6 +44,13 @@
     margin-left: 30px;
     flex-wrap: wrap; /* Permet à la section de se réorganiser en colonnes sur petit écran */
   }
+
+  .sub-options-container {
+    display: flex; 
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+    gap: 30px; 
+  }
   
   .plan-card {
     display: flex;
@@ -118,7 +125,8 @@
       margin-left: 0;
       gap: 20px;
     }
-  
+    
+
     .plan-card {
       width: 100%;
       max-width: 350px;
