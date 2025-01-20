@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import RegistrationFormView from './RegistrationFormView';
-import SuccessModal from './SuccessModal';
-
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -9,25 +7,56 @@ const RegistrationForm = () => {
     prenom: '',
     mail: '',
     mdp: '',
+    confirmMdp: '', // Nouveau champ pour la confirmation du mot de passe
     sexe: '',
     dateNaissance: '',
-    adresse: '', 
+    adresse: '',
     telephone: '',
   });
   const [isModalVisible, setModalVisible] = useState(false);
+  const [error, setError] = useState(''); // Nouveau : Gestion des erreurs
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const validateForm = () => {
+    if (!formData.nom || !formData.prenom || !formData.mail || !formData.mdp || !formData.confirmMdp) {
+      return 'Tous les champs obligatoires doivent être remplis.';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.mail)) {
+      return 'Veuillez entrer une adresse e-mail valide.';
+    }
+
+    if (formData.mdp.length < 6) {
+      return 'Le mot de passe doit contenir au moins 6 caractères.';
+    }
+
+    if (formData.mdp !== formData.confirmMdp) {
+      return 'Les mots de passe ne correspondent pas.';
+    }
+
+    return ''; // Pas d'erreur
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Validation avant envoi
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     const formDataWithDate = {
       ...formData,
-      date_creation: new Date().toISOString().split('T')[0], // Ajout date de la creation du compte pour la bdd
+      date_creation: new Date().toISOString().split('T')[0],
     };
+
     fetch('http://localhost:8080/users/register', {
       method: 'POST',
       headers: {
@@ -35,18 +64,19 @@ const RegistrationForm = () => {
       },
       body: JSON.stringify(formDataWithDate),
     })
-    .then((response) => {
-      if (response.ok) {
-        setModalVisible(true); // Ouvre le modal si la soumission est un succès
-      }
-      return response.text();
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error('Erreur :', error);
-    });
+      .then((response) => {
+        if (response.ok) {
+          setModalVisible(true);
+        } else {
+          return response.text().then((text) => {
+            console.log(text);  // Affiche la réponse en cas d'erreur
+            throw new Error(text || 'Erreur lors de l’inscription.');
+          });
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   return (
@@ -55,7 +85,8 @@ const RegistrationForm = () => {
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       isModalVisible={isModalVisible}
-      setModalVisible={setModalVisible} 
+      setModalVisible={setModalVisible}
+      error={error} // Nouveau : gestion des erreurs
     />
   );
 };

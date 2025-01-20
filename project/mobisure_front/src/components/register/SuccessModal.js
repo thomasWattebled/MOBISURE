@@ -1,6 +1,10 @@
 import React from 'react';
 
 const SuccessModal = ({ show, onClose }) => {
+  const handleSignIn = () => {
+    window.location.href = '/login'; 
+  };
+
   return (
     <div
       className={`modal fade ${show ? 'show d-block' : ''}`}
@@ -26,12 +30,11 @@ const SuccessModal = ({ show, onClose }) => {
             Votre compte a été créé avec succès !
           </div>
           <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={onClose}
-            >
+            <button className="btn btn-secondary" onClick={onClose}>
               Fermer
+            </button>
+            <button className="btn btn-primary" onClick={handleSignIn}>
+              Se connecter
             </button>
           </div>
         </div>

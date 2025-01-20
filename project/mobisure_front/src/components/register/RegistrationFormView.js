@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi'; // Importer les icônes de réacteurs
 import FormField from './FormField';
 import SuccessModal from './SuccessModal';
 
-const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVisible,setModalVisible }) => {
+const RegistrationFormView = ({
+  formData,
+  handleChange,
+  handleSubmit,
+  isModalVisible,
+  setModalVisible,
+  error,
+}) => {
+  const [showPassword, setShowPassword] = useState(false); // Pour afficher/cacher le mot de passe
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Pour afficher/cacher la confirmation du mot de passe
 
   const handleModalClose = () => {
-    setModalVisible(false); // Fermer le modal
+    setModalVisible(false);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -14,10 +32,16 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h2 className="card-title text-center">Inscription</h2>
+              <h2 className="card-title text-center" style={{ fontWeight: 'bold' }}>
+                INSCRIPTION
+              </h2>
+              {error && <div className="alert alert-danger">{error}</div>}
               <form onSubmit={handleSubmit}>
+                {/* Sexe */}
                 <div className="mb-3">
-                  <label className="form-label">Sexe :</label>
+                  <label className="form-label" style={{ fontWeight: 'bold', fontSize: '1.1rem', color: 'blue' }}>
+                    Sexe :
+                  </label>
                   <div>
                     <div className="form-check form-check-inline">
                       <input
@@ -49,9 +73,11 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
                     </div>
                   </div>
                 </div>
+
+                {/* Champs de formulaire */}
                 <FormField
                   id="nom"
-                  label="Nom :"
+                  label={<span style={{ fontWeight: 'bold', color: 'blue' }}>Nom :</span>}
                   type="text"
                   name="nom"
                   value={formData.nom}
@@ -61,7 +87,7 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
                 />
                 <FormField
                   id="prenom"
-                  label="Prénom :"
+                  label={<span style={{ fontWeight: 'bold', color: 'blue' }}>Prénom :</span>}
                   type="text"
                   name="prenom"
                   value={formData.prenom}
@@ -71,36 +97,85 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
                 />
                 <FormField
                   id="mail"
-                  label="Mail :"
+                  label={<span style={{ fontWeight: 'bold', color: 'blue' }}>E-mail :</span>}
                   type="email"
                   name="mail"
                   value={formData.mail}
-                  placeholder="Entrez votre mail"
+                  placeholder="Entrez votre e-mail"
                   handleChange={handleChange}
                   required
                 />
-                <FormField
-                  id="mdp"
-                  label="Mot de passe :"
-                  type="password"
-                  name="mdp"
-                  value={formData.mdp}
-                  placeholder="Entrez votre mot de passe"
-                  handleChange={handleChange}
-                  required
-                />
-                <FormField
-                  id="dateNaissance"
-                  label="Date de naissance :"
-                  type="date"
-                  name="dateNaissance"
-                  value={formData.dateNaissance}
-                  handleChange={handleChange}
-                  required
-                />
+                {/* Mot de passe et confirmation */}
+                <div className="mb-3">
+                  <label className="form-label" style={{ fontWeight: 'bold', fontSize: '1.1rem', color: 'blue' }}>
+                    Mot de passe :
+                  </label>
+                  <div className="d-flex">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      className="form-control me-2"
+                      id="mdp"
+                      name="mdp"
+                      value={formData.mdp}
+                      placeholder="Entrez votre mot de passe"
+                      onChange={handleChange}
+                      required
+                    />
+                    <i
+                      className="password-toggle"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FiEyeOff /> : <FiEye />}
+                    </i>
+                  </div>
+                </div>
+
+                {/* Confirmation du mot de passe */}
+                <div className="mb-3">
+                  <label className="form-label" style={{ fontWeight: 'bold', fontSize: '1.1rem', color: 'blue' }}>
+                    Confirmation du mot de passe :
+                  </label>
+                  <div className="d-flex">
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      className="form-control me-2"
+                      id="confirmMdp"
+                      name="confirmMdp"
+                      value={formData.confirmMdp}
+                      placeholder="Confirmer le mot de passe"
+                      onChange={handleChange}
+                      required
+                    />
+                    <i
+                      className="password-toggle"
+                      onClick={toggleConfirmPasswordVisibility}
+                    >
+                      {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                    </i>
+                  </div>
+                </div>
+
+                {/* Date de naissance (format JJ/MM/AAAA) */}
+                <div className="mb-3">
+                  <label className="form-label" style={{ fontWeight: 'bold', fontSize: '1.1rem', color: 'blue' }}>
+                    Date de naissance :
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="dateNaissance"
+                    value={formData.dateNaissance}
+                    onChange={handleChange}
+                    placeholder="JJ/MM/AAAA"
+                    maxLength="10"
+                    pattern="\d{2}/\d{2}/\d{4}"
+                    required
+                  />
+                </div>
+
                 <FormField
                   id="adresse"
-                  label="Adresse :"
+                  label={<span style={{ fontWeight: 'bold', color: 'blue' }}>Adresse :</span>}
                   type="text"
                   name="adresse"
                   value={formData.adresse}
@@ -110,7 +185,7 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
                 />
                 <FormField
                   id="telephone"
-                  label="Numéro de téléphone :"
+                  label={<span style={{ fontWeight: 'bold', color: 'blue' }}>Numéro de téléphone :</span>}
                   type="tel"
                   name="telephone"
                   value={formData.telephone}
@@ -119,7 +194,7 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
                   pattern="[0-9]{10}"
                   required
                 />
-                <button type="submit" className="btn btn-primary w-100">
+                <button type="submit" className="btn btn-primary w-100 mt-3">
                   S'inscrire
                 </button>
               </form>
