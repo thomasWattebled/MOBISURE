@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import adminService from '../../services/adminService';
+import '../../assets/css/pageUser.css';
 
 function UserRow({ user, onRoleChange, fonctionDelete }) {
 	
