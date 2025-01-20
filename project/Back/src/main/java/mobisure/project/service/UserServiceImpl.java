@@ -14,6 +14,7 @@ import mobisure.project.dto.UserDto;
 import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
 import mobisure.project.repository.UserRepository;
+import mobisure.project.request.changeMdpRequest;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,6 +25,11 @@ public class UserServiceImpl implements UserService {
 	 @Autowired
 	 private PasswordEncoder passwordEncoder;
 	
+	 /**
+	  * Retrieve all User entities and convert them to DTOs.
+	  *
+	  * @return a list of UserDto objects representing all users.
+	  */
 	@Override
 	public List<UserDto> getAllUsers() {
 		List<User> users = repoUser.findAll();
@@ -36,6 +42,12 @@ public class UserServiceImpl implements UserService {
 		return usersDto;
 	}
 
+	/**
+     * Retrieve a User by its ID and convert it to a DTO.
+     *
+     * @param id the ID of the User to retrieve.
+     * @return an Optional containing the UserDto if found, or empty if not found.
+     */
 	@Override
 	public Optional<UserDto> getUserById(Long id) {
 		Optional<User> users = repoUser.findById(id);
@@ -48,6 +60,12 @@ public class UserServiceImpl implements UserService {
 		return Optional.empty();
 	}
 
+	/**
+     * Convert a User entity to a UserDto.
+     *
+     * @param user the User entity to be converted.
+     * @return the corresponding UserDto object.
+     */
 	@Override
 	public UserDto convertToDto(User user) {
 		
@@ -68,6 +86,12 @@ public class UserServiceImpl implements UserService {
 		return userDto;
 	}
 
+	/**
+     * Convert a UserDto to a User entity.
+     *
+     * @param userDto the UserDto object to be converted.
+     * @return the corresponding User entity.
+     */
 	@Override
 	public User convertToEntity(UserDto userDto) {
 		
@@ -88,6 +112,11 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	/**
+     * Register a new User by converting a UserDto to an entity and saving it.
+     *
+     * @param userDto the UserDto object containing the data of the User to be registered.
+     */
 	@Override
 	public void registerUser(UserDto userDto) {
 		
@@ -105,6 +134,12 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	/**
+     * Update the roles of a User by their ID.
+     *
+     * @param userId the ID of the User whose roles will be updated.
+     * @param list a list of role names to assign to the User.
+     */
 	@Override
 	public void updateRoleUser(long userId, List<String> role) {
 		System.out.println(userId);
@@ -113,6 +148,8 @@ public class UserServiceImpl implements UserService {
 		
 		if(role.contains("USER")) {roles.add(RoleName.USER);}
 		if(role.contains("ADMIN")) {roles.add(RoleName.ADMIN);}
+		if(role.contains("PARTENAIRE")) {roles.add(RoleName.PARTENAIRE);}
+		if(role.contains("MEDECIN")) {roles.add(RoleName.MEDECIN);}
 		
 		System.out.println(roles);
 		
@@ -121,6 +158,45 @@ public class UserServiceImpl implements UserService {
 		if(user.isPresent()) {
 			user.get().setRoles(roles);
 			repoUser.save(user.get());
+		}
+		
+	}
+
+	/**
+     * Delete a User by their ID.
+     *
+     * @param id the ID of the User to be deleted.
+     */
+	@Override
+	public void delete(Long id) {
+		repoUser.deleteById(id);
+	}
+
+	@Override
+	public Optional<UserDto> getUserByEmail(String email) {
+		
+		Optional<User> user = repoUser.findByMail(email);
+		
+		if(user.isPresent()) {
+			UserDto userDto = convertToDto(user.get());
+			return Optional.of(userDto);
+		}
+		
+		return Optional.empty();
+	}
+
+	@Override
+	public void changeMdp(changeMdpRequest changeMdp) {
+		System.out.println(changeMdp.getMail());
+		System.out.println(changeMdp.getDate());
+		System.out.println(changeMdp.getMdp());
+		Optional<User> user = repoUser.findByMailAndDateNaissance(changeMdp.getMail(), changeMdp.getDate()); 
+		if(user.isPresent()) {
+			user.get().setMdp(passwordEncoder.encode(changeMdp.getMdp()));
+			repoUser.save(user.get());
+		}
+		else {
+			throw new RuntimeException("Ce compte n'existe pas.");
 		}
 		
 	}

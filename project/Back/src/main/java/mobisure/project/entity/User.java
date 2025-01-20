@@ -7,12 +7,15 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+/*
+ * This class is an entity in our BDD (MySQL).
+ * It represents the Client table.
+ */
 
 @Entity
 @Table(name = "Client")
@@ -54,9 +57,23 @@ public class User {
 	
 	private Set<RoleName> roles = new HashSet<>();
 
-	
+	/*
+	 * Constructor without arguments for creating an instance of another class
+	 */
 	public User(){}
 
+	/**
+	 * 
+	 * @param nom : the name of the user.
+	 * @param prenom : the user's first name.
+	 * @param mail : the user’s email.
+	 * @param mdp : the user’s password.
+	 * @param sexe : the gender of the user.
+	 * @param dateNaissance : the date of birth of the user.
+	 * @param adresse : the address of the user.
+	 * @param telephone : the user’s phone number.
+	 * @param date_creation : the date of creation of the user.
+	 */
 	public User(String nom, String prenom, String mail, String mdp, String sexe, Date dateNaissance, String adresse,
 			String numero_client, String telephone, Date date_creation, Set<RoleName> roles) {
 		super();
@@ -74,7 +91,9 @@ public class User {
 		this.roles = roles;
 	}
 
-
+	/*
+	 *Getter and setter for all attributes 
+	 */
 
 	public Long getId() {
 		return id;

@@ -27,12 +27,22 @@ import mobisure.project.repository.UserRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+/**
+ * Configuration class for Spring Security settings.
+ */
 @Configuration
 public class SecurityConfig {
 	
 	@Autowired
 	private UserRepository repoUser;
 
+	/**
+     * Configures the security filter chain for the application.
+     * 
+     * @param http the {@link HttpSecurity} object used to configure security rules.
+     * @return a {@link SecurityFilterChain} object.
+     * @throws Exception if there is a problem with the configuration.
+     */
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception{
 		http
@@ -57,7 +67,11 @@ public class SecurityConfig {
 
 	}
 	
-	
+	/**
+     * Configures the user details service used for authentication.
+     * 
+     * @return a {@link UserDetailsService} implementation that retrieves user information from the database.
+     */
 	@Bean
 	 public UserDetailsService userDetailsService() {
 		 
@@ -77,7 +91,13 @@ public class SecurityConfig {
 		 
 	 }
 	 
-	 
+	/**
+     * Configures the authentication manager for the application.
+     * 
+     * @param userDetailsService the {@link UserDetailsService} used to load user data.
+     * @param passwordEncoder the {@link PasswordEncoder} used for encoding and matching passwords.
+     * @return an {@link AuthenticationManager} object.
+     */
 	 @Bean
 	 public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder) {
 		 DaoAuthenticationProvider authenticationProvider = new
@@ -87,12 +107,21 @@ public class SecurityConfig {
 	 		return new ProviderManager(authenticationProvider);
 	 }
 	 
+	 /**
+	  * Configures the password encoder used to securely hash passwords.
+	  * 
+	  * @return a {@link PasswordEncoder} object.
+	 */
 	 @Bean
 	 public PasswordEncoder passwordEncoder() {
 		 return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	 }
 	 
-	 
+	 /**
+	  * Configures Cross-Origin Resource Sharing (CORS) settings.
+	  * 
+	  * @return a {@link CorsConfigurationSource} object with the specified configuration.
+	 */
 	 @Bean
 	 public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
