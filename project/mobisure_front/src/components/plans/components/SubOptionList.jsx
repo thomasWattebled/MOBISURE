@@ -17,24 +17,20 @@ const SubOptionList = ({ subOptions, onSubOptionSelect }) => {
   };
 
   return (
-    <div className="sub-options-container">
+    <div className="sub-options-container-vehicle">
       {subOptions.map((option) => (
-        <div key={option.value} onClick={() => handleSubOptionSelect(option.label)}>
-          <div className="plan-card">
-            <button className="plan-button">
-              <img
-                src={option.value}
-                alt={option.label}
-                className="plan-image"
-              />
-              <div className="plan-description">
-                <h3>{option.label}</h3>
-                <p>Choisissez cette option pour des services adaptés à vos besoins.</p>
-              </div>
-            </button>
+    <div key={option.value} onClick={() => handleSubOptionSelect(option.label)}>
+      <div className="plan-card">
+        <button className="plan-button">
+          <img src={option.value} alt={option.label} className="plan-image" />
+          <div className="plan-description">
+            <h3>{option.label}</h3>
+            <p>Choisissez cette option pour des services adaptés à vos besoins.</p>
           </div>
-        </div>
-      ))}
+        </button>
+      </div>
+    </div>
+  ))}
 
     </div>
   );
