@@ -1,13 +1,13 @@
-// VoyageProfessionnelForm.js
 import React, { useState } from 'react';
 import '../../style/form.css';
 
-const VoyageProfessionnelForm = () => {
+const VoyageVacanceForm = () => {
   const [formData, setFormData] = useState({
-    companyName: '',
+    paysDepart: '',
     destination: '',
     dateDepart: '',
     dateRetour:'',
+    nbPersonnes:'',
   });
 
   const handleInputChange = (e) => {
@@ -28,15 +28,15 @@ const VoyageProfessionnelForm = () => {
       <h3>Formulaire pour Voyage Professionnel</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="companyName">Nom de l'entreprise :</label>
+          <label htmlFor="companyName">Pays de depart</label>
           <input
             type="text"
-            id="companyName"
-            name="companyName"
-            value={formData.companyName}
+            id="paysDepart"
+            name="paysDepart"
+            value={formData.paysDepart}
             onChange={handleInputChange}
             required
-            placeholder="Entrez le nom de votre entreprise"
+            placeholder="Le pays de depart"
           />
         </div>
         <div className="form-group">
@@ -73,10 +73,22 @@ const VoyageProfessionnelForm = () => {
             required
           />
         </div>
+        <div className="form-group">
+          <label htmlFor="dates">Nombre de personnes</label>
+          <input
+            type="text"
+            id="nbPersonnes"
+            name="nbPersonnes"
+            value={formData.nbPersonnes}
+            onChange={handleInputChange}
+            required
+            placeholder="Pour combien de personnes ?"
+          />
+        </div>
         <button type="submit">Soumettre</button>
       </form>
     </div>
   );
 };
 
-export default VoyageProfessionnelForm;
+export default VoyageVacanceForm;

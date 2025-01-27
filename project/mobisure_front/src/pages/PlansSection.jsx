@@ -3,10 +3,15 @@ import '../components/plans/style/PlansSection.css';
 import Carousel from '../components/home/Carousel';
 import SubOptionList from '../components/plans/components/SubOptionList';
 import AssuranceVehicule from '../components/plans/components/AssuranceVehicule';
+import AssuranceMotoForm from '../components/plans/components/formulaire/AssuranceMotoForm';
+import voiture from '../components/plans/images/assurance_vehicule.jpg'; 
+import moto from '../components/plans/images/moto.jpg'
+import velo from '../components/plans/images/velo.jpg'
 import AssuranceVoyage from '../components/plans/components/AssuranceVoyage';
 import voyage_vacance from '../components/plans/images/voyage_vacance.jpg';
 import voyage_pro from '../components/plans/images/voyage_professionel.jpg';
 import VoyageProfessionnelForm from '../components/plans/components/formulaire/VoyageProForm';
+import VoyageVacanceForm from '../components/plans/components/formulaire/VoyageVacanceForm';
 import AssuranceVehiculeForm from '../components/plans/components/formulaire/AssuranceVehiculeForm';
 import Recap from '../components/plans/components/Recap';
 
@@ -41,8 +46,13 @@ const PlansSection = () => {
         ]);
         setIsOptionSelected(true);
       }else if (plan === "Assurance Véhicule") {
-        setShowForm(true); 
-        setSubOptions(null);
+        //setShowForm(true); 
+        setSubOptions([
+          { label: "Voiture", value: voiture },
+          { label: "Moto", value: moto },
+          { label: "Velo" , value: velo}
+        ]);
+        setIsOptionSelected(true);
       }  else {
         setSubOptions(null);
       }
@@ -53,11 +63,15 @@ const PlansSection = () => {
       setSelectedSubOption(subOption);
       setSubOptions(null); 
       //setIsOptionSelected(true);
-      if (subOption === "Voyage Professionnel") {
-        setShowForm(true); // Affiche le formulaire lorsque "Voyage Professionnel" est sélectionné
-      } else {
-        setShowForm(false); // Cache le formulaire pour "Voyage Vacance"
-      }
+        setShowForm(true); 
+    };
+
+    const handleBack = () => {
+      setShowForm(false);
+      setSelectedPlan(null);
+      setSelectedSubOption(null);
+      setIsOptionSelected(false);
+      setSubOptions(null);
     };
 
     return (
@@ -79,24 +93,57 @@ const PlansSection = () => {
         </div>
       ) : null}
 
-      {subOptions  && !showForm ? (
+      {subOptions && !showForm ? (
+        <div>
         <div className="sub-options-container">
-          <SubOptionList
-            subOptions={subOptions}
-            onSubOptionSelect={handleSubOptionSelect}
-          />
+            <SubOptionList
+              subOptions={subOptions}
+              onSubOptionSelect={handleSubOptionSelect}/>
         </div>
+        <button onClick={handleBack} className="back-button">
+        Retour
+      </button>
+      </div>
       ) : null}
+
   
 
-      {showForm && selectedPlan === "Assurance Véhicule" && (
+      {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Voiture" &&(
+        <div>
       <AssuranceVehiculeForm />
+      <button onClick={handleBack} className="back-button">
+        Retour
+      </button>
+      </div>
       )}
         {/* Formulaire pour "Voyage Professionnel" */}
-        {showForm && selectedPlan === "Assurance Voyage" && (
-         <VoyageProfessionnelForm/>
+        {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Professionnel" &&(
+          <div>
+            <VoyageProfessionnelForm/>
+            <button onClick={handleBack} className="back-button">
+              Retour
+            </button>
+          </div>
         )}
-  
+
+        {/* Formulaire pour "Assurancz vehicule Moto" */}
+                {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Moto" &&(
+          <div>
+            <AssuranceMotoForm/>
+            <button onClick={handleBack} className="back-button">
+              Retour
+            </button>
+          </div>
+        )}
+      {/* Formulaire pour "Voyage Vacance" */}
+      {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Vacance" && (
+        <div>
+          <VoyageVacanceForm/>
+          <button onClick={handleBack} className="back-button">
+            Retour
+          </button>
+        </div>
+        )}
         {/* Récapitulatif à droite */}
         <Recap selectedPlan={selectedPlan} subOptionType={selectedSubOption} />
       </div>
