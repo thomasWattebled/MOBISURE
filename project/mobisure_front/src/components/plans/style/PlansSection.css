@@ -45,12 +45,48 @@
     flex-wrap: wrap; /* Permet à la section de se réorganiser en colonnes sur petit écran */
   }
 
-  .sub-options-container {
+  /**.sub-options-container {
     display: flex; 
     justify-content: space-between; 
     flex-wrap: wrap; 
     gap: 30px; 
+  }*/
+  .sub-options-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* Centrer horizontalement */
+    gap: 20px; /* Espacement entre les sous-options et le bouton */
   }
+
+  .sub-options-container-vehicle {
+    width: 700px;
+    display: flex;
+    flex-wrap: wrap; /* Permet à vos éléments de s'enrouler */
+    gap: 20px; /* Espacement entre les éléments */
+    justify-content: center; /* Centre les éléments horizontalement */
+  }
+  
+  .sub-options-list {
+    display: flex;
+    flex-direction: row; /* Les sous-options sont côte à côte */
+    justify-content: center; /* Centrer horizontalement les sous-options */
+    gap: 15px; /* Espacement entre les sous-options */
+  }
+  
+  .back-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+  
   
   .plan-card {
     display: flex;
@@ -63,7 +99,7 @@
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .plan-button {
     display: flex;
     flex-direction: column;
