@@ -1,6 +1,5 @@
 package mobisure.project.security;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -15,12 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,17 +26,13 @@ import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
 import mobisure.project.repository.UserRepository;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.*;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SecurityConfigTest {
+class SecurityConfigTest {
 	
-	@Autowired
-    private MockMvc mockMvc;
 	
 	@Mock
     private UserRepository repoUser;
@@ -48,12 +41,12 @@ public class SecurityConfigTest {
     private SecurityConfig securityConfig;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
     
     @Test
-    public void testUserDetailsService_UserFound() {
+    void testUserDetailsService_UserFound() {
     	User user = new User();
     	user.setMail("benj@gmail.com");
     	user.setMdp("mdp");
@@ -70,7 +63,7 @@ public class SecurityConfigTest {
     }
     
     @Test
-    public void testUserDetailsService_UserNotFound() {
+    void testUserDetailsService_UserNotFound() {
     	when(repoUser.findByMail("benj@mail.com")).thenReturn(Optional.empty());
     	assertThrows(RuntimeException.class, 
                 () -> securityConfig.userDetailsService().loadUserByUsername("benj@mail.com")
@@ -78,7 +71,7 @@ public class SecurityConfigTest {
     }
     
     @Test
-    public void testPasswordEncoder() {
+    void testPasswordEncoder() {
     	PasswordEncoder encoder = securityConfig.passwordEncoder();
     	assertNotNull(encoder);
     	String test = encoder.encode("mdp");
@@ -87,7 +80,7 @@ public class SecurityConfigTest {
     }
 
     @Test
-    public void testAuthenticationManager() {
+    void testAuthenticationManager() {
     	UserDetailsService userDetailsService = securityConfig.userDetailsService();
     	PasswordEncoder passwordEncoder = securityConfig.passwordEncoder();
     	AuthenticationManager test = securityConfig.authenticationManager(userDetailsService, passwordEncoder);
@@ -95,7 +88,7 @@ public class SecurityConfigTest {
     }
  
     @Test
-    public void testCorsConfigurationSource() {
+    void testCorsConfigurationSource() {
     	
     	CorsConfigurationSource source = securityConfig.corsConfigurationSource();
     	

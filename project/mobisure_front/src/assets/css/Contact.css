@@ -1,0 +1,73 @@
+/* Styles généraux */
+.page {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+
+/* Styles pour chaque section */
+.group {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-left: 5px solid #007BFF;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #007BFF;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* Formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type='mail'],
+input[type='text'],
+textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Liste */
+li {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555;
+}

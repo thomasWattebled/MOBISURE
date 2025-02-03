@@ -59,7 +59,6 @@ public class UserController {
      */
 	@PostMapping("users/register")
 	public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
-		System.out.println(userDto);
 		try {
 			service.registerUser(userDto);
 			return ResponseEntity.status(HttpStatus.CREATED).body("Utilisateur créé avec succès.");
@@ -93,7 +92,6 @@ public class UserController {
 	@PostMapping("getUserEmail")
 	public Optional<UserDto> getUserByEmail(@RequestBody Map<String, String> body){
 		String email = body.get("email");
-		Optional<UserDto> test = service.getUserByEmail(email);
 		return service.getUserByEmail(email);
 	}
 	
