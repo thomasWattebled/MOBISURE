@@ -71,4 +71,6 @@ public interface UserService {
 	public Optional<UserDto> getUserByEmail(String email);
 
 	public void changeMdp(changeMdpRequest changeMdp);
+
+	public void updateUser(Long id, UserDto userDto);
 }

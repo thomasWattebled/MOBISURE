@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import adminService from '../../services/adminService';
+import { useNavigate } from "react-router-dom";
 import '../../assets/css/pageUser.css';
 
 function UserRow({ user, onRoleChange, fonctionDelete }) {
+	
+	const navigate = useNavigate();
 	
 	const handleRoleChange = (role) => {
 	    const updatedRoles = user.roles.includes(role)
@@ -45,6 +48,9 @@ function UserRow({ user, onRoleChange, fonctionDelete }) {
 	  	/>
 	  </td>
 	  <td>
+	  	<button id="btn-modifier" type="button" onClick={() => navigate(`/updateClient/${user.id}`)}>Modifier</button>
+	  </td>
+	  <td>
 	  	<button id="btn-delete" type="button" onClick={() => fonctionDelete(user.id)}>Supprimer</button>
 	  </td>
 
@@ -64,6 +70,7 @@ function UserTable({ users, onRoleChange, fonctionDelete }) {
 		  <th>Rôle : ADMIN</th>
 		  <th>Rôle : PARTENAIRE</th>
 		  <th>Rôle : MEDECIN</th>
+		  <th>Modifier</th>
 		  <th>Supprimer</th>
         </tr>
       </thead>
