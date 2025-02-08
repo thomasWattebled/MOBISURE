@@ -38,6 +38,33 @@ class adminService {
 		})
 	}
 	
+	async getUserById(id){
+		return await fetch(SERVER_URL + '/users/'+id,{
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(response => response.json()
+	)};
+	
+	async updateUser(id, userData) {
+	  const response = await fetch(`http://localhost:8080/users/${id}`, {
+	    method: 'PUT',
+	    credentials: 'include',
+	    headers: {
+	      'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify(userData),
+	  });
+
+	  // Si la réponse est OK, retourne le JSON, sinon lance une erreur
+	  if (response.ok) {
+	    return await response.json();  // Retourne le JSON en cas de succès
+	  } else {
+	    throw new Error('Erreur lors de la mise à jour de l\'utilisateur');  // Si le statut n’est pas OK, lance une erreur
+	  }
+	}
+	
 }
 
 export default new adminService();

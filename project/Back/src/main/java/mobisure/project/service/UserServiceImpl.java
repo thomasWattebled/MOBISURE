@@ -201,4 +201,46 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public void updateUser(Long id, UserDto userDto) {
+	    // Vérifier si l'utilisateur existe
+	    Optional<User> userOptional = repoUser.findById(id);
+	    
+	    if (userOptional.isPresent()) {
+	        User user = userOptional.get();
+
+	        // Mettre à jour les informations de l'utilisateur
+	        if (userDto.getMail() != null && !userDto.getMail().isEmpty()) {
+	            user.setMail(userDto.getMail());
+	        }
+	        if (userDto.getNom() != null && !userDto.getNom().isEmpty()) {
+	            user.setNom(userDto.getNom());
+	        }
+	        if (userDto.getPrenom() != null && !userDto.getPrenom().isEmpty()) {
+	            user.setPrenom(userDto.getPrenom());
+	        }
+	        if (userDto.getDateNaissance() != null) {
+	            user.setDateNaissance(userDto.getDateNaissance());
+	        }
+	        if (userDto.getAdresse() != null && !userDto.getAdresse().isEmpty()) {
+	            user.setAdresse(userDto.getAdresse());
+	        }
+	        if (userDto.getTelephone() != null && !userDto.getTelephone().isEmpty()) {
+	            user.setTelephone(userDto.getTelephone());
+	        }
+	        if (userDto.getSexe() != null && !userDto.getSexe().isEmpty()) {
+	            user.setSexe(userDto.getSexe());
+	        }
+	        
+	        // Si le mot de passe est fourni, on le met à jour aussi
+	        if (userDto.getMdp() != null && !userDto.getMdp().isEmpty()) {
+	            user.setMdp(passwordEncoder.encode(userDto.getMdp()));
+	        }
+	        // Sauvegarder l'utilisateur mis à jour
+	        repoUser.save(user);
+	    } else {
+	        throw new RuntimeException("Utilisateur non trouvé");
+	    }
+	}
+
 }

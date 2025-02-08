@@ -18,6 +18,7 @@ import PageUser from './components/admin/pageUser';
 import {WhenUserIsInRole} from './components/security/PrivateRoute.js';
 import MyInformation from './components/user/MyInformation.js';
 import MdpForm from './components/auth/MdpForm.js';
+import FormUpdateClient from './components/admin/formUpdateClient.js';
 
 export const Layout = () => (
   <div className="d-flex flex-column min-vh-100">
@@ -66,6 +67,7 @@ export default function App() {
 			<Route path="/pageUser" element={<PageUser />} />
 			<Route path="/userInformation" element={<MyInformation />} />
 			<Route path="/changeMdp" element={<MdpForm />} />
+			<Route path="/updateClient/:id" element={<FormUpdateClient />} />
           </Route>
         </Routes>
       </BrowserRouter>
