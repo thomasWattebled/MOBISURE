@@ -12,6 +12,7 @@ import voyage_vacance from '../components/plans/images/voyage_vacance.jpg';
 import voyage_pro from '../components/plans/images/voyage_professionel.jpg';
 import VoyageProfessionnelForm from '../components/plans/components/formulaire/VoyageProForm';
 import VoyageVacanceForm from '../components/plans/components/formulaire/VoyageVacanceForm';
+import AssuranceVeloForm from '../components/plans/components/formulaire/AssuranceVeloForm';
 import AssuranceVehiculeForm from '../components/plans/components/formulaire/AssuranceVehiculeForm';
 import Recap from '../components/plans/components/Recap';
 
@@ -111,6 +112,15 @@ const PlansSection = () => {
       {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Voiture" &&(
         <div>
       <AssuranceVehiculeForm />
+      <button onClick={handleBack} className="back-button">
+        Retour
+      </button>
+      </div>
+      )}
+
+{showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Velo" &&(
+        <div>
+      <AssuranceVeloForm />
       <button onClick={handleBack} className="back-button">
         Retour
       </button>

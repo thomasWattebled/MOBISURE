@@ -4,7 +4,7 @@ import "../../style/form.css";
 const AssuranceVehiculeForm = () =>  {
   const [selectedMarque, setSelectedMarque] = useState("");
   const [models, setModels] = useState([]);
-
+  const [selectedOption, setSelectedOption] = useState("");
   const marques = [
     "Audi",
     "BMW",
@@ -75,6 +75,19 @@ const AssuranceVehiculeForm = () =>  {
               ))}
             </select>
           </label>
+        </div>
+        <div className="form-group" >
+      <label>
+      <p>Electrique ? </p>
+      </label>
+      <div className="radio-group">
+      <input type="radio" id="oui" name="oui" value="oui" checked={selectedOption === "oui"}
+            onChange={(e) => setSelectedOption(e.target.value)}/>
+      <label for="oui">Oui</label>
+      <input type="radio" id="non" name="non" value="non" checked={selectedOption === "non"}
+            onChange={(e) => setSelectedOption(e.target.value)}/>
+      <label for="non">Non</label>
+          </div>
         </div>
         <div className="form-group">
           <label>
