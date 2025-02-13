@@ -20,6 +20,8 @@ import MyInformation from './components/user/MyInformation.js';
 import MdpForm from './components/auth/MdpForm.js';
 import FormUpdateClient from './components/admin/formUpdateClient.js';
 
+import MessageApp from './components/messagerie/MessageApp.js';
+
 export const Layout = () => (
   <div className="d-flex flex-column min-vh-100">
     <nav className="navbar d-flex align-items-center px-3" style={{ backgroundColor: '#00aaff' }}>
@@ -38,6 +40,7 @@ export const Layout = () => (
 		  <WhenUserIsInRole role="ADMIN">
 		  	<Link to="/pageUser" className="text-white text-decoration-none">Admin</Link>
 		  </WhenUserIsInRole>
+		  <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
         </WhenUserIsAuthenticated>
       </Nav>
@@ -68,6 +71,7 @@ export default function App() {
 			<Route path="/userInformation" element={<MyInformation />} />
 			<Route path="/changeMdp" element={<MdpForm />} />
 			<Route path="/updateClient/:id" element={<FormUpdateClient />} />
+			<Route path="/messagerie" element={<MessageApp />} />
           </Route>
         </Routes>
       </BrowserRouter>
