@@ -15,7 +15,7 @@ public class UserAuthDtoTest {
 	
 	@BeforeEach
 	public void setUp() {
-		user = new UserAuthDto("Benjamin");
+		user = new UserAuthDto("Benjamin", null);
 	}
 	
 	@Test
