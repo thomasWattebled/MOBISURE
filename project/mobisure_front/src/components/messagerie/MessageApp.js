@@ -30,17 +30,30 @@ const MessageApp = () => {
       fetchUsers();
       connectWebSocket();
     }
-  }, [user]);
+  }, [user, selectedUser]);
 
   const connectWebSocket = () => {
+	
+	if (stompClient.current) {
+	    stompClient.current.deactivate();
+	  }
+	  
     const socket = new SockJS('http://localhost:8081/ws');
+	
     stompClient.current = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
         stompClient.current.subscribe(`/topic/messages/${user.id}`, (message) => {
           const newMessage = JSON.parse(message.body);
-          setMessages(prevMessages => [...prevMessages, newMessage]);
+          setMessages(prevMessages => {
+			console.log(selectedUser)
+			if (selectedUser && newMessage.expediteurId === selectedUser.id){
+				console.log("messagge recu de bon utilisateur");
+				return [...prevMessages, newMessage];
+			}
+			return prevMessages;
+		  });
         });
       },
       onStompError: (frame) => {
@@ -110,6 +123,7 @@ const MessageApp = () => {
     }
   };
 
+  console.log(users)
   return (
     <div className="message-app">
       <div className="user-list">
@@ -119,6 +133,8 @@ const MessageApp = () => {
             <li
               key={userItem.id}
               onClick={() => {
+				console.log("detected")
+				console.log(userItem)
                 setSelectedUser(userItem);
                 fetchConversation(userItem.id);
               }}

@@ -17,7 +17,7 @@ public class UserAuthDto {
      * 
      * @param username the username of the user.
      */
-	public UserAuthDto(String username) {
+	public UserAuthDto(String username,Long id) {
 		super();
 		this.username = username;
 		this.roles = new ArrayList<>();
@@ -63,7 +63,7 @@ public class UserAuthDto {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
-
+	
 	
 	
 }
