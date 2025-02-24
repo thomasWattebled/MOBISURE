@@ -26,6 +26,8 @@ public class ImpactCOD {
 
             String responseBody = response.readEntity(String.class);
             JSONObject json = new JSONObject(responseBody);
+            
+            System.out.println(json.getJSONArray("data"));
 
             emission = json.getJSONArray("data").getJSONObject(0)
                     .getDouble("value");

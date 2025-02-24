@@ -17,7 +17,7 @@ public class OpenRouteService {
 		this.apiKey = apiKey;
 	}
 	
-	public double getDistance (String gpsStart, String gpsEnd) {
+	public double getDistanceRoute (String gpsStart, String gpsEnd) {
 		Client client = ClientBuilder.newClient();
 		String url = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=" + apiKey + "&start=" + gpsStart + "&end=" + gpsEnd + "&units=km";
 		WebTarget target = client.target(url);
@@ -35,7 +35,7 @@ public class OpenRouteService {
             distance = json.getJSONArray("features").getJSONObject(0)
                     .getJSONObject("properties").getJSONObject("summary").getDouble("distance");
 
-            System.out.println("Distance : " + distance + " m");
+            System.out.println("Distance route : " + distance + " m");
 
         } catch (Exception e) {
             System.err.println("Une erreur s'est produite : " + e.getMessage());
