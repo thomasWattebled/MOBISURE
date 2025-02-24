@@ -1,16 +1,55 @@
 import React, { useState } from "react";
+import PopupConfirmation from "./popUpConfirmation";
 
 const AddSinistre = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [formData, setFormData] = useState({
+    type: "",
+    date: "",
+    description: "",
+    photo:""
+  });
 
-const [showModal, setShowModal] = useState(false);
-return (
-<div className="container mt-5">
-      {/* Bouton pour ouvrir la popup */}
+  // Gestion des changements dans les champs du formulaire
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "photo") {
+      setFormData({
+        ...formData,
+        [name]: files[0], // Stocker le fichier image
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  // Soumission du formulaire
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Formulaire soumis:", formData);
+    setShowConfirmationModal(true);
+    setShowModal(false);
+  };
+
+  // Configuration pour le PDF
+  const pdfConfig = [
+    { label: "Type de sinistre", key: "type" },
+    { label: "Date du sinistre", key: "date" },
+    { label: "Description", key: "description" },
+    { label: "Photo", key: "photo", type: "image" }, 
+
+  ];
+
+  return (
+    <div className="container mt-5">
       <button className="btn btn-primary" onClick={() => setShowModal(true)}>
         +
       </button>
 
-      {/* Popup Bootstrap */}
       {showModal && (
         <div className="modal show d-block" tabIndex="-1">
           <div className="modal-dialog">
@@ -24,18 +63,52 @@ return (
                 ></button>
               </div>
               <div className="modal-body">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label className="form-label">Type de sinistre</label>
-                    <input type="text" className="form-control" placeholder="Ex: Accident, Vol, Incendie..." />
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="type"
+                      value={formData.type}
+                      onChange={handleChange}
+                      placeholder="Ex: Accident, Vol, Incendie..."
+                      required
+                    />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Date du sinistre</label>
-                    <input type="date" className="form-control" />
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Description</label>
-                    <textarea className="form-control" rows="3" placeholder="Décrivez votre sinistre..."></textarea>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      rows="3"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      placeholder="Décrivez votre sinistre..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Photo (optionnel)</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      name="photo"
+                      accept="image/*"
+                      onChange={handleChange}
+                    />
                   </div>
                   <button type="submit" className="btn btn-success">
                     Soumettre
@@ -47,8 +120,25 @@ return (
         </div>
       )}
 
-      {/* Fond semi-transparent pour fermer le modal */}
-      {showModal && <div className="modal-backdrop show" onClick={() => setShowModal(false)}></div>}
+      {/* Popup de confirmation */}
+      {showConfirmationModal && (
+        <PopupConfirmation
+          onClose={() => setShowConfirmationModal(false)}
+          formData={formData}
+          pdfConfig={pdfConfig}
+        />
+      )}
+
+
+      {(showModal || showConfirmationModal) && (
+        <div
+          className="modal-backdrop show"
+          onClick={() => {
+            setShowModal(false);
+            setShowConfirmationModal(false);
+          }}
+        ></div>
+      )}
     </div>
   );
 };
