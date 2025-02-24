@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@stomp/stompjs": "^7.0.0",
     "@testing-library/jest-dom": "^5.17.0",
 =======
 >>>>>>> be2aa37 (generation pdf)
+=======
+>>>>>>> be2aa37a03e79cf0bf32b1b6b70bec32e2d8e32e
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.3",
