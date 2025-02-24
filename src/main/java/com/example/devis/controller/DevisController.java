@@ -24,7 +24,7 @@ public class DevisController {
     /**
      * Calculer le devis et stocker le voyage
      */
-    @PostMapping("/calculer")  // Assurez-vous que c'est bien @PostMapping !
+    @PostMapping("/calculer")
     public ResponseEntity<Voyage> calculerEtAjouterVoyage(@Valid @RequestBody Voyage voyage) {
         double devis = devisService.calculerDevis(voyage);
         voyage.setCoutBase(devis); // Met à jour le prix calculé
