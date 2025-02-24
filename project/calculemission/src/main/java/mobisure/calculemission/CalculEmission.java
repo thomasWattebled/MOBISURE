@@ -1,12 +1,14 @@
 package mobisure.calculemission;
 
 import jakarta.ws.rs.Consumes;
+
 import jakarta.ws.rs.GET;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -27,7 +29,7 @@ public class CalculEmission {
     @Path("/getemission")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public double getEmission(@QueryParam("gpsStart") String gpsStart,
+    public Response getEmission(@QueryParam("gpsStart") String gpsStart,
     		@QueryParam("gpsEnd") String gpsEnd,
     		@QueryParam("transport") int transport){
     	double emission = -1.0;
@@ -36,6 +38,8 @@ public class CalculEmission {
     	
     	emission = this.impactCOD.getEmission(transport, distance/1000);
     	
-        return emission;
+    	return Response.ok(emission)
+    			.header("Access-Control-Allow-Origin", "*")
+    			.build();
     }
 }
