@@ -13,6 +13,7 @@ import Contact from './pages/Contact.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import Footer from './components/Footer.jsx';
 import travelImage7 from './assets/image/logo.png';
+import Emission from './pages/Emission.jsx';
 
 export const Layout = () => (
   <div className="d-flex flex-column min-vh-100">
@@ -27,6 +28,7 @@ export const Layout = () => (
         </WhenUserIsNotAuthenticated>
         <WhenUserIsAuthenticated>
           <Link to="/home" className="text-white text-decoration-none">Home</Link>
+          <Link to="/emission" className="text-white text-decoration-none">Emission</Link>
           <Link to="/plans" className="text-white text-decoration-none">Plans</Link>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
         </WhenUserIsAuthenticated>
@@ -54,6 +56,7 @@ export default function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/emission" element={<Emission />}/>
           </Route>
         </Routes>
       </BrowserRouter>
