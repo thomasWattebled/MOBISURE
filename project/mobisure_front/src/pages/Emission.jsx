@@ -12,8 +12,8 @@ const Emission = () => {
     const [clickPosition, setClickPosition] = useState('');
     const position = [51.505, -0.09];
 
-    const [startCoordinates, setStartCoordinates] = useState('8.681495,49.41461');
-    const [endCoordinates, setEndCoordinates] = useState('8.687872,49.420318');
+    const [startCoordinates, setStartCoordinates] = useState('');
+    const [endCoordinates, setEndCoordinates] = useState('');
 
     const [startValue, setStartValue] = useState('');
     const [endValue, setEndValue] = useState('');

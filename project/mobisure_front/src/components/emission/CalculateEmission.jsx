@@ -12,13 +12,13 @@ const CalculateEmission = ({startCoordonate, endCoordonate, transport}) => {
                 Calculate Emissions
             </button>
             {emissions !== -1 ?
-            <p>
+            (<p>
                 Emission : {emissions} kg
-            </p>
-             : 
-            <p>
+            </p>)
+            : 
+            (<p>
 
-            </p>}
+            </p>)}
         </>
     )
 }
