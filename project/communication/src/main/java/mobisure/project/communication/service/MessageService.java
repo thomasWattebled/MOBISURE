@@ -12,4 +12,12 @@ public interface MessageService {
 	
 	List<Message> getConversationMessage(Long expediteurId, Long receveurId);
 	
+	boolean checkConversationExists(Long expediteurId, Long receveurId);
+	
+	Message createConversation(Long expediteurId, Long receveurId, String contenue);
+	
+	List<Message> getUserMessages(Long userId);
+	
+	List<Message> getAllMessage();
+	
 }

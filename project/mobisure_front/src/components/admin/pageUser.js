@@ -1,87 +1,90 @@
 import { useState, useEffect } from 'react';
 import adminService from '../../services/adminService';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../auth/AuthContext';
 import '../../assets/css/pageUser.css';
+import UserService from '../../services/userService';
 
-function UserRow({ user, onRoleChange, fonctionDelete }) {
-	
-	const navigate = useNavigate();
-	
-	const handleRoleChange = (role) => {
-	    const updatedRoles = user.roles.includes(role)
-	      ? user.roles.filter(r => r !== role) // Retirer le rôle
-	      : [...user.roles, role]; // Ajouter le rôle
+function UserRow({ user, onRoleChange, fonctionDelete, startConversation }) {
+  const navigate = useNavigate();
 
-	    onRoleChange(user.id, updatedRoles);
-	  };
-	
+  const handleRoleChange = (role) => {
+    const updatedRoles = user.roles.includes(role)
+      ? user.roles.filter(r => r !== role)
+      : [...user.roles, role];
+    onRoleChange(user.id, updatedRoles);
+  };
+
   return (
     <tr>
       <td>{user.nom}</td>
       <td>{user.prenom}</td>
-	  <td>
-	  	<input 
-			type="checkbox"
-			checked={user.roles.includes('USER')}
-			onChange={() => handleRoleChange('USER')}
-		/>
-	  </td>
-	  <td>
-	  	<input 
-	  		type="checkbox"
-	  		checked={user.roles.includes('ADMIN')}
-			onChange={() => handleRoleChange('ADMIN')}
-	  	/>
-	  </td>
-	  <td>
-	  	<input 
-	  		type="checkbox"
-	  	  	checked={user.roles.includes('PARTENAIRE')}
-	  		onChange={() => handleRoleChange('PARTENAIRE')}
-	  	/>
-	  </td>
-	  <td>
-	  	<input 
-	  		type="checkbox"
-	  	  	checked={user.roles.includes('MEDECIN')}
-	  		onChange={() => handleRoleChange('MEDECIN')}
-	  	/>
-	  </td>
-	  <td>
-	  	<button id="btn-modifier" type="button" onClick={() => navigate(`/updateClient/${user.id}`)}>Modifier</button>
-	  </td>
-	  <td>
-	  	<button id="btn-delete" type="button" onClick={() => fonctionDelete(user.id)}>Supprimer</button>
-	  </td>
-
-	  
+      <td>
+        <input
+          type="checkbox"
+          checked={user.roles.includes('USER')}
+          onChange={() => handleRoleChange('USER')}
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          checked={user.roles.includes('ADMIN')}
+          onChange={() => handleRoleChange('ADMIN')}
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          checked={user.roles.includes('PARTENAIRE')}
+          onChange={() => handleRoleChange('PARTENAIRE')}
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          checked={user.roles.includes('MEDECIN')}
+          onChange={() => handleRoleChange('MEDECIN')}
+        />
+      </td>
+      <td>
+        <button id="btn-modifier" type="button" onClick={() => navigate(`/updateClient/${user.id}`)}>Modifier</button>
+      </td>
+      <td>
+        <button id="btn-delete" type="button" onClick={() => fonctionDelete(user.id)}>Supprimer</button>
+      </td>
+      <td>
+        <button id="btn-conversation" type="button" onClick={() => startConversation(user.id)}>Démarrer une conversation</button>
+      </td>
     </tr>
   );
 }
 
-function UserTable({ users, onRoleChange, fonctionDelete }) {
+function UserTable({ users, onRoleChange, fonctionDelete, startConversation }) {
   return (
     <table>
       <thead>
         <tr>
           <th>Nom</th>
           <th>Prénom</th>
-		  <th>Rôle : USER</th>
-		  <th>Rôle : ADMIN</th>
-		  <th>Rôle : PARTENAIRE</th>
-		  <th>Rôle : MEDECIN</th>
-		  <th>Modifier</th>
-		  <th>Supprimer</th>
+          <th>Rôle : USER</th>
+          <th>Rôle : ADMIN</th>
+          <th>Rôle : PARTENAIRE</th>
+          <th>Rôle : MEDECIN</th>
+          <th>Modifier</th>
+          <th>Supprimer</th>
+          <th>Conversation</th>
         </tr>
       </thead>
       <tbody>
         {users.map((user, index) => (
-          <UserRow 
-		  	key={user.id || index} 
-			user={user} 
-			onRoleChange={onRoleChange} 
-			fonctionDelete = {fonctionDelete}
-			/>
+          <UserRow
+            key={user.id || index}
+            user={user}
+            onRoleChange={onRoleChange}
+            fonctionDelete={fonctionDelete}
+            startConversation={startConversation}
+          />
         ))}
       </tbody>
     </table>
@@ -89,32 +92,68 @@ function UserTable({ users, onRoleChange, fonctionDelete }) {
 }
 
 export default function PageUser() {
+  const { getUser } = useAuth();
+  const userDetails = getUser();
   const [listeUsers, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
     adminService.fetchAllUsers().then(data => {
-      setUsers(data);
+      const filteredUsers = data.filter(user => user.mail !== userDetails.unsername);
+      setUsers(filteredUsers);
       setLoading(false);
     });
   }, []);
   
+  useEffect(() => {
+        setLoading(true);
+        UserService.fetchUserByEmail(userDetails.unsername).then(data => {
+          	setUser(data);
+          	setLoading(false)
+        });
+      },[]);
+
   const handleRoleChange = (userId, updateRoles) => {
-	setUsers(majUser =>
-		majUser.map(user =>
-			user.id === userId ? { ...user, roles: updateRoles } : user
-		)
-	);
-	adminService.updateUserRoles(userId, updateRoles);
-  }
-  
+    setUsers(majUser =>
+      majUser.map(user =>
+        user.id === userId ? { ...user, roles: updateRoles } : user
+      )
+    );
+    adminService.updateUserRoles(userId, updateRoles);
+  };
+
   const deleteUser = async (id) => {
-	adminService.deleteById(id).then(() => {
-		let updateUsers = [...listeUsers].filter(user => user.id !== id);
-		setUsers(updateUsers);
-	});
-  }
+    adminService.deleteById(id).then(() => {
+      let updateUsers = [...listeUsers].filter(user => user.id !== id);
+      setUsers(updateUsers);
+    });
+  };
+
+  const checkConversationExists = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:8081/checkConversation/${user.id}/${userId}`, {
+        credentials: 'include',
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Erreur lors de la vérification de la conversation :", error);
+      return false;
+    }
+  };
+
+  const startConversation = async (userId) => {
+    navigate(`/messagerie/${userId}`);
+  };
+
+  const filteredUsers = listeUsers.filter((user) =>
+    user.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.prenom.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) {
     return <p>Loading ...</p>;
@@ -122,11 +161,18 @@ export default function PageUser() {
 
   return (
     <div>
-      <UserTable 
-	  	users={listeUsers} 
-		onRoleChange={handleRoleChange} 
-		fonctionDelete = {deleteUser}
-		/>
+      <input
+        type="text"
+        placeholder="Rechercher un utilisateur..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <UserTable
+        users={filteredUsers}
+        onRoleChange={handleRoleChange}
+        fonctionDelete={deleteUser}
+        startConversation={startConversation}
+      />
     </div>
   );
 }

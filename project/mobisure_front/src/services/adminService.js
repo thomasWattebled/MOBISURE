@@ -3,7 +3,7 @@ const SERVER_URL = "http://localhost:8080";
 class adminService {
 	
 	async fetchAllUsers(){
-		return fetch(SERVER_URL + '/users', {
+		return await fetch(SERVER_URL + '/users', {
 			credentials: 'include',  // Envoie les cookies d'authentification avec la requête
 			headers: {
 				'Content-Type': 'application/json'

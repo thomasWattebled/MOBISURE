@@ -72,6 +72,7 @@ export default function App() {
 			<Route path="/changeMdp" element={<MdpForm />} />
 			<Route path="/updateClient/:id" element={<FormUpdateClient />} />
 			<Route path="/messagerie" element={<MessageApp />} />
+			<Route path="/messagerie/:userId" element={<MessageApp />} />
           </Route>
         </Routes>
       </BrowserRouter>

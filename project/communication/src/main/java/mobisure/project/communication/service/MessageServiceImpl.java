@@ -30,4 +30,26 @@ public class MessageServiceImpl implements MessageService {
 		return repo.findConversationMessages(expediteurId, receveurId);
 	}
 	
+	public boolean checkConversationExists(Long expediteurId, Long receveurId) {
+        List<Message> messages = repo.findConversation(expediteurId, receveurId);
+        return !messages.isEmpty();
+    }
+
+    public Message createConversation(Long expediteurId, Long receveurId,String contenue) {
+        Message message = new Message(expediteurId, receveurId, contenue);
+        repo.save(message);
+        return message;
+    }
+    
+    public List<Message> getUserMessages(Long userId) {
+    	System.out.println(userId);
+        List<Message> messages = repo.findByExpediteurIdOrReceveurId(userId, userId);
+        System.out.println("Messages retournés : " + messages);
+        return messages;
+    }
+    
+    public List<Message> getAllMessage() {
+    	return repo.findAll();
+    }
+    
 }
