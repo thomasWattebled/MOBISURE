@@ -16,7 +16,7 @@ import mobisure.project.communication.entity.Message;
 import mobisure.project.communication.request.MessageRequest;
 import mobisure.project.communication.service.MessageService;
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class MessageController {
 	
@@ -37,7 +37,7 @@ public class MessageController {
 	
 	@GetMapping("/MyMessage/{receveurId}")
     public List<Message> getMyMessage(@PathVariable Long receveurId) {
-        return service.getReceveurMessage(receveurId);
+        return service.getUserMessages(receveurId);
     }
 
     @PostMapping("/Conversation")
@@ -50,6 +50,25 @@ public class MessageController {
     public Message sendMessageViaWebSocket(Message message) {
         service.sendMessage(message.getExpediteurId(), message.getReceveurId(), message.getContenu());
         return message;
+    }
+    
+    @GetMapping("/checkConversation/{expediteurId}/{receveurId}")
+    public ResponseEntity<Boolean> checkConversationExists(
+            @PathVariable Long expediteurId,
+            @PathVariable Long receveurId) {
+        boolean exists = service.checkConversationExists(expediteurId, receveurId);
+        return ResponseEntity.ok(exists);
+    }
+
+    @PostMapping("/createConversation")
+    public ResponseEntity<Message> createConversation(@RequestBody MessageRequest request) {
+        Message conversation = service.createConversation(request.getExpediteurId(), request.getReceveurId(),request.getContenu());
+        return ResponseEntity.ok(conversation);
+    }
+    
+    @GetMapping("/all")
+    public List<Message> all(){
+    	return service.getAllMessage();
     }
 	
 }

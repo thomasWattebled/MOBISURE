@@ -72,7 +72,7 @@ export default function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
-
+            <Route path="/messagerie/:userId" element={<MessageApp />} />
 			      <Route path="/messagerie" element={<MessageApp />} />
             <Route path="/pageUser" element={<PageUser />} />
             <Route path="/userInformation" element={<MyInformation />} />
@@ -80,6 +80,7 @@ export default function App() {
             <Route path="/updateClient/:id" element={<FormUpdateClient />} />
             <Route path="/mesContrats" element={<MdpForm />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
+        
           </Route>
         </Routes>
       </BrowserRouter>
