@@ -21,6 +21,7 @@ import FormUpdateClient from './components/admin/formUpdateClient.js';
 import Sinistre from './pages/Sinistre.jsx';
 import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceForm from './components/assistance/AssistanceForm.js';
+import AssistanceList from './components/assistance/AssistanceList.js';
 
 
 
@@ -49,6 +50,9 @@ export const Layout = () => (
 		  </WhenUserIsInRole>
 		  <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
 		  <Link to="/assistance" className="text-white text-decoration-none">Demande assistance</Link>
+		  <WhenUserIsInRole role="CONSEILLER">
+		  <Link to="/assistance/Liste" className="text-white text-decoration-none">Les demandes d'assistance</Link>
+		  </WhenUserIsInRole>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
         </WhenUserIsAuthenticated>
       </Nav>
@@ -74,7 +78,7 @@ export default function App() {
             <Route path="/plans" element={<PlansSection />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/privacy" element={<PrivacyPolicy />}
             <Route path="/messagerie/:userId" element={<MessageApp />} />
 			      <Route path="/messagerie" element={<MessageApp />} />
             <Route path="/pageUser" element={<PageUser />} />
@@ -84,6 +88,7 @@ export default function App() {
             <Route path="/mesContrats" element={<MdpForm />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
             <Route path="/assistance" element={<AssistanceForm />} />
+            <Route path="/assistance/Liste" element={<AssistanceList />} />
           </Route>
         </Routes>
       </BrowserRouter>

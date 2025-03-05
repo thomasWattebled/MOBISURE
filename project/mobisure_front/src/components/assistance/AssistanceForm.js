@@ -25,7 +25,12 @@ const AssistanceForm = () => {
 	status : 'ATTENTE',
 	date : new Date().toISOString(),
 	message : '',
-	type : ''
+	type : '',
+	nom : '',
+	prenom : '',
+	mail : '',
+	mdp : '',
+	telephone : ''
   });
   
   // Met à jour formData une fois que l'utilisateur est chargé
@@ -34,6 +39,11 @@ const AssistanceForm = () => {
         setFormData((prevFormData) => ({
           ...prevFormData,
           id_client: user.id, // Ajout de l'ID client
+		  nom: user.nom,
+		  prenom: user.prenom,
+		  mail: user.mail,
+		  mdp: user.mdp,
+		  telephone: user.telephone
         }));
       }
     }, [user]);
