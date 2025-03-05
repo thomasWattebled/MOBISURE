@@ -10,12 +10,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 @RestController
@@ -28,6 +32,15 @@ public class AssistanceController {
     @GetMapping("/assistance/all")
     public List<Assistance> getAllAssistance() {
         return service.getAllAssistance();
+    }
+    
+    @PutMapping("/assistance/updateStatus/{id}")
+    public void updateStatus(@PathVariable Long id, @RequestBody Map<String, String> requestBody){
+    	
+    	String request_status = requestBody.get("status");
+    	Status status = Status.valueOf(request_status);
+    	
+    	service.updateAssistance(id, status);
     }
 
     // Ajouter une nouvelle demande d'assistance
@@ -47,7 +60,12 @@ public class AssistanceController {
                 status,
                 date,
                 assistanceRequest.getMessage(),
-                typeAssistance
+                typeAssistance,
+                assistanceRequest.getNom(),
+                assistanceRequest.getPrenom(),
+                assistanceRequest.getMail(),
+                assistanceRequest.getMdp(),
+                assistanceRequest.getTelephone()
             );
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Demande d'assistance ajoutée avec succès");

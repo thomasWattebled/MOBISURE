@@ -20,6 +20,7 @@ import MdpForm from './components/auth/MdpForm.js';
 import FormUpdateClient from './components/admin/formUpdateClient.js';
 import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceForm from './components/assistance/AssistanceForm.js';
+import AssistanceList from './components/assistance/AssistanceList.js';
 
 
 export const Layout = () => (
@@ -45,6 +46,9 @@ export const Layout = () => (
 		  </WhenUserIsInRole>
 		  <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
 		  <Link to="/assistance" className="text-white text-decoration-none">Demande assistance</Link>
+		  <WhenUserIsInRole role="CONSEILLER">
+		  <Link to="/assistance/Liste" className="text-white text-decoration-none">Les demandes d'assistance</Link>
+		  </WhenUserIsInRole>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
         </WhenUserIsAuthenticated>
       </Nav>
@@ -78,6 +82,7 @@ export default function App() {
 			<Route path="/messagerie" element={<MessageApp />} />
 			<Route path="/messagerie/:userId" element={<MessageApp />} />
 			<Route path="/assistance" element={<AssistanceForm />} />
+			<Route path="/assistance/Liste" element={<AssistanceList />} />
           </Route>
         </Routes>
       </BrowserRouter>
