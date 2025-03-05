@@ -150,6 +150,8 @@ public class UserServiceImpl implements UserService {
 		if(role.contains("ADMIN")) {roles.add(RoleName.ADMIN);}
 		if(role.contains("PARTENAIRE")) {roles.add(RoleName.PARTENAIRE);}
 		if(role.contains("MEDECIN")) {roles.add(RoleName.MEDECIN);}
+		if(role.contains("CONSEILLER")) {roles.add(RoleName.CONSEILLER);}
+		
 		
 		System.out.println(roles);
 		

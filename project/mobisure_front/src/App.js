@@ -43,7 +43,10 @@ export const Layout = () => (
       <Link to="/mesContrats" className="text-white text-decoration-none">Mes contrats</Link>
       <Link to="/mesSinistres" className="text-white text-decoration-none">Mes sinistres</Link>
 		  <WhenUserIsInRole role="ADMIN">
-		  	<Link to="/pageUser" className="text-white text-decoration-none">Admin</Link>
+		  	<Link to="/pageUser" className="text-white text-decoration-none">Gestion des utilisateurs</Link>
+		  </WhenUserIsInRole>
+		  <WhenUserIsInRole role="CONSEILLER">
+		  	<Link to="/pageUser" className="text-white text-decoration-none">Gestion des clients</Link>
 		  </WhenUserIsInRole>
 		  <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
