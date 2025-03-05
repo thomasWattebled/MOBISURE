@@ -12,15 +12,15 @@ import AboutUs from './pages/AboutUs.jsx';
 import Contact from './pages/Contact.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import Footer from './components/Footer.jsx';
-
 import travelImage7 from './assets/image/logo.png';
 import PageUser from './components/admin/pageUser';
 import {WhenUserIsInRole} from './components/security/PrivateRoute.js';
 import MyInformation from './components/user/MyInformation.js';
 import MdpForm from './components/auth/MdpForm.js';
 import FormUpdateClient from './components/admin/formUpdateClient.js';
-
 import MessageApp from './components/messagerie/MessageApp.js';
+import AssistanceForm from './components/assistance/AssistanceForm.js';
+
 
 export const Layout = () => (
   <div className="d-flex flex-column min-vh-100">
@@ -44,6 +44,7 @@ export const Layout = () => (
 		  	<Link to="/pageUser" className="text-white text-decoration-none">Gestion des clients</Link>
 		  </WhenUserIsInRole>
 		  <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
+		  <Link to="/assistance" className="text-white text-decoration-none">Demande assistance</Link>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
         </WhenUserIsAuthenticated>
       </Nav>
@@ -76,6 +77,7 @@ export default function App() {
 			<Route path="/updateClient/:id" element={<FormUpdateClient />} />
 			<Route path="/messagerie" element={<MessageApp />} />
 			<Route path="/messagerie/:userId" element={<MessageApp />} />
+			<Route path="/assistance" element={<AssistanceForm />} />
           </Route>
         </Routes>
       </BrowserRouter>
