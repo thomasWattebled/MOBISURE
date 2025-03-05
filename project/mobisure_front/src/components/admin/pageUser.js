@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from '../auth/AuthContext';
 import '../../assets/css/pageUser.css';
 import UserService from '../../services/userService';
+import { WhenUserIsInRole } from "../security/PrivateRoute";
 
 function UserRow({ user, onRoleChange, fonctionDelete, startConversation }) {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ function UserRow({ user, onRoleChange, fonctionDelete, startConversation }) {
     <tr>
       <td>{user.nom}</td>
       <td>{user.prenom}</td>
+	  <td>{user.mail}</td>
+	  <WhenUserIsInRole role="ADMIN">
       <td>
         <input
           type="checkbox"
@@ -47,12 +50,22 @@ function UserRow({ user, onRoleChange, fonctionDelete, startConversation }) {
           onChange={() => handleRoleChange('MEDECIN')}
         />
       </td>
+	  <td>
+	  	<input
+	    	type="checkbox"
+	        checked={user.roles.includes('CONSEILLER')}
+	        onChange={() => handleRoleChange('CONSEILLER')}
+	  	/>
+	  </td>
+	  </WhenUserIsInRole>
       <td>
         <button id="btn-modifier" type="button" onClick={() => navigate(`/updateClient/${user.id}`)}>Modifier</button>
       </td>
+	  <WhenUserIsInRole role="ADMIN">
       <td>
         <button id="btn-delete" type="button" onClick={() => fonctionDelete(user.id)}>Supprimer</button>
       </td>
+	  </WhenUserIsInRole>
       <td>
         <button id="btn-conversation" type="button" onClick={() => startConversation(user.id)}>Démarrer une conversation</button>
       </td>
@@ -67,12 +80,18 @@ function UserTable({ users, onRoleChange, fonctionDelete, startConversation }) {
         <tr>
           <th>Nom</th>
           <th>Prénom</th>
+		  <th>Email</th>
+		  <WhenUserIsInRole role="ADMIN">
           <th>Rôle : USER</th>
           <th>Rôle : ADMIN</th>
           <th>Rôle : PARTENAIRE</th>
           <th>Rôle : MEDECIN</th>
+		  <th>Rôle : Conseiller</th>
+		  </WhenUserIsInRole>
           <th>Modifier</th>
+		  <WhenUserIsInRole role="ADMIN">
           <th>Supprimer</th>
+		  </WhenUserIsInRole>
           <th>Conversation</th>
         </tr>
       </thead>
@@ -152,7 +171,8 @@ export default function PageUser() {
 
   const filteredUsers = listeUsers.filter((user) =>
     user.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.prenom.toLowerCase().includes(searchTerm.toLowerCase())
+    user.prenom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+	user.mail.toLowerCase().includes(searchTerm.toLocaleLowerCase())
   );
 
   if (loading) {
