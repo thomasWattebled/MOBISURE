@@ -78,7 +78,7 @@ export default function App() {
             <Route path="/plans" element={<PlansSection />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy" element={<PrivacyPolicy />}
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/messagerie/:userId" element={<MessageApp />} />
 			      <Route path="/messagerie" element={<MessageApp />} />
             <Route path="/pageUser" element={<PageUser />} />

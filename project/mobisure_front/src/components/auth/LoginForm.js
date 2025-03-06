@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {  Link } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../assets/css/login.css';
+import '../../assets/css/form.css';
 
 
 export const LoginForm = ({handleLogin, message}) => {
