@@ -44,31 +44,34 @@ public class SecurityConfig {
      * @throws Exception if there is a problem with the configuration.
      */
 	@Bean
-	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-	    http
-	        .csrf(csrf -> csrf.disable())
-	        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-	        .authorizeHttpRequests(authz ->
-	            authz
-	                .requestMatchers(
-	                    "/swagger-ui/**", 
-	                    "/v3/api-docs/**",
-	                    "/swagger-ui.html"
-	                ).permitAll()
-	                .requestMatchers("/users/**").permitAll()
-	                .anyRequest().authenticated()
-	        )
-	        .httpBasic(withDefaults())
-	        .formLogin(formLogin -> formLogin
-	            .permitAll()
-	            .loginPage("http://localhost:3000/")
-	            .loginPage("/auth/login")
-	        )
-	        .logout(withDefaults());
+	public SecurityFilterChain configure(HttpSecurity http) throws Exception{
+		http
+		.csrf((csrf) -> csrf.disable())
+	 	.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .authorizeHttpRequests(authz ->
+        authz
+            .requestMatchers(
+                "/swagger-ui/**", 
+                "/v3/api-docs/**",
+                "/swagger-ui.html",
+                "/login",
+                "/",
+                "/register",
+                "/users/**").permitAll()
+            .anyRequest().authenticated()
+      )	 
+	 .httpBasic(withDefaults())
+	 .formLogin( formLogin-> formLogin
+			 .permitAll()
+			 .loginPage("http://localhost:3000/")
+			 .loginPage("/auth/login")
+			 )
+	 
+	 .logout(withDefaults());
+	 
+	return http.build();
 
-	    return http.build();
 	}
-
 	
 	/**
      * Configures the user details service used for authentication.
