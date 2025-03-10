@@ -36,45 +36,4 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/benja/.m2/repository/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar" sourcepath="C:/Users/benja/.m2/repository/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
-			<attribute name="maven.groupId" value="org.apache.commons"/>
-			<attribute name="maven.artifactId" value="commons-compress"/>
-			<attribute name="maven.version" value="1.24.0"/>
-			<attribute name="maven.scope" value="test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/benja/.m2/repository/com/h2database/h2/2.3.232/h2-2.3.232.jar" sourcepath="C:/Users/benja/.m2/repository/com/h2database/h2/2.3.232/h2-2.3.232-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
-			<attribute name="maven.groupId" value="com.h2database"/>
-			<attribute name="maven.artifactId" value="h2"/>
-			<attribute name="maven.version" value="2.3.232"/>
-			<attribute name="maven.scope" value="runtime"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/benja/.m2/repository/org/glassfish/jersey/core/jersey-server/4.0.0-M1/jersey-server-4.0.0-M1.jar" sourcepath="C:/Users/benja/.m2/repository/org/glassfish/jersey/core/jersey-server/4.0.0-M1/jersey-server-4.0.0-M1-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="org.eclipse.jst.component.archivename" value="jersey-server-4.0.0-M1.jar"/>
-			<attribute name="maven.groupId" value="org.glassfish.jersey.core"/>
-			<attribute name="maven.artifactId" value="jersey-server"/>
-			<attribute name="maven.version" value="4.0.0-M1"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/benja/.m2/repository/org/testcontainers/testcontainers/1.19.8/testcontainers-1.19.8.jar" sourcepath="C:/Users/benja/.m2/repository/org/testcontainers/testcontainers/1.19.8/testcontainers-1.19.8-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
-			<attribute name="maven.groupId" value="org.testcontainers"/>
-			<attribute name="maven.artifactId" value="testcontainers"/>
-			<attribute name="maven.version" value="1.19.8"/>
-			<attribute name="maven.scope" value="test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="output" path="target/classes"/>
 </classpath>
