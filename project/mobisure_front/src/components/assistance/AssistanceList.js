@@ -181,7 +181,7 @@ const AssistanceList = () => {
             <tr key={assistance.id}>
 			  <td>{assistance.num_dossier}</td>
               <td>{assistance.nom}</td>
-              <td>{assistance.nom}</td>
+              <td>{assistance.prenom}</td>
               <td>{assistance.mail}</td>
               <td>{assistance.telephone}</td>
               <td>{assistance.type}</td>

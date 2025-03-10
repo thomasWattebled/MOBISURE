@@ -19,7 +19,7 @@ public class Assistance {
 	@Column(unique = true)
     private String num_dossier;
 	
-	private Long id_client;
+	private Long idClient;
 	private Status status;
 	private Date date;
 	
@@ -38,7 +38,7 @@ public class Assistance {
 	public Assistance(Long id_client, Status status, Date date, String message, TypeAssistance type, String nom,
 			String prenom, String mail, String mdp, String telephone) {
 		super();
-		this.id_client = id_client;
+		this.idClient = id_client;
 		this.status = status;
 		this.date = date;
 		this.message = message;
@@ -76,11 +76,11 @@ public class Assistance {
 	}
 
 	public Long getId_client() {
-		return id_client;
+		return idClient;
 	}
 
 	public void setId_client(Long id_client) {
-		this.id_client = id_client;
+		this.idClient = id_client;
 	}
 
 	public Status getStatus() {

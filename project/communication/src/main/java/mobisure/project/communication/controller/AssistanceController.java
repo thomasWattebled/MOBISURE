@@ -42,6 +42,12 @@ public class AssistanceController {
     	
     	service.updateAssistance(id, status);
     }
+    
+    @GetMapping("/assistance/getMyAssistance/{id}")
+    public List<Assistance> getMyAssistance(@PathVariable Long id){
+    	List<Assistance> test = service.getMyAssistance(id);
+    	return service.getMyAssistance(id);
+    }
 
     // Ajouter une nouvelle demande d'assistance
     @PostMapping("/assistance/add")
