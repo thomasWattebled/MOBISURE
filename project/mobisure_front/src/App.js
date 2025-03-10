@@ -95,9 +95,9 @@ export default function App() {
             <Route path="/updateClient/:id" element={<FormUpdateClient />} />
             <Route path="/messagerie" element={<MessageApp />} />
             <Route path="/messagerie/:userId" element={<MessageApp />} />
-
             <Route path="/assistance/Liste" element={<AssistanceList />} />
             <Route path="/myassistance" element={<MyAssistance />} />
+            <Route path="/mesSinistres" element={<Sinistre />} />
           </Route>
         </Routes>
       </BrowserRouter>
