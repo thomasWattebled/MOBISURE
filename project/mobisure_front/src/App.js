@@ -18,10 +18,12 @@ import {WhenUserIsInRole} from './components/security/PrivateRoute.js';
 import MyInformation from './components/user/MyInformation.js';
 import MdpForm from './components/auth/MdpForm.js';
 import FormUpdateClient from './components/admin/formUpdateClient.js';
+import Sinistre from './pages/Sinistre.jsx';
 import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceForm from './components/assistance/AssistanceForm.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
+
 
 
 export const Layout = () => (
@@ -39,6 +41,8 @@ export const Layout = () => (
           <Link to="/home" className="text-white text-decoration-none">Home</Link>
           <Link to="/plans" className="text-white text-decoration-none">Plans</Link>
 		  <Link to="/userInformation" className="text-white text-decoration-none">Mes informations</Link>
+      <Link to="/mesContrats" className="text-white text-decoration-none">Mes contrats</Link>
+      <Link to="/mesSinistres" className="text-white text-decoration-none">Mes sinistres</Link>
 		  <WhenUserIsInRole role="ADMIN">
 		  	<Link to="/pageUser" className="text-white text-decoration-none">Gestion des utilisateurs</Link>
 		  </WhenUserIsInRole>
@@ -77,15 +81,16 @@ export default function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
-			<Route path="/pageUser" element={<PageUser />} />
-			<Route path="/userInformation" element={<MyInformation />} />
-			<Route path="/changeMdp" element={<MdpForm />} />
-			<Route path="/updateClient/:id" element={<FormUpdateClient />} />
-			<Route path="/messagerie" element={<MessageApp />} />
-			<Route path="/messagerie/:userId" element={<MessageApp />} />
-			<Route path="/assistance" element={<AssistanceForm />} />
-			<Route path="/assistance/Liste" element={<AssistanceList />} />
-			<Route path="/myassistance" element={<MyAssistance />} />
+            <Route path="/pageUser" element={<PageUser />} />
+            <Route path="/userInformation" element={<MyInformation />} />
+            <Route path="/changeMdp" element={<MdpForm />} />
+            <Route path="/updateClient/:id" element={<FormUpdateClient />} />
+            <Route path="/messagerie" element={<MessageApp />} />
+            <Route path="/messagerie/:userId" element={<MessageApp />} />
+            <Route path="/assistance" element={<AssistanceForm />} />
+            <Route path="/assistance/Liste" element={<AssistanceList />} />
+            <Route path="/myassistance" element={<MyAssistance />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

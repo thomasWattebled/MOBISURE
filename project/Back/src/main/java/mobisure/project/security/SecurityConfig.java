@@ -48,12 +48,18 @@ public class SecurityConfig {
 		http
 		.csrf((csrf) -> csrf.disable())
 	 	.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-	 	.authorizeHttpRequests((authz) -> 
-	 		authz
-	 			 .requestMatchers("/users/**").permitAll()
-				 .anyRequest().authenticated()
-	 )
-	 
+        .authorizeHttpRequests(authz ->
+        authz
+            .requestMatchers(
+                "/swagger-ui/**", 
+                "/v3/api-docs/**",
+                "/swagger-ui.html",
+                "/login",
+                "/",
+                "/register",
+                "/users/**").permitAll()
+            .anyRequest().authenticated()
+      )	 
 	 .httpBasic(withDefaults())
 	 .formLogin( formLogin-> formLogin
 			 .permitAll()
