@@ -17,4 +17,5 @@ public interface AssistanceService {
 	
 	public void updateAssistance(Long id,Status status);
 	
+	public List<Assistance> getMyAssistance(Long id);
 }

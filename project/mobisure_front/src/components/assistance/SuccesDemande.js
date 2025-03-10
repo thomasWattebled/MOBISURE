@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SuccessDemande = ({ show, onClose }) => {
+  const navigate = useNavigate();  // Utilisation de useNavigate pour la navigation
+
+  const handleClose = () => {
+    onClose();  // Fermer la modal
+    navigate('/home');  // Rediriger vers /home
+  };
+
   return (
     <div
       className={`modal fade ${show ? 'show d-block' : ''}`}
@@ -18,18 +26,18 @@ const SuccessDemande = ({ show, onClose }) => {
             <button
               type="button"
               className="btn-close"
-              onClick={onClose}
+              onClick={handleClose}  // Appel de handleClose ici
               aria-label="Close"
             ></button>
           </div>
           <div className="modal-body">
-            Votre demande d'assistance à bien été transmise.'
+            Votre demande d'assistance a bien été transmise.
           </div>
           <div className="modal-footer">
             <button
               type="button"
               className="btn btn-primary"
-              onClick={onClose}
+              onClick={handleClose}  // Appel de handleClose ici
             >
               Fermer
             </button>

@@ -41,5 +41,10 @@ public class AssistanceServiceImpl implements AssistanceService {
 		}
 		
 	}
+
+	@Override
+	public List<Assistance> getMyAssistance(Long id) {
+		return repo.findByIdClient(id);
+	}
 	
 }
