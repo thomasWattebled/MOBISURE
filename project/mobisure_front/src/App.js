@@ -90,7 +90,7 @@ export default function App() {
             <Route path="/assistance" element={<AssistanceForm />} />
             <Route path="/assistance/Liste" element={<AssistanceList />} />
             <Route path="/myassistance" element={<MyAssistance />} />
-
+            <Route path="/mesSinistres" element={<Sinistre />} />
           </Route>
         </Routes>
       </BrowserRouter>
