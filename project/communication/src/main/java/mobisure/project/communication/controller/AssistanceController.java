@@ -48,6 +48,11 @@ public class AssistanceController {
     	List<Assistance> test = service.getMyAssistance(id);
     	return service.getMyAssistance(id);
     }
+    
+    @GetMapping("/assistance/getByNumDossier/{numDossier}")
+    public Assistance getAssistanceByNumDossier(@PathVariable String numDossier) {
+    	return service.getByNumDossier(numDossier);
+    }
 
     // Ajouter une nouvelle demande d'assistance
     @PostMapping("/assistance/add")

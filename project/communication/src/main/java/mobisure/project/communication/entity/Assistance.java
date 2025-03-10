@@ -17,7 +17,7 @@ public class Assistance {
 	private Long id;
 
 	@Column(unique = true)
-    private String num_dossier;
+    private String numDossier;
 	
 	private Long idClient;
 	private Status status;
@@ -48,11 +48,11 @@ public class Assistance {
 		this.mail = mail;
 		this.mdp = mdp;
 		this.telephone = telephone;
-		this.num_dossier = generateNumDossier();
+		this.numDossier = generateNumDossier();
 	}
 
 	public Assistance() {
-		this.num_dossier = generateNumDossier();
+		this.numDossier = generateNumDossier();
 	}
 	
 	private String generateNumDossier() {
@@ -60,11 +60,11 @@ public class Assistance {
     }
 
     public String getNum_dossier() {
-        return num_dossier;
+        return numDossier;
     }
     
     public void setNum_dossier(String num_dossier) {
-        this.num_dossier = num_dossier;
+        this.numDossier = num_dossier;
     }
 
 	public Long getId() {

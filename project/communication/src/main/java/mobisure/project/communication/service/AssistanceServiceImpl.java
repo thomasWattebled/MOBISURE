@@ -46,5 +46,17 @@ public class AssistanceServiceImpl implements AssistanceService {
 	public List<Assistance> getMyAssistance(Long id) {
 		return repo.findByIdClient(id);
 	}
+
+	@Override
+	public Assistance getByNumDossier(String numDossier) {
+		Optional<Assistance> getAssistance = repo.findByNumDossier(numDossier);
+		
+		if(getAssistance.isPresent()) {
+			Assistance assistance = getAssistance.get();
+			return assistance;
+		}
+		
+		return null;
+	}
 	
 }

@@ -1,0 +1,217 @@
+/* Conteneur principal */
+.update-assistance-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  background-color: #8000ff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre */
+.update-assistance-container h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Tableau */
+.update-assistance-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.update-assistance-container table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.update-assistance-container table td.att {
+  font-weight: bold;
+  color: #555;
+  width: 30%;
+}
+
+td.att {
+	background-color : #0080ff;
+	width: 20%;
+	border-radius: 4px;
+	color: white
+}
+
+/* Formulaire d'upload */
+.update-assistance-container form {
+  margin-bottom: 20px;
+}
+
+.update-assistance-container input[type="file"] {
+  display: block;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.update-assistance-container button#envoi {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.update-assistance-container button#envoi:hover {
+  background-color: #0056b3;
+}
+
+button#envoi {
+	background-color: #0056b3;
+	margin-top : 5px;
+}
+
+/* Message d'upload */
+.update-assistance-container p {
+  font-size: 0.875rem;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Liste des documents */
+.update-assistance-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.update-assistance-container ul li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.update-assistance-container ul li a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.update-assistance-container ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Message "Aucun document disponible" */
+.update-assistance-container p.message {
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Zone des documents liés */
+.documents-section {
+  margin-top: 20px;
+}
+
+.documents-section h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.documents-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.documents-section ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.documents-section ul li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.documents-section ul li a {
+  display: flex;
+  align-items: center;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.documents-section ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Icône de téléchargement */
+.documents-section ul li a::before {
+  content: "📄"; /* Icône de fichier */
+  margin-right: 8px;
+}
+
+/* Message "Aucun document disponible" */
+.documents-section p.message {
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px dashed #ddd;
+}
+
+/* Conteneur pour aligner le titre et le formulaire horizontalement */
+.upload-section {
+  display: flex;
+  align-items: center; /* Alignement vertical au centre */
+  gap: 16px; /* Espace entre les éléments */
+  margin-bottom: 20px;
+}
+
+/* Style pour le champ de fichier */
+.upload-section input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  flex: 1; /* Prend tout l'espace disponible */
+}
+
+/* Style pour le bouton "Envoyer" */
+.upload-section button#envoi {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.upload-section button#envoi:hover {
+  background-color: #0056b3;
+}

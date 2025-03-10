@@ -13,4 +13,6 @@ public interface AssistanceRepository extends JpaRepository<Assistance,Long> {
 	
 	List<Assistance> findByIdClient(Long idClient);
 	
+	Optional<Assistance> findByNumDossier(String numDossier);
+	
 }
