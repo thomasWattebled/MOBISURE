@@ -1,6 +1,7 @@
 import React from 'react';
 import FormField from './FormField';
 import SuccessModal from './SuccessModal';
+import '../../assets/css/register.css';
 import '../../assets/css/form.css';
 
 const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVisible, setModalVisible }) => {

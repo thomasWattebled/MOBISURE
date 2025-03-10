@@ -22,6 +22,7 @@ import Sinistre from './pages/Sinistre.jsx';
 import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceForm from './components/assistance/AssistanceForm.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
+import MyAssistance from './components/assistance/MyAssistance.js';
 
 
 
@@ -50,6 +51,7 @@ export const Layout = () => (
 		  </WhenUserIsInRole>
 		  <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
 		  <Link to="/assistance" className="text-white text-decoration-none">Demande assistance</Link>
+		  <Link to="/myassistance" className="text-white text-decoration-none">Mes assistances</Link>
 		  <WhenUserIsInRole role="CONSEILLER">
 		  <Link to="/assistance/Liste" className="text-white text-decoration-none">Les demandes d'assistance</Link>
 		  </WhenUserIsInRole>
@@ -79,16 +81,16 @@ export default function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/messagerie/:userId" element={<MessageApp />} />
-			      <Route path="/messagerie" element={<MessageApp />} />
             <Route path="/pageUser" element={<PageUser />} />
             <Route path="/userInformation" element={<MyInformation />} />
             <Route path="/changeMdp" element={<MdpForm />} />
             <Route path="/updateClient/:id" element={<FormUpdateClient />} />
-            <Route path="/mesContrats" element={<MdpForm />} />
-            <Route path="/mesSinistres" element={<Sinistre />} />
+            <Route path="/messagerie" element={<MessageApp />} />
+            <Route path="/messagerie/:userId" element={<MessageApp />} />
             <Route path="/assistance" element={<AssistanceForm />} />
             <Route path="/assistance/Liste" element={<AssistanceList />} />
+            <Route path="/myassistance" element={<MyAssistance />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

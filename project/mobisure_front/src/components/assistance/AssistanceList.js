@@ -7,8 +7,10 @@ const AssistanceList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filters, setFilters] = useState({ nom: "", prenom: "", mail: "", telephone: "", type: "", status: "" });
+  const [filters, setFilters] = useState({ num_dossier: "", nom: "", prenom: "", mail: "", telephone: "", type: "", status: "" });
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(""); // 🔹 Stocke le message sélectionné
+  const [showModal, setShowModal] = useState(false); // 🔹 État pour afficher/masquer la modale
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,8 +64,18 @@ const AssistanceList = () => {
     (!filters.mail || assistance.mail.toLowerCase().includes(filters.mail.toLowerCase())) &&
     (!filters.telephone || assistance.telephone.includes(filters.telephone)) &&
 	(!filters.type || assistance.type.toLowerCase().includes(filters.type.toLowerCase())) &&
-	(!filters.status || assistance.status === filters.status)
+	(!filters.status || assistance.status === filters.status) &&
+	(!filters.num_dossier || assistance.num_dossier.toLowerCase().includes(filters.num_dossier.toLowerCase()))
   );
+  
+  const openMessageModal = (message) => {
+      setSelectedMessage(message);
+      setShowModal(true);
+    };
+
+    const closeMessageModal = () => {
+      setShowModal(false);
+    };
 
   if (loading) {
     return <p>Chargement des demandes d'assistance...</p>;
@@ -81,6 +93,15 @@ const AssistanceList = () => {
       </button>
       {showFilters && (
         <div className="mb-3">
+		<p>Numéro du dossier : 
+			<input 
+		    	type="text" 
+		        placeholder="Numéro du dossier" 
+		        value={filters.num_dossier} 
+		        onChange={(e) => setFilters({ ...filters, num_dossier: e.target.value })}
+		        className="form-control mb-2"
+		  	/>
+		  </p>
 		  <p>Nom : 
           <input 
             type="text" 
@@ -143,6 +164,7 @@ const AssistanceList = () => {
       <table className="table table-bordered">
         <thead>
           <tr>
+		  	<th>Numéro dossier</th>
             <th>Nom</th>
             <th>Prenom</th>
             <th>Mail</th>
@@ -157,8 +179,9 @@ const AssistanceList = () => {
         <tbody>
           {filteredList.map((assistance) => (
             <tr key={assistance.id}>
+			  <td>{assistance.num_dossier}</td>
               <td>{assistance.nom}</td>
-              <td>{assistance.prenom}</td>
+              <td>{assistance.nom}</td>
               <td>{assistance.mail}</td>
               <td>{assistance.telephone}</td>
               <td>{assistance.type}</td>
@@ -173,7 +196,11 @@ const AssistanceList = () => {
                 </select>
               </td>
               <td>{new Date(assistance.date).toLocaleDateString()}</td>
-              <td>{assistance.message}</td>
+              <td>
+			  	<button onClick={() => openMessageModal(assistance.message)}>
+			    	Voir message
+			  	</button>
+			  </td>
               <td>
                 <button id="btn-conversation" type="button" onClick={() => startConversation(assistance.id_client)}>
                   Démarrer une conversation
@@ -183,6 +210,29 @@ const AssistanceList = () => {
           ))}
         </tbody>
       </table>
+	  
+	  {showModal && (
+	          <div className="modal fade show d-block" tabIndex="-1">
+	            <div className="modal-dialog">
+	              <div className="modal-content">
+	                <div className="modal-header">
+	                  <h5 className="modal-title">Message de l'utilisateur</h5>
+	                  <button type="button" className="btn-close" onClick={closeMessageModal}></button>
+	                </div>
+	                <div className="modal-body">
+	                  <p>{selectedMessage}</p>
+	                </div>
+	                <div className="modal-footer">
+	                  <button type="button" className="btn btn-secondary" onClick={closeMessageModal}>
+	                    Fermer
+	                  </button>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        )}
+	        {/* 🔹 Ajoute un fond pour la modale */}
+	        {showModal && <div className="modal-backdrop fade show"></div>}
     </div>
   );
 };
