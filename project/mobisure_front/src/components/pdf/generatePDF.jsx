@@ -5,7 +5,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable"; // Pour les tableaux
 import logo from "../../logo192.png";
 
-<<<<<<< HEAD
 const GeneratePDF = ({ data, config, fileName = 'recapitulatif.pdf' }) => {
   const { getUser } = useAuth(); // Récupération de l'utilisateur via AuthContext
   const userDetails = getUser();
@@ -19,29 +18,12 @@ const GeneratePDF = ({ data, config, fileName = 'recapitulatif.pdf' }) => {
       });
     }
   }, [userDetails]);
-=======
-const GeneratePDF = ({ data, config, fileName = "recapitulatif.pdf" }) => {
-  const { getUser } = useAuth();
-  const userDetails = getUser();
-  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    UserService.fetchUserByEmail(userDetails.unsername).then((data) => {
-      setUser(data);
-    });
-  }, []);
->>>>>>> 594bc65 (generation pdf)
 
   const generatePDF = () => {
     const doc = new jsPDF();
     let yOffset = 20;
 
-<<<<<<< HEAD
-    let yOffset = 10;
-
-    if (user) {
-      // Ajouter les informations de l'utilisateur
-=======
     // Ajout du logo et titre
     doc.addImage(logo, "PNG", 80, 10, 50, 20);
     yOffset += 30;
@@ -57,15 +39,11 @@ const GeneratePDF = ({ data, config, fileName = "recapitulatif.pdf" }) => {
     yOffset += 10;
 
     if (user) {
->>>>>>> 594bc65 (generation pdf)
       doc.text(`Nom: ${user.nom}`, 10, yOffset);
       yOffset += 10;
       doc.text(`Prénom: ${user.prenom}`, 10, yOffset);
       yOffset += 10;
       doc.text(`Email: ${user.mail}`, 10, yOffset);
-<<<<<<< HEAD
-      yOffset += 20;
-=======
       yOffset += 15;
     }
 
@@ -96,36 +74,10 @@ const GeneratePDF = ({ data, config, fileName = "recapitulatif.pdf" }) => {
         ["Hôpital", data.hopital || "N/A"],
         ["Médecin", data.medecin || "N/A"]
       );
->>>>>>> 594bc65 (generation pdf)
     }
 
     config.forEach((item) => {
-<<<<<<< HEAD
-      const { label, key, type = 'text' } = item;
-      if (type === 'text') {
-        doc.text(`${label}: ${data[key]}`, 10, yOffset);
-        yOffset += 10;
-      } else if (type === 'image' && data[key] instanceof File) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const imgData = event.target.result;
-          doc.addImage(imgData, 'JPEG', 10, yOffset, 50, 50);
-          yOffset += 60;
-          doc.save(fileName);
-        };
-        reader.readAsDataURL(data[key]);
-      }
-    });
-
-    // Si aucune image n'est présente, sauvegarder le PDF immédiatement
-    if (!config.some((item) => item.type === 'image' && data[item.key] instanceof File)) {
-      doc.save(fileName);
-    }
-  };
-=======
       const { label, key, type = "text" } = item;
->>>>>>> 594bc65 (generation pdf)
-
       if (type === "text") {
         doc.text(`${label}: ${data[key] || "N/A"}`, 10, yOffset);
         yOffset += 10;
