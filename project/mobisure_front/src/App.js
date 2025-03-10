@@ -20,11 +20,8 @@ import MyInformation from './components/user/MyInformation.js';
 import MdpForm from './components/auth/MdpForm.js';
 import FormUpdateClient from './components/admin/formUpdateClient.js';
 import Sinistre from './pages/Sinistre.jsx';
-<<<<<<< HEAD
 
 import MessageApp from './components/messagerie/MessageApp.js';
-=======
->>>>>>> be2aa37a03e79cf0bf32b1b6b70bec32e2d8e32e
 
 export const Layout = () => (
   <div className="d-flex flex-column min-vh-100">
