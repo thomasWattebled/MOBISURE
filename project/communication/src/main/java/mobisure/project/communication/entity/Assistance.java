@@ -1,7 +1,9 @@
 package mobisure.project.communication.entity;
 
 import java.util.Date;
+import java.util.Random;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,10 +16,16 @@ public class Assistance {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	@Column(unique = true)
+    private String num_dossier;
+	
 	private Long id_client;
 	private Status status;
 	private Date date;
+	
+	@Column(length = 1000)
 	private String message;
+	
 	private TypeAssistance type;
 	private String nom;
 	private String prenom;
@@ -40,9 +48,24 @@ public class Assistance {
 		this.mail = mail;
 		this.mdp = mdp;
 		this.telephone = telephone;
+		this.num_dossier = generateNumDossier();
 	}
 
-	public Assistance() {}
+	public Assistance() {
+		this.num_dossier = generateNumDossier();
+	}
+	
+	private String generateNumDossier() {
+        return "D-" + (100000 + new Random().nextInt(900000));
+    }
+
+    public String getNum_dossier() {
+        return num_dossier;
+    }
+    
+    public void setNum_dossier(String num_dossier) {
+        this.num_dossier = num_dossier;
+    }
 
 	public Long getId() {
 		return id;

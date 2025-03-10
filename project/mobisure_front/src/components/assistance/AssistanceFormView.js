@@ -29,21 +29,30 @@ const AssistanceFormView = ({ formData, handleChange, handleSubmit, isModalVisib
 					<option value="AUTRE">Autres demandes</option>
                   </select>
                 </div>
-                <FormField
-                  id="message"
-                  label="Message :"
-                  type="text"
-                  name="message"
-                  value={formData.message}
-                  placeholder="Décrivez votre demande"
-                  handleChange={handleChange}
-                  required
-                />
+				<div className="mb-3">
+				  <label htmlFor="message" className="form-label">Message :</label>
+				  <textarea
+				    id="message"
+				    name="message"
+				    value={formData.message}
+				    onChange={handleChange}
+				    placeholder="Décrivez votre demande"
+				    className="form-control"
+				    rows="5" // Ajuste le nombre de lignes affichées
+					maxLength={1000}
+				    required
+				  />
+				  <small className="text-muted">
+				  	{formData.message.length} / {1000} caractères
+				  </small>
+				</div>
+
                 <button type="submit" className="btn btn-primary w-100">
                   Envoyer la demande
                 </button>
               </form>
             </div>
+			<p>En cas d'urgence, merci de contacter le : 03 20 17 59 47</p>
           </div>
         </div>
       </div>
