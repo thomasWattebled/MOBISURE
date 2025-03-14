@@ -12,6 +12,7 @@ public interface AccessAssistanceRepository extends JpaRepository<AccessAssistan
 	
 	List<AccessAssistance> findByIdUser(Long idUser);
 
-	List<AccessAssistance> findByIdAssistanceAndIdUser(String idAssistance, Long idUser);
+	AccessAssistance findByIdAssistanceAndIdUser(String idAssistance, Long idUser);
+
 	
 }

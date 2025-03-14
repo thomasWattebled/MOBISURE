@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import { Nav, NavDropdown } from "react-bootstrap"; // Import de NavDropdown
 import { AuthProvider } from './components/auth/AuthContext.js';
-import { WhenUserIsAuthenticated, WhenUserIsNotAuthenticated } from "./components/security/PrivateRoute.js";
+import { WhenUserHasAnyRole, WhenUserIsAuthenticated, WhenUserIsNotAuthenticated } from "./components/security/PrivateRoute.js";
 import LoginComponent from './components/auth/LoginComponent.js';
 import LogoutComponent from './components/auth/LogoutComponent.js';
 import RegistrationForm from './components/register/RegistrationForm.js';
@@ -62,6 +62,12 @@ export const Layout = () => (
 			  <NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
             </NavDropdown>
           </WhenUserIsInRole>
+		  
+		  <WhenUserHasAnyRole roles={["MEDECIN","PARTENAIRE"]}>
+		  	<NavDropdown title="Gestion" id="conseiller-dropdown" className="text-red">
+		  	 	<NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
+		 	</NavDropdown>
+		 </WhenUserHasAnyRole>
 
           {/* Autres liens */}
           <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>

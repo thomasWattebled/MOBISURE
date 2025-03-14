@@ -23,9 +23,9 @@ public class AccessAssistanceServiceImpl implements AccessAssistanceService {
 	
 	@Override
 	public boolean getPermissionOfUser(String idAssistance, Long idUser) {
-		List<AccessAssistance> resultat = repo.findByIdAssistanceAndIdUser(idAssistance, idUser);
+		AccessAssistance resultat = repo.findByIdAssistanceAndIdUser(idAssistance, idUser);
 		
-		if(resultat.isEmpty()) { return false; };
+		if(!resultat.equals(null)) { return false; };
 		
 		return true;
 	}
@@ -53,6 +53,19 @@ public class AccessAssistanceServiceImpl implements AccessAssistanceService {
 			assistance.add(repoAssistance.findByNumDossier(a.getIdAssistance()));
 		});
 		return assistance;
+	}
+
+	@Override
+	public void removeAccess(String idAssistance, Long idUser) {
+		AccessAssistance access = repo.findByIdAssistanceAndIdUser(idAssistance, idUser);
+		Assistance assistance = repoAssistance.findByNumDossier(access.getIdAssistance());
+		
+		if(assistance.isGerer()) { 
+			assistance.setGerer(false);
+			repoAssistance.save(assistance);
+		}
+		
+	    repo.delete(access);
 	}
 
 }
