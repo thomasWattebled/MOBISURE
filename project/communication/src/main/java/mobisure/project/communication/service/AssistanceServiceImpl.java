@@ -49,14 +49,12 @@ public class AssistanceServiceImpl implements AssistanceService {
 
 	@Override
 	public Assistance getByNumDossier(String numDossier) {
-		Optional<Assistance> getAssistance = repo.findByNumDossier(numDossier);
-		
-		if(getAssistance.isPresent()) {
-			Assistance assistance = getAssistance.get();
-			return assistance;
-		}
-		
-		return null;
+		return repo.findByNumDossier(numDossier);
+	}
+
+	@Override
+	public List<Assistance> getAssistanceDisponnible() {
+		return repo.findDisponnible();
 	}
 	
 }

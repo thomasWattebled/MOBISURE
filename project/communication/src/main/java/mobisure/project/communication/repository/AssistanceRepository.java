@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import mobisure.project.communication.entity.Assistance;
 
@@ -13,6 +14,8 @@ public interface AssistanceRepository extends JpaRepository<Assistance,Long> {
 	
 	List<Assistance> findByIdClient(Long idClient);
 	
-	Optional<Assistance> findByNumDossier(String numDossier);
-	
+	Assistance findByNumDossier(String numDossier);
+
+	@Query("SELECT a FROM Assistance a WHERE (a.gerer = false)")
+	List<Assistance> findDisponnible();
 }

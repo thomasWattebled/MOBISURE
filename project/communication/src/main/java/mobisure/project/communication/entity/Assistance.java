@@ -33,6 +33,7 @@ public class Assistance {
 	private String mdp;
 	private String telephone;
 	
+	private boolean gerer;
 	
 	
 	public Assistance(Long id_client, Status status, Date date, String message, TypeAssistance type, String nom,
@@ -49,10 +50,12 @@ public class Assistance {
 		this.mdp = mdp;
 		this.telephone = telephone;
 		this.numDossier = generateNumDossier();
+		this.gerer = false;
 	}
 
 	public Assistance() {
 		this.numDossier = generateNumDossier();
+		this.gerer = false;
 	}
 	
 	private String generateNumDossier() {
@@ -154,8 +157,30 @@ public class Assistance {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	
-	
+
+	public String getNumDossier() {
+		return numDossier;
+	}
+
+	public void setNumDossier(String numDossier) {
+		this.numDossier = numDossier;
+	}
+
+	public Long getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(Long idClient) {
+		this.idClient = idClient;
+	}
+
+	public boolean isGerer() {
+		return gerer;
+	}
+
+	public void setGerer(boolean gerer) {
+		this.gerer = gerer;
+	}
 	
 
 }

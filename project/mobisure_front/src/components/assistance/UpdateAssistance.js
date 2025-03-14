@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/updateAssistance.css';
 
-const UpdateMyAssistance = ({ numDossier }) => {
+const UpdateAssistance = ({ numDossier }) => {
   const [assistance, setAssistance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -89,12 +89,18 @@ const UpdateMyAssistance = ({ numDossier }) => {
   return (
     <div>
       <h3>Récapitulatif de votre dossier :</h3>
+	  
+	  <button>Ajouter une personne au dossier</button>
       <table>
         <tbody>
           <tr>
             <td className='att'>Nom et prénom :</td>
-            <td>{assistance.nom}</td>
+            <td>{assistance.nom} {assistance.prenom}</td>
           </tr>
+		  <tr>
+		  	<td className='att'>Numéro de téléphone :</td>
+		    <td>{assistance.telephone}</td>
+		  </tr>
           <tr>
             <td className='att'>Date de la demande d'assistance :</td>
             <td>{new Date(assistance.date).toLocaleDateString()}</td>
@@ -145,4 +151,4 @@ const UpdateMyAssistance = ({ numDossier }) => {
   );
 };
 
-export default UpdateMyAssistance;
+export default UpdateAssistance;

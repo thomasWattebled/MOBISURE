@@ -34,6 +34,11 @@ public class AssistanceController {
         return service.getAllAssistance();
     }
     
+    @GetMapping("/assistance/disponnible")
+    public List<Assistance> getAssistanceDisponnible() {
+        return service.getAssistanceDisponnible();
+    }
+    
     @PutMapping("/assistance/updateStatus/{id}")
     public void updateStatus(@PathVariable Long id, @RequestBody Map<String, String> requestBody){
     	

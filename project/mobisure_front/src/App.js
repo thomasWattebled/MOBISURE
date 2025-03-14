@@ -22,6 +22,7 @@ import Sinistre from './pages/Sinistre.jsx';
 import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
+import MyFolder from './components/assistance/MyFolder.js';
 import './assets/css/App.css';
 
 export const Layout = () => (
@@ -58,6 +59,7 @@ export const Layout = () => (
             <NavDropdown title="Gestion" id="conseiller-dropdown" className="text-red">
               <NavDropdown.Item as={Link} to="/pageUser">Gestion des clients</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/assistance/Liste">Les demandes d'assistance</NavDropdown.Item>
+			  <NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
             </NavDropdown>
           </WhenUserIsInRole>
 
@@ -98,6 +100,7 @@ export default function App() {
             <Route path="/assistance/Liste" element={<AssistanceList />} />
             <Route path="/myassistance" element={<MyAssistance />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
+			<Route path="/assistance/mesDossier" element={<MyFolder />} />
           </Route>
         </Routes>
       </BrowserRouter>

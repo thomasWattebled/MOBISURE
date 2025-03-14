@@ -20,4 +20,6 @@ public interface AssistanceService {
 	public List<Assistance> getMyAssistance(Long id);
 	
 	public Assistance getByNumDossier(String numDossier);
+
+	public List<Assistance> getAssistanceDisponnible();
 }
