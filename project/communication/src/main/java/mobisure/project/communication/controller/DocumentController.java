@@ -1,6 +1,5 @@
 package mobisure.project.communication.controller;
 
-import java.awt.PageAttributes.MediaType;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -11,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
-
 
 import mobisure.project.communication.entity.Document;
 import mobisure.project.communication.service.DocumentService;
@@ -55,9 +51,6 @@ public class DocumentController {
     @GetMapping("/by-dossier/{numDossier}")
     public ResponseEntity<List<Document>> getFilesByDossier(@PathVariable String numDossier) {
         List<Document> documents = documentService.getFilesByNumDossier(numDossier);
-        if (documents.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
         return ResponseEntity.ok(documents);
     }
     

@@ -43,10 +43,7 @@
   text-decoration: underline;
 }
 
-/* Menu déroulant */
-.navbar .dropdown {
-  position: relative;
-}
+
 
 .navbar .dropdown-menu {
   background-color: #00aaff;

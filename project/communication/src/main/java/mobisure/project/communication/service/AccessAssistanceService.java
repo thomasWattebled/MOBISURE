@@ -14,4 +14,6 @@ public interface AccessAssistanceService {
 	public List<AccessAssistance> getAll();
 
 	public List<Assistance> getMyFolder(Long idUser);
+
+	public void removeAccess(String idAssistance, Long idUser);
 }

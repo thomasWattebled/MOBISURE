@@ -244,5 +244,19 @@ public class UserServiceImpl implements UserService {
 	        throw new RuntimeException("Utilisateur non trouvé");
 	    }
 	}
+	
+	public List<UserDto> getUsersByRole(RoleName role) {
+		
+		List<User> users = repoUser.findAll();
+		List<UserDto> res = new ArrayList<>();
+		users.forEach( u -> {
+			if(u.getRoles().contains(role)) {
+				UserDto us = convertToDto(u);
+				res.add(us); 
+			}
+		});
+		
+		return res;
+	}
 
 }
