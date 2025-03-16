@@ -23,10 +23,12 @@ import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceForm from './components/assistance/AssistanceForm.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
+import Payment from './pages/Payment.jsx';
 
 
 
 export const Layout = () => (
+  <>
   <div className="d-flex flex-column min-vh-100">
     <nav className="navbar d-flex align-items-center px-3" style={{ backgroundColor: '#00aaff' }}>
       <img src={travelImage7} alt="MOBISURE Logo" style={{ height: '40px', marginRight: '15px' }} />
@@ -64,6 +66,7 @@ export const Layout = () => (
     </main>
     <Footer />
   </div>
+  </>
 );
 
 export default function App() {
@@ -91,6 +94,7 @@ export default function App() {
             <Route path="/assistance/Liste" element={<AssistanceList />} />
             <Route path="/myassistance" element={<MyAssistance />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
+            <Route path="/payment" element={<Payment />} />
           </Route>
         </Routes>
       </BrowserRouter>

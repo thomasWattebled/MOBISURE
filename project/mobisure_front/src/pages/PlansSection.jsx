@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../components/plans/style/PlansSection.css';
 import Carousel from '../components/home/Carousel';
 import SubOptionList from '../components/plans/components/SubOptionList';
@@ -15,6 +15,9 @@ import VoyageVacanceForm from '../components/plans/components/formulaire/VoyageV
 import AssuranceVeloForm from '../components/plans/components/formulaire/AssuranceVeloForm';
 import AssuranceVehiculeForm from '../components/plans/components/formulaire/AssuranceVehiculeForm';
 import Recap from '../components/plans/components/Recap';
+import { useAuth } from '../components/auth/AuthContext';
+import UserService from '../services/userService';
+
 
 const PlansSection = () => {
   const reforestationData = [
@@ -29,12 +32,52 @@ const PlansSection = () => {
     }];
 
 
+    const { getUser } = useAuth();
+    const userDetails = getUser();
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     const [selectedPlan, setSelectedPlan] = useState(null);
     const [subOptions, setSubOptions] = useState(null);
     const [selectedSubOption, setSelectedSubOption] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [isOptionSelected, setIsOptionSelected] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false);
+    
+    useEffect(() => {
+              setLoading(true);
+              UserService.fetchUserByEmail(userDetails.unsername).then(data => {
+                  setUser(data);
+                  setLoading(false)
+              });
+            },[]);
+
+            const [formData, setFormData] = useState({
+              id_client: "",
+              date: new Date().toISOString(),
+              marque: "",
+              modele: "",
+              electrique: "",
+              annee: "",
+              utilisation: "",
+              duree: "",
+            });
+
+    // Met à jour formData une fois que l'utilisateur est chargé
+    useEffect(() => {
+          if (user) {
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              id_client: user.id, // Ajout de l'ID client
+          nom: user.nom,
+          prenom: user.prenom,
+          mail: user.mail,
+          mdp: user.mdp,
+          telephone: user.telephone
+            }));
+          }
+        }, [user]);
+    
     
     // Gestion de la sélection des plans principaux
     const handlePlanSelect = (plan) => {
@@ -57,6 +100,36 @@ const PlansSection = () => {
       }  else {
         setSubOptions(null);
       }
+    };
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+      console.log(formData)
+      e.preventDefault();
+  
+      fetch('http://localhost:8083/devis/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      .then((response) => {
+        if (response.ok) {
+          setModalVisible(true); // Ouvre le modal si la soumission est un succès
+        }
+        return response.text();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Erreur :', error);
+      });
     };
   
     // Gestion de la sélection des sous-options
@@ -111,8 +184,14 @@ const PlansSection = () => {
 
       {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Voiture" &&(
         <div>
-      <AssuranceVehiculeForm />
-      <button onClick={handleBack} className="back-button">
+      <AssuranceVehiculeForm 
+      formData={formData}
+      setFormData={setFormData}  
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+      isModalVisible={isModalVisible}
+      setModalVisible={setModalVisible} />
+      <button onClick={handleBack}   className="back-button">
         Retour
       </button>
       </div>
