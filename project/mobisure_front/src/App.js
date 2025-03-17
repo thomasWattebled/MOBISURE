@@ -55,19 +55,17 @@ export const Layout = () => (
             </NavDropdown>
           </WhenUserIsInRole>
 
-          <WhenUserIsInRole role="CONSEILLER">
+          
+		  <WhenUserHasAnyRole roles={["MEDECIN","PARTENAIRE","CONSEILLER"]}>
             <NavDropdown title="Gestion" id="conseiller-dropdown" className="text-red">
+			 <WhenUserIsInRole role="CONSEILLER">
               <NavDropdown.Item as={Link} to="/pageUser">Gestion des clients</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/assistance/Liste">Les demandes d'assistance</NavDropdown.Item>
-			  <NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
+			 </WhenUserIsInRole>
+			  	<NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
             </NavDropdown>
-          </WhenUserIsInRole>
-		  
-		  <WhenUserHasAnyRole roles={["MEDECIN","PARTENAIRE"]}>
-		  	<NavDropdown title="Gestion" id="conseiller-dropdown" className="text-red">
-		  	 	<NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
-		 	</NavDropdown>
 		 </WhenUserHasAnyRole>
+		  
 
           {/* Autres liens */}
           <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
