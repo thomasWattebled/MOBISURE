@@ -40,7 +40,7 @@ public class AssistanceController {
     }
     
     @PutMapping("/assistance/updateStatus/{id}")
-    public void updateStatus(@PathVariable Long id, @RequestBody Map<String, String> requestBody){
+    public void updateStatus(@PathVariable String id, @RequestBody Map<String, String> requestBody){
     	
     	String request_status = requestBody.get("status");
     	Status status = Status.valueOf(request_status);
@@ -69,20 +69,52 @@ public class AssistanceController {
             
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(assistanceRequest.getDate());
+            
+            switch (typeAssistance) {
+            case AUTO:
+                service.createDepannage(
+                        assistanceRequest.getId_client(), status, date, assistanceRequest.getMessage(), typeAssistance,
+                        assistanceRequest.getNom(), assistanceRequest.getPrenom(), assistanceRequest.getMail(), 
+                        assistanceRequest.getMdp(), assistanceRequest.getTelephone(), assistanceRequest.getVille(), 
+                        assistanceRequest.getRue()
+                );
+                break;
 
-            // Créer une nouvelle demande d'assistance
-            service.createAssistance(
-                assistanceRequest.getId_client(),
-                status,
-                date,
-                assistanceRequest.getMessage(),
-                typeAssistance,
-                assistanceRequest.getNom(),
-                assistanceRequest.getPrenom(),
-                assistanceRequest.getMail(),
-                assistanceRequest.getMdp(),
-                assistanceRequest.getTelephone()
-            );
+            case ACCIDENT:
+                service.createAccident(
+                        assistanceRequest.getId_client(), status, date, assistanceRequest.getMessage(), typeAssistance,
+                        assistanceRequest.getNom(), assistanceRequest.getPrenom(), assistanceRequest.getMail(), 
+                        assistanceRequest.getMdp(), assistanceRequest.getTelephone(), assistanceRequest.getVille(), 
+                        assistanceRequest.getRue(), assistanceRequest.getNbBlesse()
+                );
+                break;
+
+            case REMBOURSEMENT:
+                service.createRemboursement(
+                        assistanceRequest.getId_client(), status, date, assistanceRequest.getMessage(), typeAssistance,
+                        assistanceRequest.getNom(), assistanceRequest.getPrenom(), assistanceRequest.getMail(), 
+                        assistanceRequest.getMdp(), assistanceRequest.getTelephone(), assistanceRequest.getMontant(), 
+                        assistanceRequest.getMotif()
+                );
+                break;
+
+            case MEDICAL:
+                service.createMedical(
+                        assistanceRequest.getId_client(), status, date, assistanceRequest.getMessage(), typeAssistance,
+                        assistanceRequest.getNom(), assistanceRequest.getPrenom(), assistanceRequest.getMail(), 
+                        assistanceRequest.getMdp(), assistanceRequest.getTelephone(), assistanceRequest.getMotif()
+                );
+                break;
+
+            default:
+                service.createAssistance(
+                        assistanceRequest.getId_client(), status, date, assistanceRequest.getMessage(), typeAssistance,
+                        assistanceRequest.getNom(), assistanceRequest.getPrenom(), assistanceRequest.getMail(), 
+                        assistanceRequest.getMdp(), assistanceRequest.getTelephone()
+                );
+                break;
+        }
+
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Demande d'assistance ajoutée avec succès");
 

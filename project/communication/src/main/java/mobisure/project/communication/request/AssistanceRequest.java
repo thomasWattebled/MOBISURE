@@ -12,11 +12,22 @@ public class AssistanceRequest {
 	private String mail;
 	private String mdp;
 	private String telephone;
+	
+	//Pour depannage et accident : 
+	private String ville;
+	private String rue;
+	
+	//Pour accident :
+	private int nbBlesse;
+	
+	//Pour remboursement :
+	private float montant;
+	private String motif; // et pour medical
     
 	public AssistanceRequest() {}
 
 	public AssistanceRequest(Long id_client, String status, String date, String message, String type, String nom,
-			String prenom, String mail, String mdp, String telephone) {
+			String prenom, String mail, String mdp, String telephone,String ville, String rue,int nbBlesse, float montant, String motif) {
 		super();
 		this.id_client = id_client;
 		this.status = status;
@@ -28,6 +39,11 @@ public class AssistanceRequest {
 		this.mail = mail;
 		this.mdp = mdp;
 		this.telephone = telephone;
+		this.ville = ville;
+		this.rue = rue;
+		this.nbBlesse = nbBlesse;
+		this.montant = montant;
+		this.motif = motif;
 	}
 
 	public Long getId_client() {
@@ -109,8 +125,45 @@ public class AssistanceRequest {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-    
-	
-    
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getRue() {
+		return rue;
+	}
+
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+
+	public int getNbBlesse() {
+		return nbBlesse;
+	}
+
+	public void setNbBlesse(int nbBlesse) {
+		this.nbBlesse = nbBlesse;
+	}
+
+	public float getMontant() {
+		return montant;
+	}
+
+	public void setMontant(float montant) {
+		this.montant = montant;
+	}
+
+	public String getMotif() {
+		return motif;
+	}
+
+	public void setMotif(String motif) {
+		this.motif = motif;
+	} 
 	
 }
