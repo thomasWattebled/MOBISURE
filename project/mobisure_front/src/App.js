@@ -23,6 +23,7 @@ import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
 import MyFolder from './components/assistance/MyFolder.js';
+import MyContrat from './components/contrat/MyContrat.js';
 import './assets/css/App.css';
 
 export const Layout = () => (
@@ -105,6 +106,7 @@ export default function App() {
             <Route path="/myassistance" element={<MyAssistance />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
 			<Route path="/assistance/mesDossier" element={<MyFolder />} />
+			<Route path="/mesContrats" element={<MyContrat />} />
           </Route>
         </Routes>
       </BrowserRouter>
