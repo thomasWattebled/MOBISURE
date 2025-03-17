@@ -17,9 +17,9 @@ public class Assistance {
 	private Long id;
 
 	@Column(unique = true)
-    private String num_dossier;
+    private String numDossier;
 	
-	private Long id_client;
+	private Long idClient;
 	private Status status;
 	private Date date;
 	
@@ -33,12 +33,13 @@ public class Assistance {
 	private String mdp;
 	private String telephone;
 	
+	private boolean gerer;
 	
 	
 	public Assistance(Long id_client, Status status, Date date, String message, TypeAssistance type, String nom,
 			String prenom, String mail, String mdp, String telephone) {
 		super();
-		this.id_client = id_client;
+		this.idClient = id_client;
 		this.status = status;
 		this.date = date;
 		this.message = message;
@@ -48,11 +49,13 @@ public class Assistance {
 		this.mail = mail;
 		this.mdp = mdp;
 		this.telephone = telephone;
-		this.num_dossier = generateNumDossier();
+		this.numDossier = generateNumDossier();
+		this.gerer = false;
 	}
 
 	public Assistance() {
-		this.num_dossier = generateNumDossier();
+		this.numDossier = generateNumDossier();
+		this.gerer = false;
 	}
 	
 	private String generateNumDossier() {
@@ -60,11 +63,11 @@ public class Assistance {
     }
 
     public String getNum_dossier() {
-        return num_dossier;
+        return numDossier;
     }
     
     public void setNum_dossier(String num_dossier) {
-        this.num_dossier = num_dossier;
+        this.numDossier = num_dossier;
     }
 
 	public Long getId() {
@@ -76,11 +79,11 @@ public class Assistance {
 	}
 
 	public Long getId_client() {
-		return id_client;
+		return idClient;
 	}
 
 	public void setId_client(Long id_client) {
-		this.id_client = id_client;
+		this.idClient = id_client;
 	}
 
 	public Status getStatus() {
@@ -154,8 +157,30 @@ public class Assistance {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	
-	
+
+	public String getNumDossier() {
+		return numDossier;
+	}
+
+	public void setNumDossier(String numDossier) {
+		this.numDossier = numDossier;
+	}
+
+	public Long getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(Long idClient) {
+		this.idClient = idClient;
+	}
+
+	public boolean isGerer() {
+		return gerer;
+	}
+
+	public void setGerer(boolean gerer) {
+		this.gerer = gerer;
+	}
 	
 
 }

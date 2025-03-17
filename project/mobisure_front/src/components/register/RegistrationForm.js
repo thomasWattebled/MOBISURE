@@ -30,9 +30,25 @@ const RegistrationForm = () => {
       date_creation: new Date().toISOString().split('T')[0],
     };
 
-    // Simulate form submission
-    console.log('Form submitted:', formDataWithDate);
-    setModalVisible(true);
+	fetch('http://localhost:8080/users/register', {
+	      method: 'POST',
+	      headers: {
+	        'Content-Type': 'application/json',
+	      },
+	      body: JSON.stringify(formDataWithDate),
+	    })
+	    .then((response) => {
+	      if (response.ok) {
+	        setModalVisible(true); // Ouvre le modal si la soumission est un succès
+	      }
+	      return response.text();
+	    })
+	    .then((data) => {
+	      console.log(data);
+	    })
+	    .catch((error) => {
+	      console.error('Erreur :', error);
+	    });
 
 
   };

@@ -73,4 +73,6 @@ public interface UserService {
 	public void changeMdp(changeMdpRequest changeMdp);
 
 	public void updateUser(Long id, UserDto userDto);
+	
+	public List<UserDto> getUsersByRole(RoleName role);
 }

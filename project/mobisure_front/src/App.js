@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap"; // Import de NavDropdown
 import { AuthProvider } from './components/auth/AuthContext.js';
-import { WhenUserIsAuthenticated, WhenUserIsNotAuthenticated } from "./components/security/PrivateRoute.js";
+import { WhenUserHasAnyRole, WhenUserIsAuthenticated, WhenUserIsNotAuthenticated } from "./components/security/PrivateRoute.js";
 import LoginComponent from './components/auth/LoginComponent.js';
 import LogoutComponent from './components/auth/LogoutComponent.js';
 import RegistrationForm from './components/register/RegistrationForm.js';
@@ -14,18 +14,17 @@ import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import Footer from './components/Footer.jsx';
 import travelImage7 from './assets/image/logo.png';
 import PageUser from './components/admin/pageUser';
-import {WhenUserIsInRole} from './components/security/PrivateRoute.js';
+import { WhenUserIsInRole } from './components/security/PrivateRoute.js';
 import MyInformation from './components/user/MyInformation.js';
 import MdpForm from './components/auth/MdpForm.js';
 import FormUpdateClient from './components/admin/formUpdateClient.js';
 import Sinistre from './pages/Sinistre.jsx';
 import MessageApp from './components/messagerie/MessageApp.js';
-import AssistanceForm from './components/assistance/AssistanceForm.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
 import Payment from './pages/Payment.jsx';
-
-
+import MyFolder from './components/assistance/MyFolder.js';
+import './assets/css/App.css';
 
 export const Layout = () => (
   <>
@@ -42,21 +41,38 @@ export const Layout = () => (
         <WhenUserIsAuthenticated>
           <Link to="/home" className="text-white text-decoration-none">Home</Link>
           <Link to="/plans" className="text-white text-decoration-none">Plans</Link>
-		  <Link to="/userInformation" className="text-white text-decoration-none">Mes informations</Link>
-      <Link to="/mesContrats" className="text-white text-decoration-none">Mes contrats</Link>
-      <Link to="/mesSinistres" className="text-white text-decoration-none">Mes sinistres</Link>
-		  <WhenUserIsInRole role="ADMIN">
-		  	<Link to="/pageUser" className="text-white text-decoration-none">Gestion des utilisateurs</Link>
-		  </WhenUserIsInRole>
-		  <WhenUserIsInRole role="CONSEILLER">
-		  	<Link to="/pageUser" className="text-white text-decoration-none">Gestion des clients</Link>
-		  </WhenUserIsInRole>
-		  <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
-		  <Link to="/assistance" className="text-white text-decoration-none">Demande assistance</Link>
-		  <Link to="/myassistance" className="text-white text-decoration-none">Mes assistances</Link>
-		  <WhenUserIsInRole role="CONSEILLER">
-		  <Link to="/assistance/Liste" className="text-white text-decoration-none">Les demandes d'assistance</Link>
-		  </WhenUserIsInRole>
+
+          {/* Menu déroulant pour les informations de l'utilisateur */}
+          <NavDropdown title="Mes informations" id="user-dropdown" className="text-white">
+            <NavDropdown.Item as={Link} to="/userInformation">Mes informations</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/mesContrats">Mes contrats</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/mesSinistres">Mes sinistres</NavDropdown.Item>
+			<Link to="/myassistance" className="text-white text-decoration-none">Mes assistances</Link>
+          </NavDropdown>
+
+          {/* Menu déroulant pour les rôles administrateur et conseiller */}
+          <WhenUserIsInRole role="ADMIN">
+            <NavDropdown title="Gestion" id="admin-dropdown" className="text-white">
+              <NavDropdown.Item as={Link} to="/pageUser">Gestion des utilisateurs</NavDropdown.Item>
+            </NavDropdown>
+          </WhenUserIsInRole>
+
+          <WhenUserIsInRole role="CONSEILLER">
+            <NavDropdown title="Gestion" id="conseiller-dropdown" className="text-red">
+              <NavDropdown.Item as={Link} to="/pageUser">Gestion des clients</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/assistance/Liste">Les demandes d'assistance</NavDropdown.Item>
+			  <NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
+            </NavDropdown>
+          </WhenUserIsInRole>
+		  
+		  <WhenUserHasAnyRole roles={["MEDECIN","PARTENAIRE"]}>
+		  	<NavDropdown title="Gestion" id="conseiller-dropdown" className="text-red">
+		  	 	<NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
+		 	</NavDropdown>
+		 </WhenUserHasAnyRole>
+
+          {/* Autres liens */}
+          <Link to="/messagerie" className="text-white text-decoration-none">Messagerie</Link>
           <Link to="/deconnexion" className="text-white text-decoration-none">Déconnexion</Link>
         </WhenUserIsAuthenticated>
       </Nav>
@@ -90,14 +106,15 @@ export default function App() {
             <Route path="/updateClient/:id" element={<FormUpdateClient />} />
             <Route path="/messagerie" element={<MessageApp />} />
             <Route path="/messagerie/:userId" element={<MessageApp />} />
-            <Route path="/assistance" element={<AssistanceForm />} />
             <Route path="/assistance/Liste" element={<AssistanceList />} />
             <Route path="/myassistance" element={<MyAssistance />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
             <Route path="/payment" element={<Payment />} />
+			      <Route path="/assistance/mesDossier" element={<MyFolder />} />
           </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
   );
 }
+

@@ -5,7 +5,7 @@ import UpdateAssistance from './UpdateAssistance';
 import UserService from '../../services/userService';
 import { useAuth } from '../auth/AuthContext';
 
-const AssistanceList = () => {
+const MyFolder = () => {
   const [assistanceList, setAssistanceList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,6 +15,7 @@ const AssistanceList = () => {
   const [selectedMessage, setSelectedMessage] = useState(""); // 🔹 Stocke le message sélectionné
   const [showModal, setShowModal] = useState(false); // 🔹 État pour afficher/masquer la modale
   const [showGestion, setGestion] = useState(false);
+  const [selectDossier, setSelectedDossier] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const { getUser } = useAuth();
@@ -29,8 +30,12 @@ const AssistanceList = () => {
   	   setLoading(false);
   	 }, []);
 
+	 
   useEffect(() => {
-    fetch('http://localhost:8081/assistance/disponnible')
+	
+	if (!user) return;
+	
+    fetch(`http://localhost:8081/access/myFolder?idUser=${user.id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Erreur de récupération des données');
@@ -45,7 +50,7 @@ const AssistanceList = () => {
         setError(error.message);
         setLoading(false);
       });
-  }, []);
+  }, [user]);
 
   const startConversation = (userId) => {
     navigate(`/messagerie/${userId}`);
@@ -94,21 +99,12 @@ const AssistanceList = () => {
     };
 	
 	const openGestion = async (numDossier) => {
-		try{
-			const response = await fetch(`http://localhost:8081/access/addAccess?idAssistance=${numDossier}&idUser=${user.id}`, {
-			        method: 'POST',
-			        headers: {
-			          'Content-Type': 'application/json',
-			        },
-			      });
-				  
-			setAssistanceList((prevList) =>
-				prevList.filter((dossier) => dossier.numDossier !== numDossier)
-			);
-					  
-		} catch(error){
-			alert("Erreur");
-		}
+		setGestion(true);
+		setSelectedDossier(numDossier);
+	}
+	
+	const closeGestion = () => {
+		setGestion(false);
 	}
 			
 
@@ -122,7 +118,7 @@ const AssistanceList = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center">Liste des Demandes d'Assistance</h2>
+      <h2 className="text-center">Mes dossiers</h2>
       <button className="btn btn-primary mb-3" onClick={() => setShowFilters(!showFilters)}>
         {showFilters ? "Masquer les filtres" : "Afficher les filtres"}
       </button>
@@ -251,11 +247,29 @@ const AssistanceList = () => {
 	          </div>
 	        )}
 			
+			{showGestion && (
+				         <div className="modal">
+				           <div className="modal-content">
+				             <div className="modal-header">
+				               <h5 className="modal-title">Vous modifiez le dossier suivant : {selectDossier}</h5>
+				               <button type="button" onClick={closeGestion}>×</button>
+				             </div>
+				             <div className="modal-body">
+				               <UpdateAssistance numDossier={selectDossier} />
+				             </div>
+				             <div className="modal-footer">
+				               <button type="button" onClick={closeGestion}>
+				                 Fermer
+				               </button>
+				             </div>
+				           </div>
+				         </div>
+				       )}
+			
 	        {/* 🔹 Ajoute un fond pour la modale */}
-	        {showModal && <div className="modal-backdrop fade show"></div>}
+	        {showModal && showGestion && <div className="modal-backdrop fade show"></div>}
     </div>
   );
 };
 
-export default AssistanceList;
-
+export default MyFolder;
