@@ -51,18 +51,23 @@ const PaymentForm = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8088/payment/', {
-                method: 'POST',
+            const response =await fetch("http://localhost:8088/api/tryPayment", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(paymentRequest)
-            });
+                body: JSON.stringify({
+                    cardNumber: "1234567890123456",
+                    cardHolder: "John Doe",
+                    cvv: "123",
+                    amount: 100.0
+                })
+            })
 
             const result = await response.text();
             setMessage(result);
         } catch (error) {
-            setMessage('Payment failed!');
+            setMessage('fail');
         }
     };
 

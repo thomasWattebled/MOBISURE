@@ -1,11 +1,11 @@
-package mobisure.project.payment.service;
+package mobisure.payment.service;
 
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mobisure.project.payment.entity.Payment;
+import mobisure.payment.entity.Payment;
 
 import java.time.LocalDateTime;
 

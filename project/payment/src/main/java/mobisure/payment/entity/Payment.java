@@ -1,11 +1,14 @@
-package mobisure.project.payment.entity;
+package mobisure.payment.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class Payment {
-
+		
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String cardNumber;
     private String cardHolder;
     private String cvv;
@@ -25,7 +28,13 @@ public class Payment {
         this.paymentSuccess = paymentSuccess;
     }
 
-   
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCardNumber() {
         return cardNumber;
