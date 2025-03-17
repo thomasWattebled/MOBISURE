@@ -56,12 +56,7 @@ const PaymentForm = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    cardNumber: "1234567890123456",
-                    cardHolder: "John Doe",
-                    cvv: "123",
-                    amount: 100.0
-                })
+                body: JSON.stringify(paymentRequest)
             })
 
             const result = await response.text();
