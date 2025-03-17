@@ -1,15 +1,15 @@
-import {React, useState } from 'react';
-
+import React, { useState } from 'react';
 import { validateCardNumber, validateCVV } from './verificationCarte';
+import './PaymentForm.css'; // Importer le CSS
 
 const PaymentForm = () => {
     const [cardNumber, setCardNumber] = useState('');
     const [cardHolder, setCardHolder] = useState('');
     const [cvv, setCvv] = useState('');
     const [message, setMessage] = useState('');
-
     const [cardNumberError, setCardNumberError] = useState('');
     const [cvvError, setCvvError] = useState('');
+    const [isOpen, setIsOpen] = useState(false); // État pour gérer l'ouverture de la popup
 
     const amount = 100.0; // A MODIFIER
 
@@ -47,17 +47,17 @@ const PaymentForm = () => {
             cardNumber,
             cardHolder,
             cvv,
-            amount 
+            amount,
         };
 
         try {
-            const response =await fetch("http://localhost:8088/api/tryPayment", {
-                method: "POST",
+            const response = await fetch('http://localhost:8088/api/tryPayment', {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(paymentRequest)
-            })
+                body: JSON.stringify(paymentRequest),
+            });
 
             const result = await response.text();
             setMessage(result);
@@ -68,50 +68,64 @@ const PaymentForm = () => {
 
     return (
         <div>
-            <h2>Simulate Payment</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Card Number:</label>
-                    <input
-                        type="text"
-                        value={cardNumber}
-                        onChange={handleCardNumberChange}
-                        required
-                    />
-                    {cardNumberError && <p style={{ color: 'red' }}>{cardNumberError}</p>}
-                </div>
-                <div>
-                    <label>Card Holder:</label>
-                    <input
-                        type="text"
-                        value={cardHolder}
-                        onChange={(e) => setCardHolder(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>CVV:</label>
-                    <input
-                        type="text"
-                        value={cvv}
-                        onChange={handleCVVChange}
-                        required
-                    />
-                    {cvvError && <p style={{ color: 'red' }}>{cvvError}</p>}
-                </div>
-                <div>
-                    <label>Amount:</label>
-                    <input
-                        type="number"
-                        value={amount}
-                        readOnly 
-                    />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-            {message && <p>{message}</p>}
+            {/* Bouton pour ouvrir la popup */}
+            <button onClick={() => setIsOpen(true)}>Passer au reglement</button>
+
+            {/* Overlay et popup */}
+            {isOpen && (
+                <>
+                    <div className="overlay" onClick={() => setIsOpen(false)}></div>
+                    <div className="popup">
+                        <h2>Simulate Payment</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <label>Card Number:</label>
+                                <input
+                                    type="text"
+                                    value={cardNumber}
+                                    onChange={handleCardNumberChange}
+                                    required
+                                />
+                                {cardNumberError && <p style={{ color: 'red' }}>{cardNumberError}</p>}
+                            </div>
+                            <div>
+                                <label>Card Holder:</label>
+                                <input
+                                    type="text"
+                                    value={cardHolder}
+                                    onChange={(e) => setCardHolder(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label>CVV:</label>
+                                <input
+                                    type="text"
+                                    value={cvv}
+                                    onChange={handleCVVChange}
+                                    required
+                                />
+                                {cvvError && <p style={{ color: 'red' }}>{cvvError}</p>}
+                            </div>
+                            <div>
+                                <label>Amount:</label>
+                                <input
+                                    type="number"
+                                    value={amount}
+                                    readOnly
+                                />
+                            </div>
+                            <button type="submit">Submit</button>
+                            <button type="button" onClick={() => setIsOpen(false)} style={{ marginLeft: '10px' }}>
+                                Close
+                            </button>
+                        </form>
+                        {message && <p>{message}</p>}
+                    </div>
+                </>
+            )}
         </div>
-    )
+    );
 };
 
 export default PaymentForm;
