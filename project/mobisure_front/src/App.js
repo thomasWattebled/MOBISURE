@@ -22,12 +22,14 @@ import Sinistre from './pages/Sinistre.jsx';
 import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
+import Payment from './pages/Payment.jsx';
 import MyFolder from './components/assistance/MyFolder.js';
 import MyContrat from './components/contrat/MyContrat.js';
 import SinistreList from './components/sinistre/SinistreList.jsx';
 import './assets/css/App.css';
 
 export const Layout = () => (
+  <>
   <div className="d-flex flex-column min-vh-100">
     <nav className="navbar d-flex align-items-center px-3" style={{ backgroundColor: '#00aaff' }}>
       <img src={travelImage7} alt="MOBISURE Logo" style={{ height: '40px', marginRight: '15px' }} />
@@ -80,6 +82,7 @@ export const Layout = () => (
     </main>
     <Footer />
   </div>
+  </>
 );
 
 export default function App() {
@@ -106,9 +109,11 @@ export default function App() {
             <Route path="/assistance/Liste" element={<AssistanceList />} />
             <Route path="/myassistance" element={<MyAssistance />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
-			<Route path="/assistance/mesDossier" element={<MyFolder />} />
-			<Route path="/mesContrats" element={<MyContrat />} />
-			<Route path="/mesSinistres" element={<SinistreList />} />
+            <Route path="/assistance/mesDossier" element={<MyFolder />} />
+            <Route path="/mesContrats" element={<MyContrat />} />
+            <Route path="/mesSinistres" element={<SinistreList />} />
+            <Route path="/payment" element={<Payment />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

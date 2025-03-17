@@ -32,7 +32,7 @@ const SinistreList = () => {
 
 
     if (user?.id) {
-        fetch(`http://localhost:8081/sinistre/${user.id}/all`)
+        fetch(`http://localhost:8082/sinistre/${user.id}/all`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Erreur de récupération des données');
@@ -56,7 +56,7 @@ const SinistreList = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:8081/assistance/updateStatus/${id}`, {
+      const response = await fetch(`http://localhost:8082/sinistre/updateStatus/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
