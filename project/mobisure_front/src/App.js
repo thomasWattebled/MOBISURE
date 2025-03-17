@@ -24,6 +24,7 @@ import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
 import Payment from './pages/Payment.jsx';
 import MyFolder from './components/assistance/MyFolder.js';
+import MyContrat from './components/contrat/MyContrat.js';
 import './assets/css/App.css';
 
 export const Layout = () => (
@@ -107,8 +108,9 @@ export default function App() {
             <Route path="/assistance/Liste" element={<AssistanceList />} />
             <Route path="/myassistance" element={<MyAssistance />} />
             <Route path="/mesSinistres" element={<Sinistre />} />
-            <Route path="/payment" element={<Payment />} />
 			      <Route path="/assistance/mesDossier" element={<MyFolder />} />
+			      <Route path="/mesContrats" element={<MyContrat />} />
+            <Route path="/payment" element={<Payment />} />
           </Route>
         </Routes>
       </BrowserRouter>
