@@ -1,7 +1,9 @@
 package mobisure.project.communication.entity;
 
 import java.util.Date;
+import java.util.Random;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,10 +16,16 @@ public class Assistance {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
-	private Long id_client;
+	@Column(unique = true)
+    private String numDossier;
+	
+	private Long idClient;
 	private Status status;
 	private Date date;
+	
+	@Column(length = 1000)
 	private String message;
+	
 	private TypeAssistance type;
 	private String nom;
 	private String prenom;
@@ -25,12 +33,13 @@ public class Assistance {
 	private String mdp;
 	private String telephone;
 	
+	private boolean gerer;
 	
 	
 	public Assistance(Long id_client, Status status, Date date, String message, TypeAssistance type, String nom,
 			String prenom, String mail, String mdp, String telephone) {
 		super();
-		this.id_client = id_client;
+		this.idClient = id_client;
 		this.status = status;
 		this.date = date;
 		this.message = message;
@@ -40,9 +49,26 @@ public class Assistance {
 		this.mail = mail;
 		this.mdp = mdp;
 		this.telephone = telephone;
+		this.numDossier = generateNumDossier();
+		this.gerer = false;
 	}
 
-	public Assistance() {}
+	public Assistance() {
+		this.numDossier = generateNumDossier();
+		this.gerer = false;
+	}
+	
+	private String generateNumDossier() {
+        return "D-" + (100000 + new Random().nextInt(900000));
+    }
+
+    public String getNum_dossier() {
+        return numDossier;
+    }
+    
+    public void setNum_dossier(String num_dossier) {
+        this.numDossier = num_dossier;
+    }
 
 	public Long getId() {
 		return id;
@@ -53,11 +79,11 @@ public class Assistance {
 	}
 
 	public Long getId_client() {
-		return id_client;
+		return idClient;
 	}
 
 	public void setId_client(Long id_client) {
-		this.id_client = id_client;
+		this.idClient = id_client;
 	}
 
 	public Status getStatus() {
@@ -131,8 +157,30 @@ public class Assistance {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	
-	
+
+	public String getNumDossier() {
+		return numDossier;
+	}
+
+	public void setNumDossier(String numDossier) {
+		this.numDossier = numDossier;
+	}
+
+	public Long getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(Long idClient) {
+		this.idClient = idClient;
+	}
+
+	public boolean isGerer() {
+		return gerer;
+	}
+
+	public void setGerer(boolean gerer) {
+		this.gerer = gerer;
+	}
 	
 
 }

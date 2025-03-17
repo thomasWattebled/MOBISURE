@@ -13,7 +13,7 @@ public class AssistanceRequest {
 	private String mdp;
 	private String telephone;
     
-	
+	public AssistanceRequest() {}
 
 	public AssistanceRequest(Long id_client, String status, String date, String message, String type, String nom,
 			String prenom, String mail, String mdp, String telephone) {

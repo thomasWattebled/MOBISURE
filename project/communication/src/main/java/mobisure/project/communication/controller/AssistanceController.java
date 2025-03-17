@@ -34,6 +34,11 @@ public class AssistanceController {
         return service.getAllAssistance();
     }
     
+    @GetMapping("/assistance/disponnible")
+    public List<Assistance> getAssistanceDisponnible() {
+        return service.getAssistanceDisponnible();
+    }
+    
     @PutMapping("/assistance/updateStatus/{id}")
     public void updateStatus(@PathVariable Long id, @RequestBody Map<String, String> requestBody){
     	
@@ -41,6 +46,17 @@ public class AssistanceController {
     	Status status = Status.valueOf(request_status);
     	
     	service.updateAssistance(id, status);
+    }
+    
+    @GetMapping("/assistance/getMyAssistance/{id}")
+    public List<Assistance> getMyAssistance(@PathVariable Long id){
+    	List<Assistance> test = service.getMyAssistance(id);
+    	return service.getMyAssistance(id);
+    }
+    
+    @GetMapping("/assistance/getByNumDossier/{numDossier}")
+    public Assistance getAssistanceByNumDossier(@PathVariable String numDossier) {
+    	return service.getByNumDossier(numDossier);
     }
 
     // Ajouter une nouvelle demande d'assistance

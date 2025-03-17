@@ -17,4 +17,9 @@ public interface AssistanceService {
 	
 	public void updateAssistance(Long id,Status status);
 	
+	public List<Assistance> getMyAssistance(Long id);
+	
+	public Assistance getByNumDossier(String numDossier);
+
+	public List<Assistance> getAssistanceDisponnible();
 }

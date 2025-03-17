@@ -48,7 +48,7 @@ const MyInformation = () => {
                     <strong>Genre : </strong>{user.sexe}
                   </li>
                   <li className="mb-3">
-                    <strong>Date de naissance : </strong>{user.dateNaissance}
+                    <strong>Date de naissance : </strong>{new Date(user.dateNaissance).toLocaleDateString()}
                   </li>
                   <li className="mb-3">
                     <strong>Téléphone : </strong>{user.telephone}

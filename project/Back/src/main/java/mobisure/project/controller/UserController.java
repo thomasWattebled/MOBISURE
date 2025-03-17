@@ -1,5 +1,6 @@
 package mobisure.project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import mobisure.project.dto.UserDto;
+import mobisure.project.entity.RoleName;
 import mobisure.project.request.UserRoleUpdateRequest;
 import mobisure.project.request.changeMdpRequest;
 import mobisure.project.service.UserService;
@@ -39,6 +42,7 @@ public class UserController {
      */
 	@GetMapping("/users")
 	public List<UserDto> getAllUser(){
+		System.out.print("la");
 		return service.getAllUsers();
 	}
 	
@@ -127,5 +131,12 @@ public class UserController {
 	    }
 	}
 	
+	@GetMapping("users/byRole")
+	public ResponseEntity<List<UserDto>> getByRole(@RequestParam String role) {
+		if(role.equals("conseiller")) {return ResponseEntity.ok(service.getUsersByRole(RoleName.CONSEILLER));}
+		if(role.equals("medecin")) {return ResponseEntity.ok(service.getUsersByRole(RoleName.MEDECIN));}
+		if(role.equals("partenaire")) {return ResponseEntity.ok(service.getUsersByRole(RoleName.PARTENAIRE));}
+		return ResponseEntity.ok(new ArrayList<>());
+	}
 	
 }
