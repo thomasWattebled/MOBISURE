@@ -1,10 +1,25 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../style/form.css";
 
-const AssuranceMotoForm = () => {
+const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
   const [selectedMarque, setSelectedMarque] = useState("");
   const [models, setModels] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+        setFormData((prevData) => ({
+          ...prevData,      
+          marque: "",
+          modele: "",
+  		  motorisation: "THERMIQUE",
+  		  utilisation: "",
+  		  duree: 0,
+  		  fabrication: 0,
+		  plaque: ""
+        }));
+  	},[]);
   
   const marques = [
     "Yamaha",
@@ -39,19 +54,37 @@ const AssuranceMotoForm = () => {
     const marque = e.target.value;
     setSelectedMarque(marque);
     // Mettre à jour la liste des modèles correspondants
+	setFormData((prevData) => ({
+		    ...prevData,
+		    marque: marque
+		  }));
     setModels(modelsByMarque[marque] || []);
   };
-
+  
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      // Redirige vers la page de récap en passant formData
+      navigate("/devis", { state: { formData } });
+    };
+	
+	const handleChange = (e) => {
+	    const { name, value } = e.target;
+	    setFormData((prevData) => ({
+	      ...prevData,
+	      [name]: value,
+	    }));
+	  };
+	
   return (
     <div className="form-container">
       <h2>Formulaire Assurance Moto</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>
             Marque de moto :
             <select
               name="MarqueMoto"
-              value={selectedMarque}
+              value={formData.marque || ""}
               onChange={handleMarqueChange}
               required
             >
@@ -67,7 +100,7 @@ const AssuranceMotoForm = () => {
         <div className="form-group">
           <label>
             Modèle de moto :
-            <select name="motoModel" required disabled={!selectedMarque}>
+            <select name="modele" value={formData.modele || ""}  required disabled={!selectedMarque} onChange={handleChange}>
               <option value="">Sélectionnez un modèle</option>
               {models.map((model) => (
                 <option key={model} value={model}>
@@ -77,38 +110,52 @@ const AssuranceMotoForm = () => {
             </select>
           </label>
         </div>
-        <div className="form-group" >
-      <label>
-      <p>Electrique ? </p>
-      </label>
-      <span className="radio-group">
-      <label for="oui">Oui</label>
-      <input type="radio" id="oui" name="oui" value="oui" checked={selectedOption === "oui"}
-            onChange={(e) => setSelectedOption(e.target.value)}/>
-      <label for="non">Non</label>
-      <input type="radio" id="non" name="non" value="non" checked={selectedOption === "non"}
-            onChange={(e) => setSelectedOption(e.target.value)}/>
-          </span>
+		<div className="form-group">
+		          <label>
+		            <p>Électrique ?</p>
+		          </label>
+		          <div className="radio-group">
+		            <input
+		              type="radio"
+		              id="oui"
+		              name="motorisation"
+		              value="ELECTRIQUE"
+		              checked={formData.motorisation === "ELECTRIQUE"}
+		              onChange={handleChange}
+		            />
+		            <label htmlFor="oui">Oui</label>
+		            <input
+		              type="radio"
+		              id="non"
+		              name="motorisation"
+		              value="THERMIQUE"
+		              checked={formData.motorisation === "THERMIQUE"}
+		              onChange={handleChange}
+		            />
+		            <label htmlFor="non">Non</label>
+		          </div>
         </div>
         <div className="form-group">
           <label>
             Année de fabrication :
-            <input type="number" name="manufactureYear" required />
+            <input value={formData.fabrication || ""} type="number" name="fabrication" onChange={handleChange} required />
           </label>
         </div>
-        <div className="form-group">
-          <label>
-            Utilisation de la moto :
-            <select name="usage" required>
-              <option value="personnel">Personnel</option>
-              <option value="professionnel">Professionnel</option>
-            </select>
-          </label>
-        </div>
+		<div className="form-group">
+		          <label>
+		            Utilisation du véhicule :
+		            <select name="utilisation" value={formData.utilisation || ""}
+		              onChange={handleChange} required >
+		              <option value="">Sélectionnez l'utilisation</option>
+		              <option value="PERSONNEL">Personnel</option>
+		              <option value="PROFESSIONNELLE">Professionnel</option>
+		            </select>
+		          </label>
+		        </div>
         <div className="form-group">
           <label>
             Durée :
-            <select name="duration" required>
+            <select value={formData.duree || ""} name="duree" onChange={handleChange} required>
               <option value="">Sélectionnez une durée</option>
               {durations.map((duration) => (
                 <option key={duration} value={duration}>
@@ -118,6 +165,13 @@ const AssuranceMotoForm = () => {
             </select>
           </label>
         </div>
+		<div className="form-group">
+					<label>
+				    	Plaque d'immatriculation :
+				        <input type="text" name="plaque"
+				           value={formData.plaque || ""} onChange={handleChange} required/>
+				 	</label>
+				 </div>
         <button type="submit">Soumettre</button>
       </form>
     </div>

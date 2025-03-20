@@ -1,19 +1,36 @@
 package com.example.devis.Enum;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum DureeAssurance {
-    SEMAINE(1.4),
-    DEUX_SEMAINES(1.3),
-    UN_MOIS(1.2),
-    SIX_MOIS(1.1),
-    UN_AN(1.0);
+    SEMAINE("1 semaine"),
+    DEUX_SEMAINES("2 semaines"),
+    UN_MOIS("1 mois"),
+    SIX_MOIS("6 mois"),
+    UN_AN("1 an");
 
-    private final double facteur;
+	
+	private final String label;
 
-    DureeAssurance(double facteur) {
-        this.facteur = facteur;
+    DureeAssurance(String label) {
+        this.label = label;
     }
 
-    public double getFacteur() {
-        return facteur;
+    @JsonValue
+    public String getLabel() {
+        return label;
     }
+
+    @JsonCreator
+    public static DureeAssurance fromString(String value) {
+        for (DureeAssurance duree : DureeAssurance.values()) {
+            if (duree.label.equalsIgnoreCase(value)) {
+                return duree;
+            }
+        }
+        throw new IllegalArgumentException("Durée inconnue : " + value);
+    }
+	
 }
+    
