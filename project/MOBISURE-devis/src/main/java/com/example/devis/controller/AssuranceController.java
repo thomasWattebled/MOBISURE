@@ -122,4 +122,10 @@ public class AssuranceController {
 		return ResponseEntity.ok(assurances);
 	}
 	
+	@GetMapping("/assurance/dossier/{numDossier}")
+	public ResponseEntity<Assurance> getMyAssurance(@PathVariable String numDossier) throws Exception{
+		Assurance assurance = service.getAssuranceByNumDossier(numDossier);
+		return ResponseEntity.ok(assurance);
+	}
+	
 }

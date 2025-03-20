@@ -1,6 +1,7 @@
 package com.example.devis.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.devis.entity.Assurance;
 import com.example.devis.entity.vehicule.Moto;
@@ -25,4 +26,6 @@ public interface AssuranceService {
 
 	public List<Assurance> getAllAssurance();
 	public List<Assurance> getAssuranceByClientId(Long clientId);
+	
+	public Assurance getAssuranceByNumDossier(String numDossier) throws Exception;
 }
