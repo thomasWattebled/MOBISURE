@@ -49,6 +49,16 @@ class contratService {
 				    });
 				}
 
+	async getContrat(numDossier,setContrat){
+		return await fetch(`http://localhost:8082/contrat/assurance/dossier${numDossier}`, {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}).then((response) => response.json())
+		.then((data) => { setContrat(data); })
+		.catch((error) => {
+			console.error("Erreur :", error);  // En cas d'erreur, l'afficher
+		});
+	}
 }
 
 export default contratService;

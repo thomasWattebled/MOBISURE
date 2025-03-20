@@ -1,6 +1,7 @@
 package com.example.devis.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -188,6 +189,16 @@ public class AssuranceServiceImpl implements AssuranceService{
 	@Override
 	public Professionnelle createContratProfessionnelle(Professionnelle assurance) {
 		return repo.save(assurance);
+	}
+
+
+	@Override
+	public Assurance getAssuranceByNumDossier(String numDossier) throws Exception {
+		Optional<Assurance> assurance = repo.findByNumDossier(numDossier);
+		if(assurance.isPresent()) {
+			return assurance.get();
+		}
+		throw new Exception("Assurance non trouvée");
 	}
 	
 	
