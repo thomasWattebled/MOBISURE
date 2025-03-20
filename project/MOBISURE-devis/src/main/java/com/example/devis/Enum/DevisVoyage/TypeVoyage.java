@@ -1,4 +1,4 @@
-package com.example.devis.Enum;
+package com.example.devis.Enum.DevisVoyage;
 
 public enum TypeVoyage {
     VACANCES(50, 50),  // 50€ par 1000km et 50€ par kg CO2

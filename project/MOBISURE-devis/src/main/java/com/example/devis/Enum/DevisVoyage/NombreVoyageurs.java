@@ -1,4 +1,4 @@
-package com.example.devis.Enum;
+package com.example.devis.Enum.DevisVoyage;
 
 public enum NombreVoyageurs {
     UN(1.0),

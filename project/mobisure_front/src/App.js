@@ -26,6 +26,7 @@ import Payment from './pages/Payment.jsx';
 import MyFolder from './components/assistance/MyFolder.js';
 import MyContrat from './components/contrat/MyContrat.js';
 import SinistreList from './components/sinistre/SinistreList.jsx';
+import RacapPlan from './pages/RecapPlan.jsx';
 import './assets/css/App.css';
 
 export const Layout = () => (
@@ -113,6 +114,7 @@ export default function App() {
             <Route path="/mesContrats" element={<MyContrat />} />
             <Route path="/mesSinistres" element={<SinistreList />} />
             <Route path="/payment" element={<Payment />} />
+			<Route path="/devis" element={<RacapPlan />} />
 
           </Route>
         </Routes>
