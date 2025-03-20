@@ -17,8 +17,10 @@ const Recapitulatif = () => {
 	const service = new contratService();
 	
 	if(formData.type === "VOITURE"){ service.getDevis("devisVoiture",formData,setPrice); }
-	if(formData.type === "MOTO"){ service.getDevis("devisMoto",formData,setPrice); }
-	if(formData.type === "VELO"){ service.getDevis("devisVelo",formData,setPrice); }
+	else if(formData.type === "MOTO"){ service.getDevis("devisMoto",formData,setPrice); }
+	else if(formData.type === "VELO"){ service.getDevis("devisVelo",formData,setPrice); }
+	else if(formData.type === "VACANCES"){ service.getDevis("devisVacances",formData,setPrice); }
+	else if(formData.type === "PROFESSIONNELLE"){ service.getDevis("devisProfessionnelle",formData,setPrice); }
 	
   },[]); 
   
@@ -31,26 +33,53 @@ const Recapitulatif = () => {
 	}
 	
 	else if(formData.type === "MOTO" && statusPayment===true){ 
-			service.createContrat("createMoto",formData); 
-			navigate("/home");
-		}
+		service.createContrat("createMoto",formData); 
+		navigate("/home");
+	}
 		
 	else if(formData.type === "VELO" && statusPayment===true){ 
-				service.createContrat("createVelo",formData); 
-				navigate("/home");
-			}
+		service.createContrat("createVelo",formData); 
+		navigate("/home");
+	}
+	
+	else if(formData.type === "VACANCES" && statusPayment===true){ 
+		service.createContrat("createVacances",formData); 
+		navigate("/home");
+	}
+	
+	else if(formData.type === "PROFESSIONNELLE" && statusPayment===true){ 
+		service.createContrat("createProfessionnelle",formData); 
+		navigate("/home");
+	}
 			
   },[statusPayment]);
+  
+  const labels = {
+    marque: "Marque",
+    modele: "Modèle",
+    motorisation: "Motorisation",
+    fabrication: "Année de fabrication",
+    utilisation: "Utilisation",
+    duree: "Durée",
+	type : "Votre type d'assurance",
+	paysdepart : "Le pays de départ",
+	paysArrive : "Le pays de destination",
+	datedepart : "La date de départ",
+	dateArrive : "La date d'arrivé",
+	nbPersonnes : "Le nombre de voyageurs"
+  };
 
   return (
     <div>
       <h2>Récapitulatif de la demande</h2>
-      <p><strong>Marque :</strong> {formData.marque}</p>
-      <p><strong>Modèle :</strong> {formData.modele}</p>
-      <p><strong>Motorisation :</strong> {formData.motorisation}</p>
-      <p><strong>Année de fabrication :</strong> {formData.fabrication}</p>
-      <p><strong>Utilisation :</strong> {formData.utilisation}</p>
-      <p><strong>Durée :</strong> {formData.duree}</p>
+	  
+	  {Object.entries(formData)
+	    .filter(([key]) => key !== "clientId") // Exclut clientId
+	    .map(([key, value]) => (
+	      <p key={key}>
+	        <strong>{labels[key] || key} :</strong> {value}
+	      </p>
+	    ))}
 
       {/* Bouton pour afficher le formulaire de paiement */}
       <button onClick={() => setIsOpen(true)}>

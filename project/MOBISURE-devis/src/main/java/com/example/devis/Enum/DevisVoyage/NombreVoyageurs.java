@@ -1,18 +1,33 @@
 package com.example.devis.Enum.DevisVoyage;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum NombreVoyageurs {
-    UN(1.0),
-    DEUX_A_TROIS(1.05),
-    QUATRE_A_SIX(1.1),
-    PLUS_DE_SIX(1.25);
+    UN("une personne"),
+    DEUX_A_TROIS("deux à trois"),
+    QUATRE_A_SIX("quatres à six"),
+    PLUS_DE_SIX("plus de six");
 
-    private final double facteur;
+    private final String facteur;
 
-    NombreVoyageurs(double facteur) {
+    NombreVoyageurs(String facteur) {
         this.facteur = facteur;
     }
 
-    public double getFacteur() {
+    @JsonValue
+    public String getFacteur() {
         return facteur;
     }
+    
+    @JsonCreator
+    public static NombreVoyageurs fromString(String value) {
+        for (NombreVoyageurs nbPersonnes : NombreVoyageurs.values()) {
+            if (nbPersonnes.facteur.equalsIgnoreCase(value)) {
+                return nbPersonnes;
+            }
+        }
+        throw new IllegalArgumentException("Nombre inconnue : " + value);
+    }
+    
 }

@@ -16,7 +16,11 @@ import com.example.devis.entity.Assurance;
 import com.example.devis.entity.vehicule.Moto;
 import com.example.devis.entity.vehicule.Velo;
 import com.example.devis.entity.vehicule.Voiture;
+import com.example.devis.entity.voyage.Professionnelle;
+import com.example.devis.entity.voyage.Vacances;
 import com.example.devis.request.MotoRequest;
+import com.example.devis.request.ProfessionnelleRequest;
+import com.example.devis.request.VacancesRequest;
 import com.example.devis.request.VeloRequest;
 import com.example.devis.request.VoitureRequest;
 import com.example.devis.service.AssuranceServiceImpl;
@@ -55,6 +59,22 @@ public class AssuranceController {
 		return ResponseEntity.ok(prix);
 	}
 	
+	@PostMapping("/devisVacances")
+    public ResponseEntity<Double> calculerDevisVacances(@Valid @RequestBody VacancesRequest request){
+		
+		Vacances vacances = new Vacances(request.getClientId(),request.getPaysdepart(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive(),request.getNbPersonnes());
+		double prix = service.createVacancesDevis(vacances);  
+		return ResponseEntity.ok(prix);
+	}
+	
+	@PostMapping("/devisProfessionnelle")
+    public ResponseEntity<Double> calculerDevisProfessionnelle(@Valid @RequestBody ProfessionnelleRequest request){
+		
+		Professionnelle professionnelle = new Professionnelle(request.getClientId(),request.getEntreprise(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive());
+		double prix = service.createProfessionnelleDevis(professionnelle);  
+		return ResponseEntity.ok(prix);
+	}
+	
 	@PostMapping("/createVoiture")
 	public ResponseEntity<Voiture> createVoiture(@Valid @RequestBody VoitureRequest request){
 		Voiture voiture = new Voiture(request.getClientId(),request.getMarque(),request.getMotorisation(),request.getFabrication(),request.getUtilisation(),request.getDuree(),request.getModele(),request.getPlaque());
@@ -74,6 +94,20 @@ public class AssuranceController {
 		Velo velo = new Velo(request.getClientId(),request.getMotorisation());
 		service.createContratVelo(velo);
 		return ResponseEntity.ok(velo);
+	}
+	
+	@PostMapping("/createVacances")
+	public ResponseEntity<Vacances> createVacances(@Valid @RequestBody VacancesRequest request){
+		Vacances vacances = new Vacances(request.getClientId(),request.getPaysdepart(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive(),request.getNbPersonnes());
+		service.createContratVacances(vacances);
+		return ResponseEntity.ok(vacances);
+	}
+	
+	@PostMapping("/createProfessionnelle")
+	public ResponseEntity<Professionnelle> createProfessionnelle(@Valid @RequestBody ProfessionnelleRequest request){
+		Professionnelle professionnelle = new Professionnelle(request.getClientId(),request.getEntreprise(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive());
+		service.createContratProfessionnelle(professionnelle);
+		return ResponseEntity.ok(professionnelle);
 	}
 	
 	@GetMapping("/all/assurance")

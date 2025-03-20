@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.devis.Enum.DevisVoyage.NombreVoyageurs;
 import com.example.devis.entity.Assurance;
 import com.example.devis.entity.vehicule.Moto;
 import com.example.devis.entity.vehicule.Velo;
@@ -118,6 +119,75 @@ public class AssuranceServiceImpl implements AssuranceService{
 	@Override
 	public List<Assurance> getAssuranceByClientId(Long clientId) {
 		return repo.findByClientId(clientId);
+	}
+	
+	private double calculerMultiplicateurVoyageurs(NombreVoyageurs nombreVoyageurs) {
+        double multiplicateur = 1.0;
+        
+        switch(nombreVoyageurs) {
+        	case DEUX_A_TROIS : multiplicateur *= 1.05;
+        	case QUATRE_A_SIX : multiplicateur *= 1.1;
+        	case PLUS_DE_SIX : multiplicateur *= 1.25;
+        }
+ 
+        return multiplicateur;
+    }
+
+
+	@Override
+	public double createVacancesDevis(Vacances assurance) {
+		
+		double prix_distance = 40;
+		double prix_co2 = 40;
+		double multiplicateurKm = 1 + ((100 - 1000) / 1000.0) * 0.05; //a changer !
+        double multiplicateurCO2 = 1 + (25 - 1) * 0.05; // a changer !
+		
+        prix_distance *= multiplicateurKm;
+        prix_co2 *= multiplicateurCO2;
+        
+        double total = prix_distance + prix_co2;
+        
+        int nbSemaine = 4; // a changer !
+        
+        total *= nbSemaine;
+        
+        total *= calculerMultiplicateurVoyageurs(assurance.getNbPersonnes());
+        
+        
+		return total;
+	}
+
+
+	@Override
+	public double createProfessionnelleDevis(Professionnelle assurance) {
+		
+		double prix_distance = 50;
+		double prix_co2 = 50;
+		double multiplicateurKm = 1 + ((100 - 1000) / 1000.0) * 0.05; //a changer !
+        double multiplicateurCO2 = 1 + (25 - 1) * 0.05; // a changer !
+		
+        prix_distance *= multiplicateurKm;
+        prix_co2 *= multiplicateurCO2;
+        
+        double total = prix_distance + prix_co2;
+        
+        int nbSemaine = 4; // a changer !
+        
+        total *= nbSemaine;
+
+		return total;
+	}
+
+
+	@Override
+	public Vacances createContratVacances(Vacances assurance) {
+		return repo.save(assurance);
+	}
+
+
+	@Override
+	public Professionnelle createContratProfessionnelle(Professionnelle assurance) {
+		return repo.save(assurance);
 	}
 	
 	
