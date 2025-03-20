@@ -112,6 +112,8 @@ const PlansSection = () => {
 		if(type === "Voiture"){ return "VOITURE"; }
 		if(type === "Velo"){ return "VELO"; }
 		if(type === "Moto"){ return "MOTO"; }
+		if(type === "Voyage Vacance"){ return "VACANCES"; }
+		if(type === "Voyage Professionnel"){ return "PROFESSIONNELLE"; }
 		else{ return type; }
 	};
 
@@ -188,7 +190,13 @@ const PlansSection = () => {
         {/* Formulaire pour "Voyage Professionnel" */}
         {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Professionnel" &&(
           <div>
-            <VoyageProfessionnelForm/>
+            <VoyageProfessionnelForm
+				formData={formData}
+			    setFormData={setFormData}  
+			    handleChange={handleChange}
+			    isModalVisible={isModalVisible}
+			    setModalVisible={setModalVisible}
+			/>
             <button onClick={handleBack} className="back-button">
               Retour
             </button>
@@ -213,7 +221,13 @@ const PlansSection = () => {
       {/* Formulaire pour "Voyage Vacance" */}
       {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Vacance" && (
         <div>
-          <VoyageVacanceForm/>
+          <VoyageVacanceForm
+		  	formData={formData}
+		    setFormData={setFormData}  
+		    handleChange={handleChange}
+		    isModalVisible={isModalVisible}
+		    setModalVisible={setModalVisible}
+		  />
           <button onClick={handleBack} className="back-button">
             Retour
           </button>

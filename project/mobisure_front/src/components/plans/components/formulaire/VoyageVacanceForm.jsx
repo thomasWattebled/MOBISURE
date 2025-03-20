@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import '../../style/form.css';
 
-const VoyageVacanceForm = () => {
-  const [formData, setFormData] = useState({
-    paysDepart: '',
-    destination: '',
-    dateDepart: '',
-    dateRetour:'',
-    nbPersonnes:'',
-  });
+const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
 
+	const navigate = useNavigate();
+	
+	useEffect(() => {
+	      setFormData((prevData) => ({
+	        ...prevData,      
+			paysdepart: "",
+			paysArrive: "",
+			dateDepart: "",
+			dateArrive: "",
+			nbPersonnes: 0
+	      }));
+		},[]);
+	
+	
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -19,21 +27,24 @@ const VoyageVacanceForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Data Submitted:', formData);
-  };
+      e.preventDefault();
+      // Redirige vers la page de récap en passant formData
+      navigate("/devis", { state: { formData } });
+    };
 
+  console.log(formData);
+  
   return (
     <div className="form-container">
-      <h3>Formulaire pour Voyage Professionnel</h3>
+      <h3>Formulaire pour Voyage Vacance</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="companyName">Pays de depart</label>
           <input
             type="text"
             id="paysDepart"
-            name="paysDepart"
-            value={formData.paysDepart}
+            name="paysdepart"
+            value={formData.paysdepart}
             onChange={handleInputChange}
             required
             placeholder="Le pays de depart"
@@ -44,8 +55,8 @@ const VoyageVacanceForm = () => {
           <input
             type="text"
             id="destination"
-            name="destination"
-            value={formData.destination}
+            name="paysArrive"
+            value={formData.paysArrive}
             onChange={handleInputChange}
             required
             placeholder="Entrez la destination"
@@ -56,7 +67,7 @@ const VoyageVacanceForm = () => {
           <input
             type="date"
             id="dates"
-            name="dates"
+            name="dateDepart"
             value={formData.dateDepart}
             onChange={handleInputChange}
             required
@@ -67,24 +78,29 @@ const VoyageVacanceForm = () => {
           <input
             type="date"
             id="dates"
-            name="dates"
-            value={formData.dateRetour}
+            name="dateArrive"
+            value={formData.dateArrive}
             onChange={handleInputChange}
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="dates">Nombre de personnes</label>
-          <input
-            type="text"
-            id="nbPersonnes"
-            name="nbPersonnes"
-            value={formData.nbPersonnes}
-            onChange={handleInputChange}
-            required
-            placeholder="Pour combien de personnes ?"
-          />
-        </div>
+		<div className="form-group">
+		  <label htmlFor="nbPersonnes">Nombre de personnes</label>
+		  <select
+		    id="nbPersonnes"
+		    name="nbPersonnes"
+		    value={formData.nbPersonnes}
+		    onChange={handleInputChange}
+		    required
+		  >
+		    <option value="">Sélectionner</option>
+		    <option value="une personne">Une personne</option>
+		    <option value="deux à trois">Deux à trois</option>
+		    <option value="quatres à six">Quatre à six</option>
+		    <option value="plus de six">Plus de six</option>
+		  </select>
+		</div>
+
         <button type="submit">Soumettre</button>
       </form>
     </div>
