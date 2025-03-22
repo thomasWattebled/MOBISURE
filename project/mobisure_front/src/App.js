@@ -28,6 +28,7 @@ import MyContrat from './components/contrat/MyContrat.js';
 import SinistreList from './components/sinistre/SinistreList.jsx';
 import RacapPlan from './pages/RecapPlan.jsx';
 import './assets/css/App.css';
+import VoyageForm from './components/devis/VoyageForm.jsx';
 
 export const Layout = () => (
   <>
@@ -40,6 +41,7 @@ export const Layout = () => (
           <Link to="/home" className="text-white text-decoration-none">Home</Link>
           <Link to="/register" className="text-white text-decoration-none">SignUp</Link>
           <Link to="/login" className="text-white text-decoration-none">Login</Link>
+          <Link to="/devisvoyage" className="text-white text-decoration-none">Faire un devis pour voyager</Link>
         </WhenUserIsNotAuthenticated>
         <WhenUserIsAuthenticated>
           <Link to="/home" className="text-white text-decoration-none">Home</Link>
@@ -114,6 +116,7 @@ export default function App() {
             <Route path="/mesContrats" element={<MyContrat />} />
             <Route path="/mesSinistres" element={<SinistreList />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/devisvoyage" element={<VoyageForm />} />
 			<Route path="/devis" element={<RacapPlan />} />
 
           </Route>
