@@ -1,0 +1,88 @@
+/* Custom Form Styles */
+.card {
+    background-image: url('../image/bg1.png');
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+    font-size: 1.25rem;
+    text-align: center;
+    padding: 1rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-group label,
+.form-label {
+    font-weight: bold;
+}
+
+input.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+button.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    margin-top: 10px; /* Ajoute un espace entre le champ de mot de passe et le bouton */
+}
+
+button.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s;
+}
+
+button.btn-primary:hover {
+    background-color: rgb(98, 160, 234);
+    border-color: rgb(98, 160, 234);
+}
+
+.mt-3 {
+    text-align: center;
+}
+
+.alert {
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Ajoutez ceci pour espacer le champ de mot de passe et le bouton Login */
+.form-group:last-child {
+    margin-bottom: 20px; 
+}
+
+/* Add background image to the form container */
+.form-container {
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Appliquer l'image de fond sur toute la page */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url('../image/bg2.png');
+}
+
