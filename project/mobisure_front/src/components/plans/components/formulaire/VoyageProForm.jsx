@@ -5,6 +5,7 @@ import '../../style/form.css';
 const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
 	
 	const navigate = useNavigate();
+	const [selectedOptions, setSelectedOptions] = useState(new Set());
 	
 	useEffect(() => {
 		      setFormData((prevData) => ({
@@ -12,9 +13,35 @@ const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalV
 				entreprise: "",
 				paysArrive: "",
 				dateDepart: "",
-				dateArrive: ""
+				dateArrive: "",
+				options: Array
 		      }));
 			},[]);
+	
+			const optionsDisponibles = [
+						    "Perte de documents",
+						    "Matériel pro couvert",
+							"Assistance juridique à l’étranger"
+						  ];
+						  
+						  const handleOptionChange = (option) => {
+						  				      setSelectedOptions(prevSet => {
+						  				        const newSet = new Set(prevSet);
+						  				        if (newSet.has(option)) {
+						  				          newSet.delete(option);
+						  				        } else {
+						  				          newSet.add(option);
+						  				        }
+
+						  				        // Mettre à jour formData avec les options sélectionnées
+						  				        setFormData((prevData) => ({
+						  				          ...prevData,
+						  				          options: Array.from(newSet) // Convertir le Set en tableau
+						  				        }));
+
+						  				        return newSet;
+						  				      });
+						  				    };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -80,6 +107,24 @@ const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalV
             required
           />
         </div>
+		<div className="form-group">
+							   <label>Options supplémentaires :</label>
+							   <div className="checkbox-group">
+							     {optionsDisponibles.map((option) => (
+							       <div key={option}>
+							         <input
+							           type="checkbox"
+							           id={option}
+							           name="options"
+							           value={option}
+							           checked={selectedOptions.has(option)}
+							           onChange={() => handleOptionChange(option)}
+							         />
+							         <label htmlFor={option}>{option}</label>
+							       </div>
+							     ))}
+							   </div>
+							 </div>
         <button type="submit">Soumettre</button>
       </form>
     </div>

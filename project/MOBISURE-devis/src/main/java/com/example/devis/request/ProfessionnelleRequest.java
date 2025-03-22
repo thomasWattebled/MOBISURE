@@ -1,8 +1,10 @@
 package com.example.devis.request;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.example.devis.Enum.TypeAssurance;
+import com.example.devis.Enum.Options.ProfessionelleOptions;
 
 public class ProfessionnelleRequest {
 
@@ -12,6 +14,7 @@ public class ProfessionnelleRequest {
 	private String paysArrive;
 	private Date dateDepart;
 	private Date dateArrive;
+	private Set<ProfessionelleOptions> options;
 	
 	public Long getClientId() {
 		return clientId;
@@ -48,6 +51,12 @@ public class ProfessionnelleRequest {
 	}
 	public void setDateArrive(Date dateArrive) {
 		this.dateArrive = dateArrive;
+	}
+	public Set<ProfessionelleOptions> getOptions() {
+		return options;
+	}
+	public void setOptions(Set<ProfessionelleOptions> options) {
+		this.options = options;
 	}
 	
 	

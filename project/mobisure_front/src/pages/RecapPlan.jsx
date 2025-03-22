@@ -54,20 +54,47 @@ const Recapitulatif = () => {
 			
   },[statusPayment]);
   
-  const labels = {
-    marque: "Marque",
-    modele: "Modèle",
-    motorisation: "Motorisation",
-    fabrication: "Année de fabrication",
-    utilisation: "Utilisation",
-    duree: "Durée",
-	type : "Votre type d'assurance",
-	paysdepart : "Le pays de départ",
-	paysArrive : "Le pays de destination",
-	datedepart : "La date de départ",
-	dateArrive : "La date d'arrivé",
-	nbPersonnes : "Le nombre de voyageurs"
-  };
+  let labels = {};
+  
+  if(formData.type === "VACANCES"){
+	labels = {
+		type : "Votre type d'assurance",
+		paysdepart : "Le pays de départ",
+		paysArrive : "Le pays de destination",
+		datedepart : "La date de départ",
+		dateArrive : "La date d'arrivé",
+		nbPersonnes : "Le nombre de voyageurs"
+	  };
+  }
+  
+  else if (formData.type === "PROFESSIONNELLE"){
+  		labels = {
+  				type : "Votre type d'assurance",
+  				entreprise : "Votre entreprise",
+  				paysArrive : "Le pays de destination",
+  				dateDepart : "La date de départ",
+  				dateArrive : "La date d'arrivé",
+  			  };
+   		}
+		
+  else if (formData.type === "VELO"){
+	labels = {
+		type : "Votre type d'assurance",
+		motorisation: "Motorisation"
+	};
+  }
+		
+  else {
+	labels = {
+	    marque: "Marque",
+	    modele: "Modèle",
+	    motorisation: "Motorisation",
+	    fabrication: "Année de fabrication",
+	    utilisation: "Utilisation",
+	    duree: "Durée",
+		type : "Votre type d'assurance",
+	  };
+  }
 
   return (
     <div>

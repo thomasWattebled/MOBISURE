@@ -1,10 +1,12 @@
 package com.example.devis.entity.voyage;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.devis.Enum.TypeAssurance;
+import com.example.devis.Enum.Options.ProfessionelleOptions;
 import com.example.devis.entity.Assurance;
 
 @Document
@@ -14,10 +16,11 @@ public class Professionnelle extends Assurance {
 	private String paysArrive;
 	private Date dateDepart;
 	private Date dateArrive;
+	private Set<ProfessionelleOptions> options;
 	
 	public Professionnelle() {}
 
-	public Professionnelle(Long clientId, String entreprise, String paysArrive, Date dateDepart, Date dateArrive) {
+	public Professionnelle(Long clientId, String entreprise, String paysArrive, Date dateDepart, Date dateArrive, Set<ProfessionelleOptions> options) {
 		
 		super(clientId,TypeAssurance.PROFESSIONNELLE);
 		
@@ -25,6 +28,7 @@ public class Professionnelle extends Assurance {
 		this.paysArrive = paysArrive;
 		this.dateDepart = dateDepart;
 		this.dateArrive = dateArrive;
+		this.options = options;
 	}
 
 	public String getEntreprise() {
@@ -59,4 +63,12 @@ public class Professionnelle extends Assurance {
 		this.dateArrive = dateArrive;
 	}
 
+	public Set<ProfessionelleOptions> getOptions() {
+		return options;
+	}
+
+	public void setOptions(Set<ProfessionelleOptions> options) {
+		this.options = options;
+	}
+	
 }
