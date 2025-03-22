@@ -3,27 +3,22 @@ package mobisure.project.communication.entity;
 import java.util.Date;
 import java.util.Random;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 public class Assistance {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private String id;
 
-	@Column(unique = true)
+	@Indexed(unique = true)
     private String numDossier;
 	
 	private Long idClient;
 	private Status status;
 	private Date date;
-	
-	@Column(length = 1000)
 	private String message;
 	
 	private TypeAssistance type;
@@ -70,11 +65,11 @@ public class Assistance {
         this.numDossier = num_dossier;
     }
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

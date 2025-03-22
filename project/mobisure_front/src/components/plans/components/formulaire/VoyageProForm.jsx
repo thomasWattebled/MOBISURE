@@ -1,14 +1,20 @@
-// VoyageProfessionnelForm.js
-import React, { useState } from 'react';
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import '../../style/form.css';
 
-const VoyageProfessionnelForm = () => {
-  const [formData, setFormData] = useState({
-    companyName: '',
-    destination: '',
-    dateDepart: '',
-    dateRetour:'',
-  });
+const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
+	
+	const navigate = useNavigate();
+	
+	useEffect(() => {
+		      setFormData((prevData) => ({
+		        ...prevData,      
+				entreprise: "",
+				paysArrive: "",
+				dateDepart: "",
+				dateArrive: ""
+		      }));
+			},[]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,21 +25,22 @@ const VoyageProfessionnelForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Data Submitted:', formData);
-  };
+        e.preventDefault();
+        // Redirige vers la page de récap en passant formData
+        navigate("/devis", { state: { formData } });
+      };
 
   return (
     <div className="form-container">
       <h3>Formulaire pour Voyage Professionnel</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="companyName">Nom de l'entreprise :</label>
+          <label htmlFor="entreprise">Nom de l'entreprise :</label>
           <input
             type="text"
-            id="companyName"
-            name="companyName"
-            value={formData.companyName}
+            id="entreprise"
+            name="entreprise"
+            value={formData.entreprise}
             onChange={handleInputChange}
             required
             placeholder="Entrez le nom de votre entreprise"
@@ -44,8 +51,8 @@ const VoyageProfessionnelForm = () => {
           <input
             type="text"
             id="destination"
-            name="destination"
-            value={formData.destination}
+            name="paysArrive"
+            value={formData.paysArrive}
             onChange={handleInputChange}
             required
             placeholder="Entrez la destination"
@@ -56,7 +63,7 @@ const VoyageProfessionnelForm = () => {
           <input
             type="date"
             id="dates"
-            name="dates"
+            name="dateDepart"
             value={formData.dateDepart}
             onChange={handleInputChange}
             required
@@ -67,8 +74,8 @@ const VoyageProfessionnelForm = () => {
           <input
             type="date"
             id="dates"
-            name="dates"
-            value={formData.dateRetour}
+            name="dateArrive"
+            value={formData.dateArrive}
             onChange={handleInputChange}
             required
           />

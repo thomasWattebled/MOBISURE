@@ -14,10 +14,7 @@ export default function VoyageForm() {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    
-    // Convert numeric fields to correct data types
     const newValue = type === "number" ? (value.includes(".") ? parseFloat(value) : parseInt(value, 10)) : value;
-    
     setVoyage({ ...voyage, [name]: newValue });
   };
 
@@ -29,17 +26,19 @@ export default function VoyageForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(voyage),
+        body: JSON.stringify({
+          ...voyage,
+          motorisation: voyage.motorisation === "ELECTRIQUE" ? "ELECTRIQUE" : "THERMIQUE",
+        }),
       });
-      
+
       if (!response.ok) {
         throw new Error("Erreur lors de la soumission du formulaire");
       }
 
       const data = await response.json();
-      console.log("Réponse du serveur :", data);
-      const roundedCoutBase = parseFloat(data.coutBase).toFixed(2); // Round to 2 decimal places
-      alert(`Devis calculé : ${roundedCoutBase}€`);
+      const roundedCoutBase = parseFloat(data.coutBase).toFixed(2);
+      alert(`Devis calculé : ${roundedCoutBase} €`);
     } catch (error) {
       console.error("Erreur :", error);
       alert("Erreur lors de la soumission du formulaire");
@@ -70,10 +69,8 @@ export default function VoyageForm() {
             <label className="form-label">Motorisation :</label>
             <select name="motorisation" onChange={handleChange} className="form-select">
               <option value="">Sélectionner</option>
-              <option value="THERMIQUE">Essence</option>
-              <option value="THERMIQUE">Diesel</option>
               <option value="ELECTRIQUE">Électrique</option>
-              <option value="THERMIQUE">Hybride</option>
+              <option value="THERMIQUE">Thermique</option>
             </select>
           </div>
 

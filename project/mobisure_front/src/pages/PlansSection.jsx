@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../components/plans/style/PlansSection.css';
 import Carousel from '../components/home/Carousel';
 import SubOptionList from '../components/plans/components/SubOptionList';
@@ -15,6 +15,9 @@ import VoyageVacanceForm from '../components/plans/components/formulaire/VoyageV
 import AssuranceVeloForm from '../components/plans/components/formulaire/AssuranceVeloForm';
 import AssuranceVehiculeForm from '../components/plans/components/formulaire/AssuranceVehiculeForm';
 import Recap from '../components/plans/components/Recap';
+import { useAuth } from '../components/auth/AuthContext';
+import UserService from '../services/userService';
+
 
 const PlansSection = () => {
   const reforestationData = [
@@ -29,12 +32,41 @@ const PlansSection = () => {
     }];
 
 
+    const { getUser } = useAuth();
+    const userDetails = getUser();
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     const [selectedPlan, setSelectedPlan] = useState(null);
     const [subOptions, setSubOptions] = useState(null);
     const [selectedSubOption, setSelectedSubOption] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [isOptionSelected, setIsOptionSelected] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false);
+    
+    useEffect(() => {
+              setLoading(true);
+              UserService.fetchUserByEmail(userDetails.unsername).then(data => {
+                  setUser(data);
+                  setLoading(false)
+              });
+            },[]);
+
+            const [formData, setFormData] = useState({
+              clientId: "",
+              type: ""
+            });
+
+    // Met à jour formData une fois que l'utilisateur est chargé
+    useEffect(() => {
+          if (user) {
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              clientId: user.id, // Ajout de l'ID client
+            }));
+          }
+        }, [user]);
+    
     
     // Gestion de la sélection des plans principaux
     const handlePlanSelect = (plan) => {
@@ -58,6 +90,11 @@ const PlansSection = () => {
         setSubOptions(null);
       }
     };
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
   
     // Gestion de la sélection des sous-options
     const handleSubOptionSelect = (subOption) => {
@@ -65,7 +102,20 @@ const PlansSection = () => {
       setSubOptions(null); 
       //setIsOptionSelected(true);
         setShowForm(true); 
+		setFormData((prevFormData) => ({
+		    ...prevFormData,
+		    type: changeType(subOption), // Met à jour dynamiquement le type choisi
+		  }));
     };
+	
+	const changeType = (type) => {
+		if(type === "Voiture"){ return "VOITURE"; }
+		if(type === "Velo"){ return "VELO"; }
+		if(type === "Moto"){ return "MOTO"; }
+		if(type === "Voyage Vacance"){ return "VACANCES"; }
+		if(type === "Voyage Professionnel"){ return "PROFESSIONNELLE"; }
+		else{ return type; }
+	};
 
     const handleBack = () => {
       setShowForm(false);
@@ -111,8 +161,13 @@ const PlansSection = () => {
 
       {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Voiture" &&(
         <div>
-      <AssuranceVehiculeForm />
-      <button onClick={handleBack} className="back-button">
+      <AssuranceVehiculeForm 
+      formData={formData}
+      setFormData={setFormData}  
+      handleChange={handleChange}
+      isModalVisible={isModalVisible}
+      setModalVisible={setModalVisible} />
+      <button onClick={handleBack}   className="back-button">
         Retour
       </button>
       </div>
@@ -120,7 +175,13 @@ const PlansSection = () => {
 
 {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Velo" &&(
         <div>
-      <AssuranceVeloForm />
+      <AssuranceVeloForm
+	  		formData={formData}
+	        setFormData={setFormData}  
+	        handleChange={handleChange}
+	        isModalVisible={isModalVisible}
+	        setModalVisible={setModalVisible}
+	  />
       <button onClick={handleBack} className="back-button">
         Retour
       </button>
@@ -129,7 +190,13 @@ const PlansSection = () => {
         {/* Formulaire pour "Voyage Professionnel" */}
         {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Professionnel" &&(
           <div>
-            <VoyageProfessionnelForm/>
+            <VoyageProfessionnelForm
+				formData={formData}
+			    setFormData={setFormData}  
+			    handleChange={handleChange}
+			    isModalVisible={isModalVisible}
+			    setModalVisible={setModalVisible}
+			/>
             <button onClick={handleBack} className="back-button">
               Retour
             </button>
@@ -139,7 +206,13 @@ const PlansSection = () => {
         {/* Formulaire pour "Assurancz vehicule Moto" */}
                 {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Moto" &&(
           <div>
-            <AssuranceMotoForm/>
+            <AssuranceMotoForm
+				formData={formData}
+			    setFormData={setFormData}  
+			    handleChange={handleChange}
+			    isModalVisible={isModalVisible}
+			    setModalVisible={setModalVisible}
+			/>
             <button onClick={handleBack} className="back-button">
               Retour
             </button>
@@ -148,7 +221,13 @@ const PlansSection = () => {
       {/* Formulaire pour "Voyage Vacance" */}
       {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Vacance" && (
         <div>
-          <VoyageVacanceForm/>
+          <VoyageVacanceForm
+		  	formData={formData}
+		    setFormData={setFormData}  
+		    handleChange={handleChange}
+		    isModalVisible={isModalVisible}
+		    setModalVisible={setModalVisible}
+		  />
           <button onClick={handleBack} className="back-button">
             Retour
           </button>
