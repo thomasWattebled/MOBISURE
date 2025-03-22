@@ -1,11 +1,13 @@
 package com.example.devis.entity.voyage;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.devis.Enum.TypeAssurance;
 import com.example.devis.Enum.DevisVoyage.NombreVoyageurs;
+import com.example.devis.Enum.Options.VacanceOptions;
 import com.example.devis.entity.Assurance;
 
 @Document
@@ -16,11 +18,12 @@ public class Vacances extends Assurance {
 	private Date dateDepart;
 	private Date dateArrive;
 	private NombreVoyageurs nbPersonnes;
+	private Set<VacanceOptions> options;
 	
 	public Vacances() {}
 
 	public Vacances(Long clientId, String paysdepart, String paysArrive, Date dateDepart, Date dateArrive,
-			NombreVoyageurs nbPersonnes) {
+			NombreVoyageurs nbPersonnes, Set<VacanceOptions> options) {
 		
 		super(clientId,TypeAssurance.VACANCES);
 		
@@ -29,6 +32,7 @@ public class Vacances extends Assurance {
 		this.dateDepart = dateDepart;
 		this.dateArrive = dateArrive;
 		this.nbPersonnes = nbPersonnes;
+		this.options = options;
 	}
 
 	public String getPaysdepart() {
@@ -69,6 +73,14 @@ public class Vacances extends Assurance {
 
 	public void setNbPersonnes(NombreVoyageurs nbPersonnes) {
 		this.nbPersonnes = nbPersonnes;
+	}
+
+	public Set<VacanceOptions> getOptions() {
+		return options;
+	}
+
+	public void setOptions(Set<VacanceOptions> options) {
+		this.options = options;
 	}
 
 	

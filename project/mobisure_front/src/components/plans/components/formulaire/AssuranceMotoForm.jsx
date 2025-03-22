@@ -5,7 +5,7 @@ import "../../style/form.css";
 const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
   const [selectedMarque, setSelectedMarque] = useState("");
   const [models, setModels] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState(new Set());
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -17,7 +17,8 @@ const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible
   		  utilisation: "",
   		  duree: 0,
   		  fabrication: 0,
-		  plaque: ""
+		  plaque: "",
+		  options: Array
         }));
   	},[]);
   
@@ -33,6 +34,12 @@ const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible
     "KTM",
     "Indian",
   ];
+  
+  const optionsDisponibles = [
+      "Assistance zéro km",
+      "Équipements protégés",
+      "Garantie tous risques",
+    ];
 
   // Liste des modèles associés à chaque marque
   const modelsByMarque = {
@@ -74,6 +81,25 @@ const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible
 	      [name]: value,
 	    }));
 	  };
+	  
+	  const handleOptionChange = (option) => {
+	      setSelectedOptions(prevSet => {
+	        const newSet = new Set(prevSet);
+	        if (newSet.has(option)) {
+	          newSet.delete(option);
+	        } else {
+	          newSet.add(option);
+	        }
+
+	        // Mettre à jour formData avec les options sélectionnées
+	        setFormData((prevData) => ({
+	          ...prevData,
+	          options: Array.from(newSet) // Convertir le Set en tableau
+	        }));
+
+	        return newSet;
+	      });
+	    };
 	
   return (
     <div className="form-container">
@@ -172,6 +198,24 @@ const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible
 				           value={formData.plaque || ""} onChange={handleChange} required/>
 				 	</label>
 				 </div>
+				 <div className="form-group">
+				 		   <label>Options supplémentaires :</label>
+				 		   <div className="checkbox-group">
+				 		     {optionsDisponibles.map((option) => (
+				 		       <div key={option}>
+				 		         <input
+				 		           type="checkbox"
+				 		           id={option}
+				 		           name="options"
+				 		           value={option}
+				 		           checked={selectedOptions.has(option)}
+				 		           onChange={() => handleOptionChange(option)}
+				 		         />
+				 		         <label htmlFor={option}>{option}</label>
+				 		       </div>
+				 		     ))}
+				 		   </div>
+				 		 </div>
         <button type="submit">Soumettre</button>
       </form>
     </div>

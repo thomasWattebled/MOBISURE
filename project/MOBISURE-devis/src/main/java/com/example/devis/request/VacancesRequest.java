@@ -1,9 +1,11 @@
 package com.example.devis.request;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.example.devis.Enum.TypeAssurance;
 import com.example.devis.Enum.DevisVoyage.NombreVoyageurs;
+import com.example.devis.Enum.Options.VacanceOptions;
 
 public class VacancesRequest {
 
@@ -14,6 +16,7 @@ public class VacancesRequest {
 	private Date dateDepart;
 	private Date dateArrive;
 	private NombreVoyageurs nbPersonnes;
+	private Set<VacanceOptions> options;
 	
 	public Long getClientId() {
 		return clientId;
@@ -57,4 +60,11 @@ public class VacancesRequest {
 	public void setNbPersonnes(NombreVoyageurs nbPersonnes) {
 		this.nbPersonnes = nbPersonnes;
 	}
+	public Set<VacanceOptions> getOptions() {
+		return options;
+	}
+	public void setOptions(Set<VacanceOptions> options) {
+		this.options = options;
+	}
+	
 }

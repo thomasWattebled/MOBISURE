@@ -1,5 +1,7 @@
 package com.example.devis.entity.vehicule;
 
+import java.util.Set;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.devis.Enum.DureeAssurance;
@@ -7,6 +9,7 @@ import com.example.devis.Enum.TypeAssurance;
 import com.example.devis.Enum.DevisVehicule.MarqueVoiture;
 import com.example.devis.Enum.DevisVehicule.Motorisation;
 import com.example.devis.Enum.DevisVehicule.UtilisationVehicule;
+import com.example.devis.Enum.Options.VoitureOptions;
 import com.example.devis.entity.Assurance;
 
 @Document
@@ -19,11 +22,12 @@ public class Voiture extends Assurance{
 	private DureeAssurance duree;
 	private String modele;
 	private String plaque;
+	private Set<VoitureOptions> options;
 	
 	public Voiture() {}
 
 	public Voiture(Long clientId,MarqueVoiture marque, Motorisation electrique, Long fabrication, UtilisationVehicule utilisation,
-			DureeAssurance duree,String modele,String plaque) {
+			DureeAssurance duree,String modele,String plaque,Set<VoitureOptions> options) {
 		
 		super(clientId,TypeAssurance.VOITURE);
 		this.marque = marque;
@@ -33,6 +37,7 @@ public class Voiture extends Assurance{
 		this.duree = duree;
 		this.modele = modele;
 		this.plaque = plaque;
+		this.options = options;
 	}
 
 	public MarqueVoiture getMarque() {
@@ -89,6 +94,14 @@ public class Voiture extends Assurance{
 
 	public void setPlaque(String plaque) {
 		this.plaque = plaque;
+	}
+
+	public Set<VoitureOptions> getOptions() {
+		return options;
+	}
+
+	public void setOptions(Set<VoitureOptions> options) {
+		this.options = options;
 	}
 	
 }

@@ -9,7 +9,7 @@ const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVis
     const [user, setUser] = useState(null);
   const [selectedMarque, setSelectedMarque] = useState("");
   const [models, setModels] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState(new Set());
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -21,7 +21,8 @@ const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVis
 		utilisation: "",
 		duree: 0,
 		fabrication: 0,
-		plaque: ""
+		plaque: "",
+		options: Array
       }));
 	},[]);
 
@@ -37,6 +38,13 @@ const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVis
     "Renault",
     "Peugeot",
   ];
+  
+  const optionsDisponibles = [
+    "Assistance zéro km",
+    "Véhicule de remplacement",
+    "Bris de glace",
+  ];
+
 
   const handleModalClose = () => {
     setModalVisible(false); // Fermer le modal
@@ -49,6 +57,27 @@ const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVis
       [name]: value,
     }));
   };
+  
+  const handleOptionChange = (option) => {
+    setSelectedOptions(prevSet => {
+      const newSet = new Set(prevSet);
+      if (newSet.has(option)) {
+        newSet.delete(option);
+      } else {
+        newSet.add(option);
+      }
+
+      // Mettre à jour formData avec les options sélectionnées
+      setFormData((prevData) => ({
+        ...prevData,
+        options: Array.from(newSet) // Convertir le Set en tableau
+      }));
+
+      return newSet;
+    });
+  };
+
+
 
 
   // Liste des modèles associés à chaque marque
@@ -181,6 +210,25 @@ const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVis
 		           value={formData.plaque || ""} onChange={handleChange} required/>
 		 	</label>
 		 </div>
+		 <div className="form-group">
+		   <label>Options supplémentaires :</label>
+		   <div className="checkbox-group">
+		     {optionsDisponibles.map((option) => (
+		       <div key={option}>
+		         <input
+		           type="checkbox"
+		           id={option}
+		           name="options"
+		           value={option}
+		           checked={selectedOptions.has(option)}
+		           onChange={() => handleOptionChange(option)}
+		         />
+		         <label htmlFor={option}>{option}</label>
+		       </div>
+		     ))}
+		   </div>
+		 </div>
+
         <button type="submit">Soumettre</button>
       </form>
       <SuccessDemande show={isModalVisible} onClose={handleModalClose} />

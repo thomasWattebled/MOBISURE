@@ -1,10 +1,13 @@
 package com.example.devis.request;
 
+import java.util.Set;
+
 import com.example.devis.Enum.DureeAssurance;
 import com.example.devis.Enum.TypeAssurance;
 import com.example.devis.Enum.DevisVehicule.MarqueMoto;
 import com.example.devis.Enum.DevisVehicule.Motorisation;
 import com.example.devis.Enum.DevisVehicule.UtilisationVehicule;
+import com.example.devis.Enum.Options.MotoOptions;
 
 public class MotoRequest {
 
@@ -17,6 +20,7 @@ public class MotoRequest {
     private String modele;
     private MarqueMoto marque;
     private String plaque;
+    private Set<MotoOptions> options;
     
 	public String getPlaque() {
 		return plaque;
@@ -71,6 +75,12 @@ public class MotoRequest {
 	}
 	public void setMotorisation(Motorisation motorisation) {
 		this.motorisation = motorisation;
+	}
+	public Set<MotoOptions> getOptions() {
+		return options;
+	}
+	public void setOptions(Set<MotoOptions> options) {
+		this.options = options;
 	}
     
 }
