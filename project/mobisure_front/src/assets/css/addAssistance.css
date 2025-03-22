@@ -1,0 +1,100 @@
+/* Conteneur principal */
+.assistance-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 5px;
+}
+
+/* Carte du formulaire */
+.assistance-form-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* Titre du formulaire */
+.assistance-form-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Groupe de formulaire */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Label des champs */
+.form-label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Champs de formulaire */
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Zone de texte */
+textarea.form-control {
+  resize: vertical;
+  min-height: 150px;
+}
+
+/* Bouton de soumission */
+.submit-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Message de caractères restants */
+.form-text {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+/* Message d'urgence */
+.urgence-message {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: #ff0000;
+  font-weight: bold;
+  padding: 1rem;
+  background-color: #fff3f3;
+  border-radius: 6px;
+  border: 1px solid #ffcccc;
+}

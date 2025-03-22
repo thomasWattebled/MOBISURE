@@ -1,0 +1,80 @@
+/* Custom Registration Form Styles */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #126347;
+    margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Inputs */
+input.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+/* Button */
+button.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+}
+
+button.btn-primary {
+    background-color: #126347;
+    border-color: #126347;
+    transition: background-color 0.3s;
+}
+
+button.btn-primary:hover {
+    background-color: #62984c;
+    border-color: #62984c;
+}
+
+/* Spacing between input fields */
+.mb-3 {
+    margin-bottom: 20px;  /* Adds spacing between fields */
+}
+
+/* Adjust space below password input */
+.mb-3:last-child {
+    margin-bottom: 20px; /* Adjust space after the password field */
+}
+
+/* Adjust the space between the button and the fields */
+button.btn {
+    margin-top: 10px; /* Adds space between the password field and the button */
+}
+
+/* Alert box */
+.alert {
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Customize the form layout */
+.container {
+    max-width: 90%;
+}
+
+.row.justify-content-center {
+    margin-top: 50px;
+}
