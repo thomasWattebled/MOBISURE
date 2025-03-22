@@ -79,8 +79,9 @@ const PaymentForm = () => {
                         <h2>Simulate Payment</h2>
                         <form onSubmit={handleSubmit}>
                             <div>
-                                <label>Card Number:</label>
+                                <label htmlFor="card_number">Card Number:</label>
                                 <input
+                                    id="card_number"
                                     type="text"
                                     value={cardNumber}
                                     onChange={handleCardNumberChange}
@@ -89,8 +90,9 @@ const PaymentForm = () => {
                                 {cardNumberError && <p style={{ color: 'red' }}>{cardNumberError}</p>}
                             </div>
                             <div>
-                                <label>Card Holder:</label>
+                                <label htmlFor="card_holder">Card Holder:</label>
                                 <input
+                                 id="card_holder"
                                     type="text"
                                     value={cardHolder}
                                     onChange={(e) => setCardHolder(e.target.value)}
@@ -98,8 +100,9 @@ const PaymentForm = () => {
                                 />
                             </div>
                             <div>
-                                <label>CVV:</label>
+                                <label htmlFor="cvv">CVV:</label>
                                 <input
+                                id="cvv"
                                     type="text"
                                     value={cvv}
                                     onChange={handleCVVChange}

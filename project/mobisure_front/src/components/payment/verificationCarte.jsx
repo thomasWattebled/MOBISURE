@@ -1,5 +1,8 @@
 // verification_carte.jsx
 export const validateCardNumber = (cardNumber) => {
+    // Check for empty input
+    if (cardNumber.length === 0) return false;
+
     // Algorithme de Luhn
     let sum = 0;
     for (let i = 0; i < cardNumber.length; i++) {

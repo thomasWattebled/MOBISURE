@@ -17,16 +17,13 @@ describe("ConfirmationModal", () => {
   ];
 
   it("affiche le message de confirmation et le bouton Générer PDF", () => {
-    act(() => {
-        render(
-          <PopupConfirmation
-            onClose={onCloseMock}
-            formData={formData}
-            pdfConfig={pdfConfig}
-          />
-        );
-      });
-
+    render(
+      <PopupConfirmation
+        onClose={onCloseMock}
+        formData={formData}
+        pdfConfig={pdfConfig}
+      />
+    );
     expect(screen.getByText("Le sinistre a bien été créé.")).toBeInTheDocument();
     expect(screen.getByText("GeneratePDF Mock")).toBeInTheDocument();
   });
