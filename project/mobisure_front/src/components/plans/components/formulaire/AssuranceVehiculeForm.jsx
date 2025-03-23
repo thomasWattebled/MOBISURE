@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../style/form.css";
 import SuccessDemande from '../../../assistance/SuccesDemande'
 
-const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVisible}) =>  {
+const AssuranceVehiculeForm = ({userData,setuserData,isModalVisible, setModalVisible}) =>  {
 
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
@@ -12,20 +12,29 @@ const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVis
   const [selectedOptions, setSelectedOptions] = useState(new Set());
   const navigate = useNavigate();
   
-  useEffect(() => {
-      setFormData((prevData) => ({
-        ...prevData,      
-        marque: "",
-        modele: "",
-		motorisation: "THERMIQUE",
-		utilisation: "",
-		duree: 0,
-		fabrication: 0,
-		plaque: "",
-		options: Array
-      }));
-	},[]);
 
+  const [formData, setFormData] = useState({
+    marque: "",
+    modele: "",
+    motorisation: "THERMIQUE",
+    utilisation: "",
+    duree: 0,
+    fabrication: 0,
+    plaque: "",
+    options: []
+    });
+
+
+    useEffect(() => {
+      if (userData) {
+        setFormData((prevFormData) => ({
+          ...prevFormData, 
+          ...userData, 
+        }));
+      }
+    }, [userData]);
+
+    
   const marques = [
     "Audi",
     "BMW",

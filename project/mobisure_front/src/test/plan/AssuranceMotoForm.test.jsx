@@ -9,9 +9,9 @@ describe("AssuranceMotoForm Component", () => {
     // Vérifier que les champs sont présents
     expect(screen.getByLabelText("Marque de moto :")).toBeInTheDocument();
     expect(screen.getByLabelText("Modèle de moto :")).toBeInTheDocument();
-    expect(screen.getByText("Electrique ?")).toBeInTheDocument();
+    expect(screen.getByText("Électrique ?")).toBeInTheDocument();
     expect(screen.getByLabelText("Année de fabrication :")).toBeInTheDocument();
-    expect(screen.getByLabelText("Utilisation de la moto :")).toBeInTheDocument();
+    expect(screen.getByLabelText("Utilisation du véhicule :")).toBeInTheDocument();
     expect(screen.getByLabelText("Durée :")).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /soumettre/i })).toBeInTheDocument();
   });
@@ -41,7 +41,10 @@ describe("AssuranceMotoForm Component", () => {
   });
 
   it("validates required fields", () => {
-    render(<AssuranceMotoForm />);
+    const mockSetFormData = jest.fn();
+    render(<AssuranceMotoForm formData={{ marque: "",modele: "",motorisation: "THERMIQUE",utilisation: "",duree: 0,fabrication: 0,plaque: "", options: []}}
+      setFormData={mockSetFormData}
+      />);
     const marqueSelect = screen.getByLabelText("Marque de moto :");
     fireEvent.change(marqueSelect, { target: { value: "Yamaha" } });
     // Soumettre le formulaire sans remplir les champs
@@ -49,7 +52,7 @@ describe("AssuranceMotoForm Component", () => {
     fireEvent.click(submitButton);
     
     // Vérifier que les messages d'erreur sont affichés
-    expect(screen.getByLabelText("Marque de moto :")).toBeValid();
+    expect(screen.getByLabelText("Marque de moto :")).toBeInvalid();
     expect(screen.getByLabelText("Modèle de moto :")).toBeInvalid(); 
     expect(screen.getByLabelText("Année de fabrication :")).toBeInvalid(); 
     expect(screen.getByLabelText("Durée :")).toBeInvalid(); 

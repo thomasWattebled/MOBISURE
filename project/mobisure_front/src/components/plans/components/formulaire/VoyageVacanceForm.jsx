@@ -3,28 +3,38 @@ import { useNavigate } from "react-router-dom";
 import '../../style/form.css';
 
 
-const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible,onSubmit}) => {
+
+
+const VoyageVacanceForm = ({userData,setUserData,isModalVisible, setModalVisible,onSubmit}) => {
+
 
 	const navigate = useNavigate();
 	const [selectedOptions, setSelectedOptions] = useState(new Set());
 	
-	useEffect(() => {
-	      setFormData((prevData) => ({
-	        ...prevData,      
-			paysdepart: "",
-			paysArrive: "",
-			dateDepart: "",
-			dateArrive: "",
-			nbPersonnes: 0,
-			options: Array
-	      }));
-		},[]);
 		
-		const optionsDisponibles = [
-					    "Annulation toutes causes",
-					    "Bagages assurés",
-						"Frais médicaux à l’étranger"
-					  ];
+		const [formData, setFormData] = useState({
+      paysDepart:"",
+      paysArrive: "",
+      dateDepart: "",
+      dateArrive: "",
+      nbPersonnes: "",
+        options: []
+      });
+
+      useEffect(() => {
+        if (userData) {
+          setFormData((prevFormData) => ({
+            ...prevFormData, 
+            ...userData, 
+          }));
+        }
+      }, [userData]);
+    
+      const optionsDisponibles = [
+        "Perte de documents",
+        "Matériel pro couvert",
+      "Assistance juridique à l’étranger"
+      ];
 					  
 					  const handleChange = (e) => {
 					  				    const { name, value } = e.target;
@@ -79,18 +89,18 @@ const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible
           <input
             type="text"
             id="paysDepart"
-            name="paysdepart"
-            value={formData.paysdepart}
+            name="paysDepart"
+            value={formData.paysDepart}
             onChange={handleInputChange}
             required
             placeholder="Le pays de depart"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="destination">Destination :</label>
+          <label htmlFor="paysArrive">Destination :</label>
           <input
             type="text"
-            id="destination"
+            id="paysArrive"
             name="paysArrive"
             value={formData.paysArrive}
             onChange={handleInputChange}
@@ -113,7 +123,7 @@ const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible
           <label htmlFor="dateArrive">Date Retour :</label>
           <input
             type="date"
-            id="dates"
+            id="dateArrive"
             name="dateArrive"
             value={formData.dateArrive}
             onChange={handleInputChange}

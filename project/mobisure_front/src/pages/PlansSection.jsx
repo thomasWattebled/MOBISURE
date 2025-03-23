@@ -52,7 +52,7 @@ const PlansSection = () => {
               });
             },[]);
 
-            const [formData, setFormData] = useState({
+            const [userData, setUserData] = useState({
               clientId: "",
               type: ""
             });
@@ -60,8 +60,8 @@ const PlansSection = () => {
     // Met à jour formData une fois que l'utilisateur est chargé
     useEffect(() => {
           if (user) {
-            setFormData((prevFormData) => ({
-              ...prevFormData,
+            setUserData((prevUserData) => ({
+              ...prevUserData,
               clientId: user.id, // Ajout de l'ID client
             }));
           }
@@ -93,7 +93,7 @@ const PlansSection = () => {
 
     const handleChange = (e) => {
       const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
+      setUserData({ ...userData, [name]: value });
     };
   
     // Gestion de la sélection des sous-options
@@ -102,8 +102,8 @@ const PlansSection = () => {
       setSubOptions(null); 
       //setIsOptionSelected(true);
         setShowForm(true); 
-		setFormData((prevFormData) => ({
-		    ...prevFormData,
+        setUserData((prevUserData) => ({
+		    ...prevUserData,
 		    type: changeType(subOption), // Met à jour dynamiquement le type choisi
 		  }));
     };
@@ -162,8 +162,8 @@ const PlansSection = () => {
       {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Voiture" &&(
         <div>
       <AssuranceVehiculeForm 
-      formData={formData}
-      setFormData={setFormData}  
+      formData={userData}
+      setUserData={setUserData}  
       handleChange={handleChange}
       isModalVisible={isModalVisible}
       setModalVisible={setModalVisible} />
@@ -176,8 +176,8 @@ const PlansSection = () => {
 {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Velo" &&(
         <div>
       <AssuranceVeloForm
-	  		formData={formData}
-	        setFormData={setFormData}  
+	  		userData={userData}
+        setUserData={setUserData}  
 	        handleChange={handleChange}
 	        isModalVisible={isModalVisible}
 	        setModalVisible={setModalVisible}
@@ -191,8 +191,8 @@ const PlansSection = () => {
         {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Professionnel" &&(
           <div>
             <VoyageProfessionnelForm
-				formData={formData}
-			    setFormData={setFormData}  
+				userData={userData}
+			    setUserData={setUserData}  
 			    handleChange={handleChange}
 			    isModalVisible={isModalVisible}
 			    setModalVisible={setModalVisible}
@@ -207,8 +207,8 @@ const PlansSection = () => {
                 {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Moto" &&(
           <div>
             <AssuranceMotoForm
-				formData={formData}
-			    setFormData={setFormData}  
+				userData={userData}
+        setUserData={setUserData}  
 			    handleChange={handleChange}
 			    isModalVisible={isModalVisible}
 			    setModalVisible={setModalVisible}
@@ -222,8 +222,8 @@ const PlansSection = () => {
       {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Vacance" && (
         <div>
           <VoyageVacanceForm
-		  	formData={formData}
-		    setFormData={setFormData}  
+		  	userData={userData}
+		    setUserData={setUserData}  
 		    handleChange={handleChange}
 		    isModalVisible={isModalVisible}
 		    setModalVisible={setModalVisible}

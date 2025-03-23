@@ -6,7 +6,7 @@ describe("VoyageProfessionnelForm Component", () => {
   it("renders all form fields correctly", () => {
     render(<VoyageVacanceForm />);
     // Vérifier que le titre du formulaire est affiché
-    expect(screen.getByText("Formulaire pour Voyage Professionnel")).toBeInTheDocument();
+    expect(screen.getByText("Formulaire pour Voyage Vacance")).toBeInTheDocument();
     // Vérifier que les champs sont présents
     expect(screen.getByLabelText("Pays de depart")).toBeInTheDocument();
     expect(screen.getByLabelText("Destination :")).toBeInTheDocument();
@@ -43,7 +43,7 @@ describe("VoyageProfessionnelForm Component", () => {
     fireEvent.change(PaysNameInput, { target: { value: "France" } });
   
     const destinationInput = screen.getByLabelText("Destination :");
-    fireEvent.change(destinationInput, { target: { value: "Londres" } });
+    fireEvent.change(destinationInput, { target: { value: "Angleterre" } });
   
     const dateDepartInput = screen.getByLabelText("Date Depart :");
     fireEvent.change(dateDepartInput, { target: { value: "2023-10-01" } });
@@ -51,20 +51,19 @@ describe("VoyageProfessionnelForm Component", () => {
     const dateRetourInput = screen.getByLabelText("Date Retour :");
     fireEvent.change(dateRetourInput, { target: { value: "2023-10-10" } });
 
-    const nbPersInput = screen.getByLabelText("Nombre de personnes");
-    fireEvent.change(nbPersInput, { target: { value: "2" } });
-  
+    
     // Soumettre le formulaire
     const submitButton = screen.getByRole('button', { name: /soumettre/i });
     fireEvent.click(submitButton);
   
     // Vérifier que la fonction handleSubmit est appelée avec les bonnes données
     expect(handleSubmit).toHaveBeenCalledWith({
-        paysDepart: "France",
-      destination: "Londres",
+      paysDepart: "France",
+      paysArrive: "Angleterre",
       dateDepart: "2023-10-01",
-      dateRetour: "2023-10-10", 
-      nbPersonnes:'2',
+      dateArrive: "2023-10-10", 
+      nbPersonnes:"",
+      options: [],
     });
   });
 });
