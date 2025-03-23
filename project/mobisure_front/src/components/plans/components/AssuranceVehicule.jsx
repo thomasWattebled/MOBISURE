@@ -1,6 +1,5 @@
-// AssuranceVehicule.js
 import React from 'react';
-import vehiculeImg from '../images/assurance_vehicule.jpg'; // Remplacez par votre chemin d'image
+import vehiculeImg from '../images/assurance_vehicule.jpg'; 
 
 const AssuranceVehicule = () => {
   return (

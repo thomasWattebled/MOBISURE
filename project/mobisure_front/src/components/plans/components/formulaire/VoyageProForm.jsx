@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import '../../style/form.css';
 
-const VoyageProfessionnelForm = () => {
+const VoyageProfessionnelForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     companyName: '',
     destination: '',
@@ -20,6 +20,7 @@ const VoyageProfessionnelForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onSubmit(formData);
     console.log('Form Data Submitted:', formData);
   };
 
@@ -52,22 +53,22 @@ const VoyageProfessionnelForm = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Depart :</label>
+          <label htmlFor="dateDepart">Date Depart :</label>
           <input
             type="date"
-            id="dates"
-            name="dates"
+            id="dateDepart"
+            name="dateDepart"
             value={formData.dateDepart}
             onChange={handleInputChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Retour :</label>
+          <label htmlFor="dateRetour">Date Retour :</label>
           <input
             type="date"
-            id="dates"
-            name="dates"
+            id="dateRetour"
+            name="dateRetour"
             value={formData.dateRetour}
             onChange={handleInputChange}
             required

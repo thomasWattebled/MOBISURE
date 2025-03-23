@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, fireEvent,act } from "@testing-library/react";
-import PopupConfirmation from "../components/sinistre/popUpConfirmation";
+import PopupConfirmation from "../../components/sinistre/popUpConfirmation";
 import '@testing-library/jest-dom';
 
 
 // Mock de GeneratePDF pour éviter de tester son comportement ici
-jest.mock("../components/pdf/generatePDF", () => () => <div>GeneratePDF Mock</div>);
+jest.mock("../../components/pdf/generatePDF", () => () => <div>GeneratePDF Mock</div>);
 
 describe("ConfirmationModal", () => {
   const onCloseMock = jest.fn();

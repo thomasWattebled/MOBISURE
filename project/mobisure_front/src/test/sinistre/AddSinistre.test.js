@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import AddSinistre from '../components/sinistre/addSinistre'
+import AddSinistre from '../../components/sinistre/addSinistre'
 // Mock the useAuth hook
 
-jest.mock('../components/auth/AuthContext', () => ({
+jest.mock('../../components/auth/AuthContext', () => ({
   useAuth: () => ({
     getUser: () => ({
       nom: "Jean",
@@ -14,7 +14,7 @@ jest.mock('../components/auth/AuthContext', () => ({
 }));
 
 // Mock the PopupConfirmation component
-jest.mock('../components/sinistre/PopupConfirmation', () => (props) => (
+jest.mock('../../components/sinistre/PopupConfirmation', () => (props) => (
   <div data-testid="popup-confirmation">PopupConfirmation Mock</div>
 ));
 

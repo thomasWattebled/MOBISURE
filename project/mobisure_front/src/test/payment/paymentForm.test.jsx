@@ -1,11 +1,11 @@
-import PaymentForm from '../components/payment/PaymentForm';
-import { validateCardNumber, validateCVV } from '../components/payment/verificationCarte';
+import PaymentForm from '../../components/payment/PaymentForm';
+import { validateCardNumber, validateCVV } from '../../components/payment/verificationCarte';
 import React from "react";
 import { render, screen, fireEvent,waitFor  } from "@testing-library/react";
 import '@testing-library/jest-dom';
 
 // Mock des fonctions de validation
-jest.mock('../components/payment/verificationCarte', () => ({
+jest.mock('../../components/payment/verificationCarte', () => ({
   validateCardNumber: jest.fn(),
   validateCVV: jest.fn(),
 }));

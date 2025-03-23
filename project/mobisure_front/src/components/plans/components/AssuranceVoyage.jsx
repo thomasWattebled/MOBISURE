@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import voyageImg from '../images/assurance_voyage.jpg'; // Remplacez par votre chemin d'image
+import voyageImg from '../images/assurance_voyage.jpg'; 
 import voyage_vacance from '../images/voyage_vacance.jpg';
 import voyage_pro from '../images/voyage_professionel.jpg';
 
@@ -61,7 +61,7 @@ const AssuranceVoyage = () => {
               onClick={() => handleOptionClick('Voyage Professionnel')}
             >
               <img
-                src={voyage_pro} // Remplacez par l'image correspondante
+                src={voyage_pro} 
                 alt="Voyage Professionnel"
                 className="plan-image"
               />

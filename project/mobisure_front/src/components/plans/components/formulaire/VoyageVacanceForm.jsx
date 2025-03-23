@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../style/form.css';
 
-const VoyageVacanceForm = () => {
+const VoyageVacanceForm = ({ onSubmit })  => {
   const [formData, setFormData] = useState({
     paysDepart: '',
     destination: '',
@@ -20,6 +20,7 @@ const VoyageVacanceForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onSubmit(formData);
     console.log('Form Data Submitted:', formData);
   };
 
@@ -28,7 +29,7 @@ const VoyageVacanceForm = () => {
       <h3>Formulaire pour Voyage Professionnel</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="companyName">Pays de depart</label>
+          <label htmlFor="paysDepart">Pays de depart</label>
           <input
             type="text"
             id="paysDepart"
@@ -52,29 +53,29 @@ const VoyageVacanceForm = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Depart :</label>
+          <label htmlFor="dateDepart">Date Depart :</label>
           <input
             type="date"
-            id="dates"
-            name="dates"
+            id="dateDepart"
+            name="dateDepart"
             value={formData.dateDepart}
             onChange={handleInputChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Retour :</label>
+          <label htmlFor="dateRetour">Date Retour :</label>
           <input
             type="date"
-            id="dates"
-            name="dates"
+            id="dateRetour"
+            name="dateRetour"
             value={formData.dateRetour}
             onChange={handleInputChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Nombre de personnes</label>
+          <label htmlFor="nbPersonnes">Nombre de personnes</label>
           <input
             type="text"
             id="nbPersonnes"

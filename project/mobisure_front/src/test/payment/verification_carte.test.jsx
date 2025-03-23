@@ -1,4 +1,4 @@
-import { validateCardNumber, validateCVV } from '../components/payment/verificationCarte';
+import { validateCardNumber, validateCVV } from '../../components/payment/verificationCarte';
 
 describe("validateCardNumber", () => {
   it("returns true for valid card numbers", () => {

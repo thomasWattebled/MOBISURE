@@ -45,7 +45,7 @@ const AssuranceMotoForm = () => {
   return (
     <div className="form-container">
       <h2>Formulaire Assurance Moto</h2>
-      <form>
+      <form >
         <div className="form-group">
           <label>
             Marque de moto :
