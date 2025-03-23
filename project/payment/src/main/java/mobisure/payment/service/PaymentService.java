@@ -31,6 +31,7 @@ public class PaymentService {
     }
 
     public String processPayment(String cardNumber, String cardHolder, String cvv, double amount) {
+   
         if (!validateCardNumber(cardNumber)) {
             return "Invalid card number";
         }
@@ -39,7 +40,7 @@ public class PaymentService {
             return "Invalid CVV";
         }
         boolean paymentSuccess = amount > 0;
-
+        System.out.println(paymentSuccess);
         Payment payment = new Payment();
         payment.setCardNumber(cardNumber);
         payment.setCardHolder(cardHolder);

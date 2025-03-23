@@ -1,14 +1,31 @@
 import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../style/form.css";
 import SuccessDemande from '../../../assistance/SuccesDemande'
 
-const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisible, setModalVisible}) =>  {
+const AssuranceVehiculeForm = ({formData,setFormData,isModalVisible, setModalVisible}) =>  {
 
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
   const [selectedMarque, setSelectedMarque] = useState("");
   const [models, setModels] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState(new Set());
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+      setFormData((prevData) => ({
+        ...prevData,      
+        marque: "",
+        modele: "",
+		motorisation: "THERMIQUE",
+		utilisation: "",
+		duree: 0,
+		fabrication: 0,
+		plaque: "",
+		options: Array
+      }));
+	},[]);
+
   const marques = [
     "Audi",
     "BMW",
@@ -21,6 +38,13 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
     "Renault",
     "Peugeot",
   ];
+  
+  const optionsDisponibles = [
+    "Assistance zéro km",
+    "Véhicule de remplacement",
+    "Bris de glace",
+  ];
+
 
   const handleModalClose = () => {
     setModalVisible(false); // Fermer le modal
@@ -33,6 +57,27 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
       [name]: value,
     }));
   };
+  
+  const handleOptionChange = (option) => {
+    setSelectedOptions(prevSet => {
+      const newSet = new Set(prevSet);
+      if (newSet.has(option)) {
+        newSet.delete(option);
+      } else {
+        newSet.add(option);
+      }
+
+      // Mettre à jour formData avec les options sélectionnées
+      setFormData((prevData) => ({
+        ...prevData,
+        options: Array.from(newSet) // Convertir le Set en tableau
+      }));
+
+      return newSet;
+    });
+  };
+
+
 
 
   // Liste des modèles associés à chaque marque
@@ -54,11 +99,19 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
   const handleMarqueChange = (e) => {
     const marque = e.target.value;
     setSelectedMarque(marque);
-    formData.marque=marque
-    // Mettre à jour la liste des modèles correspondants
+	setFormData((prevData) => ({
+	    ...prevData,
+	    marque: marque
+	  }));
     setModels(modelsByMarque[marque] || []);
   };
-
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Redirige vers la page de récap en passant formData
+    navigate("/devis", { state: { formData } });
+  };
+	
   return (
     <div className="form-container">
       <h2>Formulaire Assurance Véhicule</h2>
@@ -67,7 +120,7 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
           <label>
             Marque de véhicule :
             <select
-              name="MarqueVehicule"
+              name="marqueVehicule"
               value={formData.marque || ""}
               onChange={handleMarqueChange}
               required
@@ -84,11 +137,11 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
         <div className="form-group">
           <label>
             Modèle de véhicule :
-            <select name="vehicleModel" value={formData.model}  required disabled={!selectedMarque}>
+            <select name="modele" value={formData.modele || ""}  required disabled={!selectedMarque} onChange={handleChange}>
               <option value="">Sélectionnez un modèle</option>
-              {models.map((model) => (
-                <option key={model} value={model}>
-                  {model}
+              {models.map((modele) => (
+                <option key={modele} value={modele}>
+                  {modele}
                 </option>
               ))}
             </select>
@@ -102,18 +155,18 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
             <input
               type="radio"
               id="oui"
-              name="electrique"
-              value="oui"
-              checked={formData.electrique === "oui"}
+              name="motorisation"
+              value="ELECTRIQUE"
+              checked={formData.motorisation === "ELECTRIQUE"}
               onChange={handleChange}
             />
             <label htmlFor="oui">Oui</label>
             <input
               type="radio"
               id="non"
-              name="electrique"
-              value="non"
-              checked={formData.electrique === "non"}
+              name="motorisation"
+              value="THERMIQUE"
+              checked={formData.motorisation === "THERMIQUE"}
               onChange={handleChange}
             />
             <label htmlFor="non">Non</label>
@@ -122,8 +175,8 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
         <div className="form-group">
           <label>
             Année de fabrication :
-            <input type="number" name="annee"
-              value={formData.annee || ""} onChange={handleChange} required/>
+            <input type="number" name="fabrication"
+              value={formData.fabrication || ""} onChange={handleChange} required/>
           </label>
         </div>
         <div className="form-group">
@@ -132,8 +185,8 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
             <select name="utilisation" value={formData.utilisation || ""}
               onChange={handleChange} required >
               <option value="">Sélectionnez l'utilisation</option>
-              <option value="personnel">Personnel</option>
-              <option value="professionnel">Professionnel</option>
+              <option value="PERSONNEL">Personnel</option>
+              <option value="PROFESSIONNELLE">Professionnel</option>
             </select>
           </label>
         </div>
@@ -150,6 +203,32 @@ const AssuranceVehiculeForm = ({formData,setFormData, handleSubmit, isModalVisib
             </select>
           </label>
         </div>
+		<div className="form-group">
+			<label>
+		    	Plaque d'immatriculation :
+		        <input type="text" name="plaque"
+		           value={formData.plaque || ""} onChange={handleChange} required/>
+		 	</label>
+		 </div>
+		 <div className="form-group">
+		   <label>Options supplémentaires :</label>
+		   <div className="checkbox-group">
+		     {optionsDisponibles.map((option) => (
+		       <div key={option}>
+		         <input
+		           type="checkbox"
+		           id={option}
+		           name="options"
+		           value={option}
+		           checked={selectedOptions.has(option)}
+		           onChange={() => handleOptionChange(option)}
+		         />
+		         <label htmlFor={option}>{option}</label>
+		       </div>
+		     ))}
+		   </div>
+		 </div>
+
         <button type="submit">Soumettre</button>
       </form>
       <SuccessDemande show={isModalVisible} onClose={handleModalClose} />

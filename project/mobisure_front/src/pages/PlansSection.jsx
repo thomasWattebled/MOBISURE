@@ -53,14 +53,8 @@ const PlansSection = () => {
             },[]);
 
             const [formData, setFormData] = useState({
-              id_client: "",
-              date: new Date().toISOString(),
-              marque: "",
-              modele: "",
-              electrique: "",
-              annee: "",
-              utilisation: "",
-              duree: "",
+              clientId: "",
+              type: ""
             });
 
     // Met à jour formData une fois que l'utilisateur est chargé
@@ -68,12 +62,7 @@ const PlansSection = () => {
           if (user) {
             setFormData((prevFormData) => ({
               ...prevFormData,
-              id_client: user.id, // Ajout de l'ID client
-          nom: user.nom,
-          prenom: user.prenom,
-          mail: user.mail,
-          mdp: user.mdp,
-          telephone: user.telephone
+              clientId: user.id, // Ajout de l'ID client
             }));
           }
         }, [user]);
@@ -106,31 +95,6 @@ const PlansSection = () => {
       const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
     };
-
-    const handleSubmit = (e) => {
-      console.log(formData)
-      e.preventDefault();
-  
-      fetch('http://localhost:8083/devis/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-      .then((response) => {
-        if (response.ok) {
-          setModalVisible(true); // Ouvre le modal si la soumission est un succès
-        }
-        return response.text();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error('Erreur :', error);
-      });
-    };
   
     // Gestion de la sélection des sous-options
     const handleSubOptionSelect = (subOption) => {
@@ -138,7 +102,20 @@ const PlansSection = () => {
       setSubOptions(null); 
       //setIsOptionSelected(true);
         setShowForm(true); 
+		setFormData((prevFormData) => ({
+		    ...prevFormData,
+		    type: changeType(subOption), // Met à jour dynamiquement le type choisi
+		  }));
     };
+	
+	const changeType = (type) => {
+		if(type === "Voiture"){ return "VOITURE"; }
+		if(type === "Velo"){ return "VELO"; }
+		if(type === "Moto"){ return "MOTO"; }
+		if(type === "Voyage Vacance"){ return "VACANCES"; }
+		if(type === "Voyage Professionnel"){ return "PROFESSIONNELLE"; }
+		else{ return type; }
+	};
 
     const handleBack = () => {
       setShowForm(false);
@@ -188,7 +165,6 @@ const PlansSection = () => {
       formData={formData}
       setFormData={setFormData}  
       handleChange={handleChange}
-      handleSubmit={handleSubmit}
       isModalVisible={isModalVisible}
       setModalVisible={setModalVisible} />
       <button onClick={handleBack}   className="back-button">
@@ -199,7 +175,13 @@ const PlansSection = () => {
 
 {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Velo" &&(
         <div>
-      <AssuranceVeloForm />
+      <AssuranceVeloForm
+	  		formData={formData}
+	        setFormData={setFormData}  
+	        handleChange={handleChange}
+	        isModalVisible={isModalVisible}
+	        setModalVisible={setModalVisible}
+	  />
       <button onClick={handleBack} className="back-button">
         Retour
       </button>
@@ -208,7 +190,13 @@ const PlansSection = () => {
         {/* Formulaire pour "Voyage Professionnel" */}
         {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Professionnel" &&(
           <div>
-            <VoyageProfessionnelForm/>
+            <VoyageProfessionnelForm
+				formData={formData}
+			    setFormData={setFormData}  
+			    handleChange={handleChange}
+			    isModalVisible={isModalVisible}
+			    setModalVisible={setModalVisible}
+			/>
             <button onClick={handleBack} className="back-button">
               Retour
             </button>
@@ -218,7 +206,13 @@ const PlansSection = () => {
         {/* Formulaire pour "Assurancz vehicule Moto" */}
                 {showForm && selectedPlan === "Assurance Véhicule" && selectedSubOption === "Moto" &&(
           <div>
-            <AssuranceMotoForm/>
+            <AssuranceMotoForm
+				formData={formData}
+			    setFormData={setFormData}  
+			    handleChange={handleChange}
+			    isModalVisible={isModalVisible}
+			    setModalVisible={setModalVisible}
+			/>
             <button onClick={handleBack} className="back-button">
               Retour
             </button>
@@ -227,7 +221,13 @@ const PlansSection = () => {
       {/* Formulaire pour "Voyage Vacance" */}
       {showForm && selectedPlan === "Assurance Voyage" && selectedSubOption === "Voyage Vacance" && (
         <div>
-          <VoyageVacanceForm/>
+          <VoyageVacanceForm
+		  	formData={formData}
+		    setFormData={setFormData}  
+		    handleChange={handleChange}
+		    isModalVisible={isModalVisible}
+		    setModalVisible={setModalVisible}
+		  />
           <button onClick={handleBack} className="back-button">
             Retour
           </button>

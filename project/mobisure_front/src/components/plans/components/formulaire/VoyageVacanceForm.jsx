@@ -1,15 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import '../../style/form.css';
 
-const VoyageVacanceForm = ({ onSubmit })  => {
-  const [formData, setFormData] = useState({
-    paysDepart: '',
-    destination: '',
-    dateDepart: '',
-    dateRetour:'',
-    nbPersonnes:'',
-  });
 
+const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible,onSubmit}) => {
+
+	const navigate = useNavigate();
+	const [selectedOptions, setSelectedOptions] = useState(new Set());
+	
+	useEffect(() => {
+	      setFormData((prevData) => ({
+	        ...prevData,      
+			paysdepart: "",
+			paysArrive: "",
+			dateDepart: "",
+			dateArrive: "",
+			nbPersonnes: 0,
+			options: Array
+	      }));
+		},[]);
+		
+		const optionsDisponibles = [
+					    "Annulation toutes causes",
+					    "Bagages assurés",
+						"Frais médicaux à l’étranger"
+					  ];
+					  
+					  const handleChange = (e) => {
+					  				    const { name, value } = e.target;
+					  				    setFormData((prevData) => ({
+					  				      ...prevData,
+					  				      [name]: value,
+					  				    }));
+					  				  };
+					  				  
+					  				 const handleOptionChange = (option) => {
+					  				      setSelectedOptions(prevSet => {
+					  				        const newSet = new Set(prevSet);
+					  				        if (newSet.has(option)) {
+					  				          newSet.delete(option);
+					  				        } else {
+					  				          newSet.add(option);
+					  				        }
+
+					  				        // Mettre à jour formData avec les options sélectionnées
+					  				        setFormData((prevData) => ({
+					  				          ...prevData,
+					  				          options: Array.from(newSet) // Convertir le Set en tableau
+					  				        }));
+
+					  				        return newSet;
+					  				      });
+					  				    };
+	
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -21,20 +64,23 @@ const VoyageVacanceForm = ({ onSubmit })  => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
+    navigate("/devis", { state: { formData } });
     console.log('Form Data Submitted:', formData);
   };
 
+
+  
   return (
     <div className="form-container">
-      <h3>Formulaire pour Voyage Professionnel</h3>
+      <h3>Formulaire pour Voyage Vacance</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="paysDepart">Pays de depart</label>
           <input
             type="text"
             id="paysDepart"
-            name="paysDepart"
-            value={formData.paysDepart}
+            name="paysdepart"
+            value={formData.paysdepart}
             onChange={handleInputChange}
             required
             placeholder="Le pays de depart"
@@ -45,8 +91,8 @@ const VoyageVacanceForm = ({ onSubmit })  => {
           <input
             type="text"
             id="destination"
-            name="destination"
-            value={formData.destination}
+            name="paysArrive"
+            value={formData.paysArrive}
             onChange={handleInputChange}
             required
             placeholder="Entrez la destination"
@@ -64,28 +110,52 @@ const VoyageVacanceForm = ({ onSubmit })  => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dateRetour">Date Retour :</label>
+          <label htmlFor="dateArrive">Date Retour :</label>
           <input
             type="date"
-            id="dateRetour"
-            name="dateRetour"
-            value={formData.dateRetour}
+            id="dates"
+            name="dateArrive"
+            value={formData.dateArrive}
             onChange={handleInputChange}
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="nbPersonnes">Nombre de personnes</label>
-          <input
-            type="text"
-            id="nbPersonnes"
-            name="nbPersonnes"
-            value={formData.nbPersonnes}
-            onChange={handleInputChange}
-            required
-            placeholder="Pour combien de personnes ?"
-          />
-        </div>
+		<div className="form-group">
+		  <label htmlFor="nbPersonnes">Nombre de personnes</label>
+		  <select
+		    id="nbPersonnes"
+		    name="nbPersonnes"
+		    value={formData.nbPersonnes}
+		    onChange={handleInputChange}
+		    required
+		  >
+		    <option value="">Sélectionner</option>
+		    <option value="une personne">Une personne</option>
+		    <option value="deux à trois">Deux à trois</option>
+		    <option value="quatres à six">Quatre à six</option>
+		    <option value="plus de six">Plus de six</option>
+		  </select>
+		</div>
+		
+		<div className="form-group">
+							   <label>Options supplémentaires :</label>
+							   <div className="checkbox-group">
+							     {optionsDisponibles.map((option) => (
+							       <div key={option}>
+							         <input
+							           type="checkbox"
+							           id={option}
+							           name="options"
+							           value={option}
+							           checked={selectedOptions.has(option)}
+							           onChange={() => handleOptionChange(option)}
+							         />
+							         <label htmlFor={option}>{option}</label>
+							       </div>
+							     ))}
+							   </div>
+							 </div>
+
         <button type="submit">Soumettre</button>
       </form>
     </div>
