@@ -57,28 +57,12 @@ public class Assistance {
         return "D-" + (100000 + new Random().nextInt(900000));
     }
 
-    public String getNum_dossier() {
-        return numDossier;
-    }
-    
-    public void setNum_dossier(String num_dossier) {
-        this.numDossier = num_dossier;
-    }
-
 	public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public Long getId_client() {
-		return idClient;
-	}
-
-	public void setId_client(Long id_client) {
-		this.idClient = id_client;
 	}
 
 	public Status getStatus() {

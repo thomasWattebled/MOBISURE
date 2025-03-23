@@ -43,9 +43,4 @@ public class Remboursement extends Assistance {
 		this.motif = motif;
 	}
 	
-	
-	
-	
-	
-	
 }
