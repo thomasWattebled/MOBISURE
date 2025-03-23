@@ -2,28 +2,39 @@ import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../style/form.css';
 
-const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
+
+
+
+const VoyageVacanceForm = ({userData,setUserData,isModalVisible, setModalVisible,onSubmit}) => {
+
 
 	const navigate = useNavigate();
 	const [selectedOptions, setSelectedOptions] = useState(new Set());
 	
-	useEffect(() => {
-	      setFormData((prevData) => ({
-	        ...prevData,      
-			paysdepart: "",
-			paysArrive: "",
-			dateDepart: "",
-			dateArrive: "",
-			nbPersonnes: 0,
-			options: Array
-	      }));
-		},[]);
 		
-		const optionsDisponibles = [
-					    "Annulation toutes causes",
-					    "Bagages assurés",
-						"Frais médicaux à l’étranger"
-					  ];
+		const [formData, setFormData] = useState({
+      paysDepart:"",
+      paysArrive: "",
+      dateDepart: "",
+      dateArrive: "",
+      nbPersonnes: "",
+        options: []
+      });
+
+      useEffect(() => {
+        if (userData) {
+          setFormData((prevFormData) => ({
+            ...prevFormData, 
+            ...userData, 
+          }));
+        }
+      }, [userData]);
+    
+      const optionsDisponibles = [
+        "Perte de documents",
+        "Matériel pro couvert",
+      "Assistance juridique à l’étranger"
+      ];
 					  
 					  const handleChange = (e) => {
 					  				    const { name, value } = e.target;
@@ -61,34 +72,35 @@ const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible
   };
 
   const handleSubmit = (e) => {
-      e.preventDefault();
-      // Redirige vers la page de récap en passant formData
-      navigate("/devis", { state: { formData } });
-    };
+    e.preventDefault();
+    onSubmit(formData);
+    navigate("/devis", { state: { formData } });
+    console.log('Form Data Submitted:', formData);
+  };
 
-  console.log(formData);
+
   
   return (
     <div className="form-container">
       <h3>Formulaire pour Voyage Vacance</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="companyName">Pays de depart</label>
+          <label htmlFor="paysDepart">Pays de depart</label>
           <input
             type="text"
             id="paysDepart"
-            name="paysdepart"
-            value={formData.paysdepart}
+            name="paysDepart"
+            value={formData.paysDepart}
             onChange={handleInputChange}
             required
             placeholder="Le pays de depart"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="destination">Destination :</label>
+          <label htmlFor="paysArrive">Destination :</label>
           <input
             type="text"
-            id="destination"
+            id="paysArrive"
             name="paysArrive"
             value={formData.paysArrive}
             onChange={handleInputChange}
@@ -97,10 +109,10 @@ const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Depart :</label>
+          <label htmlFor="dateDepart">Date Depart :</label>
           <input
             type="date"
-            id="dates"
+            id="dateDepart"
             name="dateDepart"
             value={formData.dateDepart}
             onChange={handleInputChange}
@@ -108,10 +120,10 @@ const VoyageVacanceForm = ({formData,setFormData,isModalVisible, setModalVisible
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Retour :</label>
+          <label htmlFor="dateArrive">Date Retour :</label>
           <input
             type="date"
-            id="dates"
+            id="dateArrive"
             name="dateArrive"
             value={formData.dateArrive}
             onChange={handleInputChange}

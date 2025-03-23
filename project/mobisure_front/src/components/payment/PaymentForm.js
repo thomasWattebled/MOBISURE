@@ -39,10 +39,10 @@ const PaymentForm = ({ price, setStatusPayment , onClose }) => {
       });
 
       const result = await response.text();
-	  console.log(result);
+      console.log(result);
       setMessage(result === "Payment successful!" ? "Paiement réussi !" : "Échec du paiement.");
-	  if(result === "Payment successful!"){ setStatusPayment(true) }
-	  onClose();
+      if(result === "Payment successful!"){ setStatusPayment(true) }
+      onClose();
     } catch (error) {
       setMessage("Erreur lors du paiement.");
     }
@@ -54,22 +54,45 @@ const PaymentForm = ({ price, setStatusPayment , onClose }) => {
         <h2>Paiement</h2>
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Numéro de carte :</label>
-            <input type="text" value={cardNumber} onChange={handleCardNumberChange} required />
+            <label htmlFor="cardNumber">Numéro de carte :</label>
+            <input 
+              id="cardNumber" 
+              type="text" 
+              value={cardNumber} 
+              onChange={handleCardNumberChange} 
+              required 
+            />
             {cardNumberError && <p className="error">{cardNumberError}</p>}
           </div>
           <div>
-            <label>Nom du titulaire :</label>
-            <input type="text" value={cardHolder} onChange={(e) => setCardHolder(e.target.value)} required />
+            <label htmlFor="cardHolder">Nom du titulaire :</label>
+            <input 
+              id="cardHolder" 
+              type="text" 
+              value={cardHolder} 
+              onChange={(e) => setCardHolder(e.target.value)} 
+              required 
+            />
           </div>
           <div>
-            <label>CVV :</label>
-            <input type="text" value={cvv} onChange={handleCVVChange} required />
+            <label htmlFor="cvv">CVV :</label>
+            <input 
+              id="cvv" 
+              type="text" 
+              value={cvv} 
+              onChange={handleCVVChange} 
+              required 
+            />
             {cvvError && <p className="error">{cvvError}</p>}
           </div>
           <div>
-            <label>Montant :</label>
-            <input type="number" value={price} readOnly />
+            <label htmlFor="amount">Montant :</label>
+            <input 
+              id="amount" 
+              type="number" 
+              value={price} 
+              readOnly 
+            />
           </div>
           <button type="submit">Valider</button>
           <button type="button" onClick={onClose} className="close-button">Annuler</button>

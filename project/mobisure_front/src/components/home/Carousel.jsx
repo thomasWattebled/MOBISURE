@@ -33,15 +33,15 @@ const Carousel = ({ images, visibleCount }) => {
       </div>
 
       {/* Boutons de navigation */}
-      <button className="carousel-button prev" onClick={() => moveCarousel(-1)}>
+      <button className="carousel-button prev" onClick={() => moveCarousel(-1)} aria-label="Previous">
         &#10094;
       </button>
-      <button className="carousel-button next" onClick={() => moveCarousel(1)}>
-        &#10095;
+      <button className="carousel-button next" onClick={() => moveCarousel(1)} aria-label="Next">
+        &#10095; 
       </button>
-    </div>
-  );
-};
+          </div>
+        );
+      };
 
 Carousel.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string).isRequired,

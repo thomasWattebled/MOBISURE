@@ -2,25 +2,31 @@ import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../style/form.css";
 
-const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
+const AssuranceMotoForm = ({userData, setUserData,isModalVisible, setModalVisible}) => {
   const [selectedMarque, setSelectedMarque] = useState("");
   const [models, setModels] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState(new Set());
   const navigate = useNavigate();
-  
-  useEffect(() => {
-        setFormData((prevData) => ({
-          ...prevData,      
-          marque: "",
-          modele: "",
-  		  motorisation: "THERMIQUE",
-  		  utilisation: "",
-  		  duree: 0,
-  		  fabrication: 0,
-		  plaque: "",
-		  options: Array
-        }));
-  	},[]);
+  const [formData, setFormData] = useState({
+      marque: '',
+      modele: '',
+      motorisation: '',
+      fabrication:'',
+      utilisation:'',
+      dure:'',
+      plaque:'',
+      options: []
+    });
+
+          useEffect(() => {
+            if (userData) {
+              setFormData((prevFormData) => ({
+                ...prevFormData, 
+                ...userData, 
+              }));
+            }
+          }, [userData]);
+
   
   const marques = [
     "Yamaha",
@@ -60,11 +66,6 @@ const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible
   const handleMarqueChange = (e) => {
     const marque = e.target.value;
     setSelectedMarque(marque);
-    // Mettre à jour la liste des modèles correspondants
-	setFormData((prevData) => ({
-		    ...prevData,
-		    marque: marque
-		  }));
     setModels(modelsByMarque[marque] || []);
   };
   
@@ -104,6 +105,7 @@ const AssuranceMotoForm = ({formData,setFormData,isModalVisible, setModalVisible
   return (
     <div className="form-container">
       <h2>Formulaire Assurance Moto</h2>
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>

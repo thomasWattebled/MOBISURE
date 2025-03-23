@@ -1,47 +1,51 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../style/form.css';
 
-const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalVisible}) => {
-	
-	const navigate = useNavigate();
-	const [selectedOptions, setSelectedOptions] = useState(new Set());
-	
-	useEffect(() => {
-		      setFormData((prevData) => ({
-		        ...prevData,      
-				entreprise: "",
-				paysArrive: "",
-				dateDepart: "",
-				dateArrive: "",
-				options: Array
-		      }));
-			},[]);
-	
-			const optionsDisponibles = [
-						    "Perte de documents",
-						    "Matériel pro couvert",
-							"Assistance juridique à l’étranger"
-						  ];
-						  
-						  const handleOptionChange = (option) => {
-						  				      setSelectedOptions(prevSet => {
-						  				        const newSet = new Set(prevSet);
-						  				        if (newSet.has(option)) {
-						  				          newSet.delete(option);
-						  				        } else {
-						  				          newSet.add(option);
-						  				        }
+const VoyageProfessionnelForm = ({ userData, setUserData, isModalVisible, setModalVisible, onSubmit }) => {
+  const navigate = useNavigate();
+  const [selectedOptions, setSelectedOptions] = useState(new Set());
 
-						  				        // Mettre à jour formData avec les options sélectionnées
-						  				        setFormData((prevData) => ({
-						  				          ...prevData,
-						  				          options: Array.from(newSet) // Convertir le Set en tableau
-						  				        }));
+  const [formData, setFormData] = useState({
+    entreprise: '',
+    paysArrive: '',
+    dateDepart: '',
+    dateArrive:'',
+    options: []
+  });
 
-						  				        return newSet;
-						  				      });
-						  				    };
+        useEffect(() => {
+          if (userData) {
+            setFormData((prevFormData) => ({
+              ...prevFormData, 
+              ...userData, 
+            }));
+          }
+        }, [userData]);
+
+  const optionsDisponibles = [
+    "Perte de documents",
+    "Matériel pro couvert",
+  "Assistance juridique à l’étranger"
+  ];
+
+  const handleOptionChange = (option) => {
+    setSelectedOptions(prevSet => {
+      const newSet = new Set(prevSet);
+      if (newSet.has(option)) {
+        newSet.delete(option);
+      } else {
+        newSet.add(option);
+      }
+
+      setFormData((prevData) => ({
+        ...prevData,
+        options: Array.from(newSet)
+      }));
+
+      return newSet;
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,10 +56,11 @@ const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalV
   };
 
   const handleSubmit = (e) => {
-        e.preventDefault();
-        // Redirige vers la page de récap en passant formData
-        navigate("/devis", { state: { formData } });
-      };
+    e.preventDefault();
+    onSubmit(formData);
+    console.log('Form Data Submitted:', formData);
+    navigate("/devis", { state: { formData } });
+  };
 
   return (
     <div className="form-container">
@@ -86,10 +91,10 @@ const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalV
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Depart :</label>
+          <label htmlFor="dateDepart">Date Depart :</label>
           <input
             type="date"
-            id="dates"
+            id="dateDepart"
             name="dateDepart"
             value={formData.dateDepart}
             onChange={handleInputChange}
@@ -97,34 +102,34 @@ const VoyageProfessionnelForm = ({formData,setFormData,isModalVisible, setModalV
           />
         </div>
         <div className="form-group">
-          <label htmlFor="dates">Date Retour :</label>
+          <label htmlFor="dateArrive">Date Retour :</label>
           <input
             type="date"
-            id="dates"
+            id="dateArrive"
             name="dateArrive"
             value={formData.dateArrive}
             onChange={handleInputChange}
             required
           />
         </div>
-		<div className="form-group">
-							   <label>Options supplémentaires :</label>
-							   <div className="checkbox-group">
-							     {optionsDisponibles.map((option) => (
-							       <div key={option}>
-							         <input
-							           type="checkbox"
-							           id={option}
-							           name="options"
-							           value={option}
-							           checked={selectedOptions.has(option)}
-							           onChange={() => handleOptionChange(option)}
-							         />
-							         <label htmlFor={option}>{option}</label>
-							       </div>
-							     ))}
-							   </div>
-							 </div>
+        <div className="form-group">
+          <label>Options supplémentaires :</label>
+          <div className="checkbox-group">
+            {optionsDisponibles.map((option) => (
+              <div key={option}>
+                <input
+                  type="checkbox"
+                  id={option}
+                  name="options"
+                  value={option}
+                  checked={selectedOptions.has(option)}
+                  onChange={() => handleOptionChange(option)}
+                />
+                <label htmlFor={option}>{option}</label>
+              </div>
+            ))}
+          </div>
+        </div>
         <button type="submit">Soumettre</button>
       </form>
     </div>

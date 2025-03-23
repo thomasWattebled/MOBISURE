@@ -2,22 +2,29 @@ import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../style/form.css";
 
-const AssuranceVeloForm = ({formData,setFormData,isModalVisible, setModalVisible}) =>  {
+const AssuranceVeloForm = ({userData,setUserData,isModalVisible, setModalVisible}) =>  {
       const [selectedOptions, setSelectedOptions] = useState(new Set());
 	  const navigate = useNavigate();
 	  
-	  useEffect(() => {
-	          setFormData((prevData) => ({
-	            ...prevData,      
-	    		motorisation: "THERMIQUE",
-				options: Array
-	          }));
-	    	},[]);
 	
-			const optionsDisponibles = [
-			    "Protection contre le vandalisme",
-			    "Assistance crevaison",
-			  ];
+	 const [formData, setFormData] = useState({
+		motorisation: "THERMIQUE",
+		options: []
+	  });
+
+	  	useEffect(() => {
+			  if (userData) {
+				setFormData((prevFormData) => ({
+				  ...prevFormData, 
+				  ...userData, 
+				}));
+			  }
+			}, [userData]);
+
+	const optionsDisponibles = [
+		"Protection contre le vandalisme",
+		"Assistance crevaison",
+	];
 	
 			const handleSubmit = (e) => {
 			      e.preventDefault();

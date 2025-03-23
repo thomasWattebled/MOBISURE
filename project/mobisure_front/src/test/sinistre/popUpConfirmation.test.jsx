@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, fireEvent,act } from "@testing-library/react";
-import PopupConfirmation from "../components/sinistre/popUpConfirmation";
+import PopupConfirmation from "../../components/sinistre/popUpConfirmation";
 import '@testing-library/jest-dom';
 
 
 // Mock de GeneratePDF pour éviter de tester son comportement ici
-jest.mock("../components/pdf/generatePDF", () => () => <div>GeneratePDF Mock</div>);
+jest.mock("../../components/pdf/generatePDF", () => () => <div>GeneratePDF Mock</div>);
 
 describe("ConfirmationModal", () => {
   const onCloseMock = jest.fn();
@@ -17,16 +17,13 @@ describe("ConfirmationModal", () => {
   ];
 
   it("affiche le message de confirmation et le bouton Générer PDF", () => {
-    act(() => {
-        render(
-          <PopupConfirmation
-            onClose={onCloseMock}
-            formData={formData}
-            pdfConfig={pdfConfig}
-          />
-        );
-      });
-
+    render(
+      <PopupConfirmation
+        onClose={onCloseMock}
+        formData={formData}
+        pdfConfig={pdfConfig}
+      />
+    );
     expect(screen.getByText("Le sinistre a bien été créé.")).toBeInTheDocument();
     expect(screen.getByText("GeneratePDF Mock")).toBeInTheDocument();
   });

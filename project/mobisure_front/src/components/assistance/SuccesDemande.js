@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import  {useNavigate}  from 'react-router-dom';
 
 const SuccessDemande = ({ show, onClose }) => {
   const navigate = useNavigate();  // Utilisation de useNavigate pour la navigation
