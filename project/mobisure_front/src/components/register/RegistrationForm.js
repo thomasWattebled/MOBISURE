@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import RegistrationFormView from './RegistrationFormView';
 import SuccessModal from './SuccessModal';
-
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +15,7 @@ const RegistrationForm = () => {
     telephone: '',
   });
   const [isModalVisible, setModalVisible] = useState(false);
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,27 +27,30 @@ const RegistrationForm = () => {
 
     const formDataWithDate = {
       ...formData,
-      date_creation: new Date().toISOString().split('T')[0], // Ajout date de la creation du compte pour la bdd
+      date_creation: new Date().toISOString().split('T')[0],
     };
-    fetch('http://localhost:8080/users/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formDataWithDate),
-    })
-    .then((response) => {
-      if (response.ok) {
-        setModalVisible(true); // Ouvre le modal si la soumission est un succès
-      }
-      return response.text();
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error('Erreur :', error);
-    });
+
+	fetch('http://localhost:8080/users/register', {
+	      method: 'POST',
+	      headers: {
+	        'Content-Type': 'application/json',
+	      },
+	      body: JSON.stringify(formDataWithDate),
+	    })
+	    .then((response) => {
+	      if (response.ok) {
+	        setModalVisible(true); // Ouvre le modal si la soumission est un succès
+	      }
+	      return response.text();
+	    })
+	    .then((data) => {
+	      console.log(data);
+	    })
+	    .catch((error) => {
+	      console.error('Erreur :', error);
+	    });
+
+
   };
 
   return (
@@ -55,7 +59,7 @@ const RegistrationForm = () => {
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       isModalVisible={isModalVisible}
-      setModalVisible={setModalVisible} 
+      setModalVisible={setModalVisible}
     />
   );
 };

@@ -4,17 +4,35 @@
   overflow: hidden;
 }
 
+.carousel-description {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #555;
+}
 .carousel-images {
   display: flex;
   transition: transform 0.5s ease-in-out;
   width: 100%;
 }
 
+
+.carousel-description {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #555;
+}
 .carousel-image-container {
-  flex: 0 0 calc(100% / 3); /* Ajustez 3 pour le nombre d'images visibles */
+  flex: 0 0 calc(100% / var(--visible-count)); /* Ajuste la largeur en fonction du nombre d'images visibles */
   display: flex;
+  flex-direction: column; /* Empile l'image et la description verticalement */
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+.carousel-description {
+  margin-top: 10px; /* Espace entre l'image et la description */
+  font-size: 1.2em;
+  color: #555;
 }
 
 .carousel-image {

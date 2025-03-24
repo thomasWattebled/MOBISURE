@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -28,6 +29,13 @@ import mobisure.project.entity.RoleName;
 import mobisure.project.entity.User;
 import mobisure.project.repository.UserRepository;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.*;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.*;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+@AutoConfigureMockMvc
 public class SecurityConfigTest {
 	
 	@Autowired
@@ -85,5 +93,24 @@ public class SecurityConfigTest {
     	AuthenticationManager test = securityConfig.authenticationManager(userDetailsService, passwordEncoder);
     	assertNotNull(test);
     }
+ 
+    @Test
+    public void testCorsConfigurationSource() {
+    	
+    	CorsConfigurationSource source = securityConfig.corsConfigurationSource();
+    	
+    	assertNotNull(source);
+        assertTrue(source instanceof UrlBasedCorsConfigurationSource);
+        
+        CorsConfiguration config = ((UrlBasedCorsConfigurationSource) source).getCorsConfigurations().get("/**");
+        assertNotNull(config);
+        
+        assertEquals(Collections.singletonList("http://localhost:3000"), config.getAllowedOrigins());
+        assertEquals(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"), config.getAllowedMethods());
+        assertEquals(Arrays.asList("Authorization", "Content-Type"), config.getAllowedHeaders());
+        assertTrue(config.getAllowCredentials());
+    }
+
+    
     
 }

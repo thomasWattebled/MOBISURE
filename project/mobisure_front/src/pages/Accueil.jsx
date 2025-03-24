@@ -14,14 +14,22 @@ import travelImage6 from '../assets/image/travelImage6.png';
 import travelImage7 from '../assets/image/travelImage7.jpg';
 
 const Accueil = () => {
-  const images = [travelImage1, travelImage2,travelImage3,travelImage4,travelImage5,travelImage6,travelImage7];
+  const images = [
+    { image: travelImage1 },
+    { image: travelImage2 },
+    { image: travelImage3 },
+    { image: travelImage4 },
+    { image: travelImage5 },
+    { image: travelImage6 },
+    { image: travelImage7 },
+  ];
 
   return (
     <>
       {/* Hero Section */}
       <div className="hero-section">
         <h1>Découvrez une assurance voyage abordable - MOBISURE</h1>
-        <Carousel images={images} />
+        <Carousel images={images} visibleCount={3} />
       </div>
 
       {/* Features Section */}

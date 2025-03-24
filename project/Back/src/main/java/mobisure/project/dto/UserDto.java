@@ -7,6 +7,12 @@ import java.util.Set;
 
 import mobisure.project.entity.RoleName;
 
+/*
+ * Data transfer class (DTO) representing a user.
+ * This class is used to transfer data between application layers
+ * while respecting the principle of separation of responsibilities.
+ */
+
 public class UserDto {
 
 	private Long id;
@@ -21,8 +27,23 @@ public class UserDto {
 	private Date date_creation;
 	private Set<RoleName> roles = new HashSet<>();
 	
+	/*
+	 * Constructor without arguments for creating an instance of another class
+	 */
 	public UserDto(){}
 
+	/**
+	 * 
+	 * @param nom : the name of the user.
+	 * @param prenom : the user's first name.
+	 * @param mail : the user’s email.
+	 * @param mdp : the user’s password.
+	 * @param sexe : the gender of the user.
+	 * @param dateNaissance : the date of birth of the user.
+	 * @param adresse : the address of the user.
+	 * @param telephone : the user’s phone number.
+	 * @param date_creation : the date of creation of the user.
+	 */
 	public UserDto(String nom, String prenom, String mail, String mdp, String sexe, Date dateNaissance, String adresse,
 			String telephone, Date date_creation) {
 		super();
@@ -38,6 +59,10 @@ public class UserDto {
 		Set<RoleName> roles = new HashSet<>();
 	}
 
+	/*
+	 *Getter and setter for all attributes 
+	 */
+	
 	public Long getId() {
 		return id;
 	}

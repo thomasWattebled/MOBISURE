@@ -1,176 +1,118 @@
-/* Global styles for the app */
-.App {
-  text-align: center;
-}
+/* Fichier CSS unifié */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-/* Header section with a calm blue gradient */
-.App-header {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Navigation Bar */
+/* Styles pour la navbar */
 .navbar {
   background-color: #00aaff;
-  padding: 15px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-links {
-  list-style: none;
+  padding: 0.5rem 1rem;
   display: flex;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-  justify-content: center;
-}
-
-.navbar-links li {
-  display: inline-block;
-}
-
-.navbar-links li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.navbar-links li a:hover {
-  background-color: #ffdd57;
-  color: #003366;
-  text-decoration: none;
-}
-
-/* Footer Section */
-footer {
-  background-color: #003366;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-/* Buttons */
-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Carousel Section */
-.carousel {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  margin: 30px 0;
-}
-
-.carousel-images {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
-}
-
-.carousel-image-container {
-  flex: 0 0 100%;
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
-.carousel-image {
-  width: 90%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Carousel Buttons */
-.carousel-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 170, 255, 0.7);
+.navbar-brand {
+  font-weight: bold;
   color: white;
-  border: none;
-  padding: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 10;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
+  font-size: 1.5rem;
 }
 
-.carousel-button:hover {
-  background-color: rgba(255, 221, 87, 0.7);
+.navbar img {
+  height: 40px;
+  margin-right: 15px;
 }
 
-.carousel-button.prev {
-  left: 15px;
-}
-
-.carousel-button.next {
-  right: 15px;
-}
-
-/* Indicators */
-.carousel-indicators {
+/* Liens de la navbar */
+.navbar-links {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 1.5rem;
 }
 
-.indicator {
-  width: 10px;
-  height: 10px;
-  background-color: #cfd9df;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.navbar-links a {
+  color: white; /* Couleur uniforme pour tous les liens */
+  text-decoration: none;
+  font-weight: normal;
+  padding: 8px 16px; /* Ajouter du padding pour les liens */
+  display: inline-block; /* Pour s'assurer qu'ils sont tous de la même hauteur */
 }
 
-.indicator.active {
+.navbar-links a:hover {
+  text-decoration: underline;
+  background-color: #0077cc; /* Ajout d'une couleur de survol pour les liens */
+}
+
+.navbar-links .active {
+  text-decoration: underline;
+}
+
+
+
+.navbar .dropdown-menu {
   background-color: #00aaff;
+  border: none;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  display: none; /* Le menu déroulant est caché par défaut */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
 }
 
-/* Keyframes for animations */
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.navbar .dropdown:hover .dropdown-menu {
+  display: block; /* Afficher le menu au survol */
+}
+
+.navbar .dropdown-menu .dropdown-item {
+  color: white;
+  padding: 8px 16px; /* Garder la même taille de padding pour les éléments de menu déroulant */
+  text-decoration: none;
+  display: block;
+}
+
+.navbar .dropdown-menu .dropdown-item:hover {
+  background-color: #0077cc;
+}
+
+/* Styles responsives pour la navbar */
+@media (max-width: 767px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  to {
-    transform: rotate(360deg);
+
+  .navbar-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 }
+
+/* Footer */
+footer {
+  background-color: #00aaff;
+  padding: 1rem;
+  text-align: center;
+  color: white;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Style général de la page */
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Main content (espace de contenu principal) */
+main {
+  padding: 20px;
+  background-color: #ffffff;
+  min-height: calc(100vh - 140px); /* Ajuste la hauteur pour inclure la navbar et le footer */
+}
+

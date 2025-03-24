@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {  Link } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../assets/css/login.css';
+import '../../assets/css/form.css';
 
 
 export const LoginForm = ({handleLogin, message}) => {
@@ -46,6 +46,9 @@ export const LoginForm = ({handleLogin, message}) => {
                             <div className="mt-3">
                                 <span>Pas de compte ? <Link to="/register">créer un compte</Link></span>
                             </div>
+							<div className="mt-3">
+								<span>Mot de passe oublié ? <Link to="/changeMdp">réinitialiser le mot de passe</Link></span>
+							</div>
                         </div>
                     </div>
                 </div>
