@@ -11,7 +11,7 @@ public enum MarqueMoto {
     TRIUMPH, KTM,
 
     // Motos standards (facteur 1.0)
-    YAMAHA, HONDA_MOTO, KAWASAKI, SUZUKI;
+    YAMAHA, HONDA, KAWASAKI, SUZUKI;
 	
 	@JsonCreator
     public static MarqueMoto fromString(String value) {

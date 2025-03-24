@@ -8,13 +8,13 @@ const AssuranceMotoForm = ({userData, setUserData,isModalVisible, setModalVisibl
   const [selectedOptions, setSelectedOptions] = useState(new Set());
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-      marque: '',
-      modele: '',
-      motorisation: '',
-      fabrication:'',
-      utilisation:'',
-      dure:'',
-      plaque:'',
+      marque: "",
+      modele: "",
+      motorisation: "",
+      fabrication:"",
+      utilisation:"",
+      dure:"",
+      plaque:"",
       options: []
     });
 
@@ -66,6 +66,10 @@ const AssuranceMotoForm = ({userData, setUserData,isModalVisible, setModalVisibl
   const handleMarqueChange = (e) => {
     const marque = e.target.value;
     setSelectedMarque(marque);
+	  setFormData((prevData) => ({
+	    ...prevData,
+	    marque: marque
+	  }));
     setModels(modelsByMarque[marque] || []);
   };
   

@@ -38,7 +38,7 @@ const AssuranceVehiculeForm = ({userData,setuserData,isModalVisible, setModalVis
   const marques = [
     "Audi",
     "BMW",
-    "Mercedes-Benz",
+    "Mercedes",
     "Volkswagen",
     "Toyota",
     "Ford",
@@ -93,7 +93,7 @@ const AssuranceVehiculeForm = ({userData,setuserData,isModalVisible, setModalVis
   const modelsByMarque = {
     Audi: ["A3", "A4", "A6", "Q5", "Q7"],
     BMW: ["Serie 3", "Serie 5", "X1", "X3", "X5"],
-    "Mercedes-Benz": ["Classe A", "Classe C", "Classe E", "GLC", "GLE"],
+    Mercedes: ["Classe A", "Classe C", "Classe E", "GLC", "GLE"],
     Volkswagen: ["Golf", "Polo", "Passat", "Tiguan", "Touareg"],
     Toyota: ["Corolla", "Yaris", "RAV4", "Hilux", "Camry"],
     Ford: ["Fiesta", "Focus", "Mustang", "Explorer", "Ranger"],
@@ -108,7 +108,7 @@ const AssuranceVehiculeForm = ({userData,setuserData,isModalVisible, setModalVis
   const handleMarqueChange = (e) => {
     const marque = e.target.value;
     setSelectedMarque(marque);
-	setFormData((prevData) => ({
+	  setFormData((prevData) => ({
 	    ...prevData,
 	    marque: marque
 	  }));
