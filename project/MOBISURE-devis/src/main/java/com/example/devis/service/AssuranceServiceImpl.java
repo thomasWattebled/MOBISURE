@@ -60,7 +60,7 @@ public class AssuranceServiceImpl implements AssuranceService{
 		switch(assurance.getMarque()) {
 			case DUCATI, HARLEY, INDIAN -> multipliccateur = 1.2;
 			case TRIUMPH, KTM -> multipliccateur = 1.1;
-			case  YAMAHA, HONDA_MOTO, KAWASAKI, SUZUKI -> multipliccateur = 1;
+			case  YAMAHA, HONDA, KAWASAKI, SUZUKI -> multipliccateur = 1;
 		}
 		
 		switch(assurance.getElectrique()) {

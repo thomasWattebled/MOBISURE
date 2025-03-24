@@ -95,7 +95,7 @@ const Recapitulatif = () => {
 		type : "Votre type d'assurance",
 	  };
   }
-
+  
   return (
     <div>
       <h2>Récapitulatif de la demande</h2>

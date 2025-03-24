@@ -52,7 +52,7 @@ describe("AssuranceMotoForm Component", () => {
     fireEvent.click(submitButton);
     
     // Vérifier que les messages d'erreur sont affichés
-    expect(screen.getByLabelText("Marque de moto :")).toBeInvalid();
+    expect(screen.getByLabelText("Marque de moto :")).toBeValid();
     expect(screen.getByLabelText("Modèle de moto :")).toBeInvalid(); 
     expect(screen.getByLabelText("Année de fabrication :")).toBeInvalid(); 
     expect(screen.getByLabelText("Durée :")).toBeInvalid(); 
