@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import mobisure.project.dto.UserDto;
+import mobisure.project.entity.RoleName;
 import mobisure.project.request.UserRoleUpdateRequest;
 import mobisure.project.request.changeMdpRequest;
 import mobisure.project.service.UserService;
@@ -196,5 +197,87 @@ public class UserControllerTest {
 
 	        verify(userService, times(1)).changeMdp(any(changeMdpRequest.class));
 	    }
+	    
+	    @Test
+	    void testUpdateUser_Success() throws Exception {
+	       
+	        UserDto updatedUser = new UserDto("John", "Doe", "johndoe@example.com", "newPassword", null, null, null, null, null);
+	        Map<String, String> response = new HashMap<>();
+	        response.put("message", "Utilisateur mis à jour avec succès.");
+
+	        doNothing().when(userService).updateUser(eq(1L), any(UserDto.class));  // On mock le service
+
+	        mockMvc.perform(put("/users/1")  // L'ID est passé dans l'URL
+	                .contentType(MediaType.APPLICATION_JSON)
+	                .content(objectMapper.writeValueAsString(updatedUser)))  // Contenu de la requête
+	                .andExpect(status().isOk())  // Vérifier le code de statut
+	                .andExpect(jsonPath("$.message").value("Utilisateur mis à jour avec succès."));  // Vérifier la réponse
+
+	        verify(userService, times(1)).updateUser(eq(1L), any(UserDto.class));  // Vérifier l'appel au service
+	    }
+	    
+	    @Test
+	    void testUpdateUser_Failure() throws Exception {
+	       
+	        UserDto updatedUser = new UserDto("John", "Doe", "johndoe@example.com", "newPassword", null, null, null, null, null);
+	        Map<String, String> errorResponse = new HashMap<>();
+	        errorResponse.put("error", "Erreur de mise à jour de l'utilisateur.");
+
+	        doThrow(new RuntimeException("Erreur de mise à jour de l'utilisateur.")).when(userService).updateUser(eq(1L), any(UserDto.class));
+
+	        mockMvc.perform(put("/users/1")
+	                .contentType(MediaType.APPLICATION_JSON)
+	                .content(objectMapper.writeValueAsString(updatedUser)))
+	                .andExpect(status().isBadRequest())  // Vérifier le code de statut
+	                .andExpect(jsonPath("$.error").value("Erreur de mise à jour de l'utilisateur."));  // Vérifier la réponse d'erreur
+
+	        verify(userService, times(1)).updateUser(eq(1L), any(UserDto.class));  // Vérifier l'appel au service
+	    }
+	    
+	    @Test
+	    void testGetByRole_Conseiller() throws Exception {
+
+	    	UserDto user1 = new UserDto("John", "Doe", "johndoe@example.com", "password", null, null, null, null, null);
+	        UserDto user2 = new UserDto("Jane", "Doe", "janedoe@example.com", "password2", null, null, null, null, null);
+	        when(userService.getUsersByRole(RoleName.CONSEILLER)).thenReturn(Arrays.asList(user1, user2));
+
+	        mockMvc.perform(get("/users/byRole?role=conseiller"))
+	                .andExpect(status().isOk())
+	                .andExpect(jsonPath("$[0].nom").value("John"))
+	                .andExpect(jsonPath("$[1].nom").value("Jane"));
+
+	        verify(userService, times(1)).getUsersByRole(RoleName.CONSEILLER);  // Vérifier l'appel au service
+	    }
+
+	    @Test
+	    void testGetByRole_Medecin() throws Exception {
+
+	    	UserDto user1 = new UserDto("John", "Doe", "johndoe@example.com", "password", null, null, null, null, null);
+	        UserDto user2 = new UserDto("Jane", "Doe", "janedoe@example.com", "password2", null, null, null, null, null);
+	        when(userService.getUsersByRole(RoleName.MEDECIN)).thenReturn(Arrays.asList(user1, user2));
+
+	        mockMvc.perform(get("/users/byRole?role=medecin"))
+	                .andExpect(status().isOk())
+	                .andExpect(jsonPath("$[0].nom").value("John"))
+	                .andExpect(jsonPath("$[1].nom").value("Jane"));
+
+	        verify(userService, times(1)).getUsersByRole(RoleName.MEDECIN);  // Vérifier l'appel au service
+	    }
+	    
+	    @Test
+	    void testGetByRole_Partenaire() throws Exception {
+
+	    	UserDto user1 = new UserDto("John", "Doe", "johndoe@example.com", "password", null, null, null, null, null);
+	        UserDto user2 = new UserDto("Jane", "Doe", "janedoe@example.com", "password2", null, null, null, null, null);
+	        when(userService.getUsersByRole(RoleName.PARTENAIRE)).thenReturn(Arrays.asList(user1, user2));
+
+	        mockMvc.perform(get("/users/byRole?role=partenaire"))
+	                .andExpect(status().isOk())
+	                .andExpect(jsonPath("$[0].nom").value("John"))
+	                .andExpect(jsonPath("$[1].nom").value("Jane"));
+
+	        verify(userService, times(1)).getUsersByRole(RoleName.PARTENAIRE);  // Vérifier l'appel au service
+	    }
+
 }
 
