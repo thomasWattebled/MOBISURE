@@ -84,7 +84,7 @@ const MyAssistance = () => {
 	   if (error) {
 	     return <p>Erreur : {error}</p>;
 	   }
-	
+	   
 	   return (
 	     <div className="my-assistance-container">
 	       <h1 className="my-assistance-title">Vos demandes d'assistances</h1>
@@ -104,7 +104,7 @@ const MyAssistance = () => {
 	         <tbody>
 	           {assistanceList.map((assistance) => (
 	             <tr key={assistance.id}>
-	               <td>{assistance.num_dossier}</td>
+	               <td>{assistance.numDossier}</td>
 	               <td>{new Date(assistance.date).toLocaleDateString()}</td>
 	               <td>{assistance.type}</td>
 	               <td>
@@ -113,7 +113,7 @@ const MyAssistance = () => {
 	                 </button>
 	               </td>
 	               <td>
-	                 <button onClick={() => openGestion(assistance.num_dossier)}>
+	                 <button onClick={() => openGestion(assistance.numDossier)}>
 	                   Gérer
 	                 </button>
 	               </td>

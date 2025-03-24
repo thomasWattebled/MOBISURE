@@ -30,7 +30,7 @@ describe('AssistanceList', () => {
   const mockAssistanceData = [
     {
       id: 1,
-      num_dossier: 'DOSS-001',
+      numDossier: 'DOSS-001',
       nom: 'Dupont',
       prenom: 'Jean',
       type: 'AUTO',
