@@ -15,6 +15,7 @@ const UpdateAssistance = ({ numDossier }) => {
   const [addPart, setAddPart] = useState(false);
 
   useEffect(() => {
+    console.log(numDossier);
     if (numDossier) {
       fetch(`http://localhost:8081/assistance/getByNumDossier/${numDossier}`)
         .then(response => {
