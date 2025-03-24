@@ -10,12 +10,13 @@ const AssistanceFormView = ({ formData, handleChange, handleSubmit, isModalVisib
   return (
     <div className="assistance-form-container">
       <div className="assistance-form-card">
-        <h2 className="assistance-form-title">Demande d'Assistance</h2>
+        <h2 htmlFor="type-assistance" className="assistance-form-title">Demande d'Assistance</h2>
         <form onSubmit={handleSubmit} className="assistance-form">
           <div className="form-group">
-            <label className="form-label">Type d'assistance :</label>
-            <select
-              name="type"
+		  <label htmlFor="type-assistance" className="form-label">Type d'assistance :</label>
+			<select
+			id="type-assistance"
+			name="type"
               value={formData.type}
               onChange={handleChange}
               className="form-control"
@@ -102,7 +103,7 @@ const AssistanceFormView = ({ formData, handleChange, handleSubmit, isModalVisib
 			{(formData.type === "REMBOURSEMENT" || formData.type === "MEDICAL")&& (
 				<div>
 					<div className="form-group">
-						<label htmlFor="montant" className="form-label">Entrer le motif de votre demande :</label>
+						<label htmlFor="motif" className="form-label">Entrer le motif de votre demande :</label>
 							<input
 								type="text"
 								id="motif"
@@ -141,7 +142,7 @@ const AssistanceFormView = ({ formData, handleChange, handleSubmit, isModalVisib
         </form>
         <p className="urgence-message">En cas d'urgence, merci de contacter le : 03 20 17 59 47</p>
       </div>
-      <SuccessDemande show={isModalVisible} onClose={handleModalClose} />
+      <SuccessDemande id='success-modal' show={isModalVisible} onClose={handleModalClose} />
     </div>
   );
   
