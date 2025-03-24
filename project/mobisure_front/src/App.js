@@ -13,6 +13,7 @@ import Contact from './pages/Contact.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import Footer from './components/Footer.jsx';
 import travelImage7 from './assets/image/logo.png';
+import Emission from './pages/Emission.jsx';
 import PageUser from './components/admin/pageUser';
 import { WhenUserIsInRole } from './components/security/PrivateRoute.js';
 import MyInformation from './components/user/MyInformation.js';
@@ -45,6 +46,7 @@ export const Layout = () => (
         </WhenUserIsNotAuthenticated>
         <WhenUserIsAuthenticated>
           <Link to="/home" className="text-white text-decoration-none">Home</Link>
+          <Link to="/emission" className="text-white text-decoration-none">Emission</Link>
           <Link to="/plans" className="text-white text-decoration-none">Plans</Link>
 
           {/* Menu déroulant pour les informations de l'utilisateur */}
@@ -103,6 +105,7 @@ export default function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/emission" element={<Emission />}/>
             <Route path="/pageUser" element={<PageUser />} />
             <Route path="/userInformation" element={<MyInformation />} />
             <Route path="/changeMdp" element={<MdpForm />} />
@@ -117,7 +120,7 @@ export default function App() {
             <Route path="/mesSinistres" element={<SinistreList />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/devisvoyage" element={<VoyageForm />} />
-			<Route path="/devis" element={<RacapPlan />} />
+			      <Route path="/devis" element={<RacapPlan />} />
 
           </Route>
         </Routes>
