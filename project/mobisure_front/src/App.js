@@ -30,6 +30,7 @@ import SinistreList from './components/sinistre/SinistreList.jsx';
 import RacapPlan from './pages/RecapPlan.jsx';
 import './assets/css/App.css';
 import VoyageForm from './components/devis/VoyageForm.jsx';
+import ContratList from './components/contrat/ContratList.js';
 
 export const Layout = () => (
   <>
@@ -70,6 +71,7 @@ export const Layout = () => (
 			 <WhenUserIsInRole role="CONSEILLER">
               <NavDropdown.Item as={Link} to="/pageUser">Gestion des clients</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/assistance/Liste">Les demandes d'assistance</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/contrats">Les contrats</NavDropdown.Item>
 			 </WhenUserIsInRole>
 			  	<NavDropdown.Item as={Link} to="/assistance/mesDossier">Mes dossiers</NavDropdown.Item>
             </NavDropdown>
@@ -121,7 +123,7 @@ export default function App() {
             <Route path="/payment" element={<Payment />} />
             <Route path="/devisvoyage" element={<VoyageForm />} />
 			      <Route path="/devis" element={<RacapPlan />} />
-
+            <Route path="/contrats" element={<ContratList />} />
           </Route>
         </Routes>
       </BrowserRouter>
