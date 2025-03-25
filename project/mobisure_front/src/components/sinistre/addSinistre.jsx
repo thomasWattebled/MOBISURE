@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PopupConfirmation from "./popUpConfirmation";
 import { useAuth } from "../auth/AuthContext";
+import sinistreService from "../../services/sinistreService";
+import UserService from '../../services/userService';
 
-const AddSinistre = () => {
+const AddSinistre = (props) => {
   const { getUser } = useAuth();
   const userDetails = getUser();
-
+  const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [formData, setFormData] = useState({
     // Informations générales
     categorieSinistre: "", // Ajout du champ catégorie
-    type: "",
     date: "",
     description: "",
     photo: "",
@@ -36,6 +37,13 @@ const AddSinistre = () => {
     ordonnance: "",
   });
 
+  useEffect(() => {
+    UserService.fetchUserByEmail(userDetails.unsername).then(data => {
+      setUser(data);
+      console.log(data);
+    });
+  }, [userDetails.unsername]);
+
   // Gestion des changements dans les champs du formulaire
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -55,7 +63,47 @@ const AddSinistre = () => {
   // Soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formulaire soumis:", formData);
+    if (formData.categorieSinistre === "Véhicule") {
+      sinistreService.postCarSinitre({
+        "contractId" : formData.numeroContrat,
+        "userId" : user.id,
+        "category" : formData.categorieSinistre,
+        "date" : formData.date,
+        "brand" : formData.marque,
+        "immatriculation" : formData.immatriculation,
+        "modele" : formData.modele,
+        "description" : formData.description,
+        "responsable" : formData.responsable,
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Erreur de récupération des données');
+        }
+        else {
+          response.json().then(data => {
+            if (typeof formData.constat !== "string") sinistreService.postSinistreFile(formData.constat, data);
+          });
+        }
+      }).then(response => props.refreshData());
+    } else if (formData.categorieSinistre === "Santé") {
+      sinistreService.postHealthSinitre({
+        "contractId" : formData.numeroContrat,
+        "userId" : user.id,
+        "category" : formData.categorieSinistre,
+        "date" : formData.date,
+        "description" : formData.description,
+        "nature" : formData.natureBlessure,
+        "hospital" : formData.hopital,
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Erreur de récupération des données');
+        }
+        else {
+          response.json().then(data => {
+            if (typeof formData.ordonnance !== "string") sinistreService.postSinistreFile(formData.ordonnance, data);
+          });
+        }
+      }).then(response => props.refreshData());
+    }
     setShowConfirmationModal(true);
     setShowModal(false);
   };
@@ -147,6 +195,19 @@ const AddSinistre = () => {
                       required
                     />
                     </div>
+                    <div className="mb-3">
+                    <label className="form-label">Description</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      rows="3"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      placeholder="Décrivez votre sinistre..."
+                      required
+                    ></textarea>
+                  </div>
 
                   {/* Informations spécifiques selon la catégorie */}
                   {formData.categorieSinistre === "Véhicule" && (
@@ -185,19 +246,6 @@ const AddSinistre = () => {
                           required
                         />
                       </div>
-                      <div className="mb-3">
-                    <label className="form-label">Description</label>
-                    <textarea
-                      type="text"
-                      className="form-control"
-                      rows="3"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                      placeholder="Décrivez votre sinistre..."
-                      required
-                    ></textarea>
-                  </div>
                   <div className="mb-3">
                     <label className="form-label">Responsable</label>
                     <textarea

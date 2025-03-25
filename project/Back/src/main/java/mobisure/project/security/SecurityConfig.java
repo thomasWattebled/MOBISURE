@@ -57,6 +57,7 @@ public class SecurityConfig {
                 "/login",
                 "/",
                 "/register",
+                "/sinistres/**",
                 "/users/**").permitAll()
             .anyRequest().authenticated()
       )	 
