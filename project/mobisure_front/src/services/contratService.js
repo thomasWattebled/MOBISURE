@@ -1,6 +1,20 @@
 // ContratService.js
 
 class contratService {
+
+	async getAllContrat(){
+		return await fetch(`http://localhost:8082/contrat/all/assurance`,{
+			method: "GET",
+	    	headers: { "Content-Type": "application/json" },		
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error("Erreur :", error);  // En cas d'erreur, l'afficher
+		});
+	}
 	
 	// Fonction pour obtenir un devis en envoyant les données du formulaire
 	async getDevis(url, formData, setPrice){
@@ -40,7 +54,7 @@ class contratService {
 				    method: "GET",
 				    headers: { "Content-Type": "application/json" },
 				  })
-				    .then((response) => response.json())  // Attendre la réponse en texte
+				    .then((response) => response.json())  // Attendre la réponse en json
 				    .then((data) => {
 					  return data;
 				    })
