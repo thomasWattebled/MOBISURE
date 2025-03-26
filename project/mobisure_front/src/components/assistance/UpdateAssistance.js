@@ -15,6 +15,7 @@ const UpdateAssistance = ({ numDossier }) => {
   const [addPart, setAddPart] = useState(false);
 
   useEffect(() => {
+    console.log(numDossier);
     if (numDossier) {
       fetch(`http://localhost:8081/assistance/getByNumDossier/${numDossier}`)
         .then(response => {
@@ -115,6 +116,7 @@ const UpdateAssistance = ({ numDossier }) => {
     return <div>{error}</div>;
   }
 
+  console.log(assistance);
   return (
     <div>
       <h3>Récapitulatif de votre dossier :</h3>
@@ -142,6 +144,39 @@ const UpdateAssistance = ({ numDossier }) => {
             <td className='att'>Type de demande :</td>
             <td>{assistance.type}</td>
           </tr>
+		  {(assistance.type === "AUTO" || assistance.type === "ACCIDENT") &&
+			<>
+			<tr>
+				<td className='att'>Ville :</td>
+			    <td>{assistance.ville}</td>
+			</tr>
+			<tr>
+				<td className='att'>Rue :</td>
+				<td>{assistance.rue}</td>
+			</tr>
+			</>
+		  }
+		  {assistance.type === "ACCIDENT" &&
+			<>
+			<tr>
+				<td className='att'>Nombre de bléssés :</td>
+				<td>{assistance.nbBlesse}</td>
+			</tr>
+			</>
+		  }
+		  
+		  {assistance.type === "REMBOURSEMENT" &&
+			<tr>
+				<td className='att'>Montant du remboursement : </td>
+				<td>{assistance.montant} €</td>
+			</tr>
+		  }
+		  {(assistance.type === "REMBOURSEMENT" || assistance.type === "MEDICAL") &&
+			<tr>
+				<td className='att'>Motif de la demande :</td>
+				<td>{assistance.motif}</td>
+			</tr>
+		  }
           <tr>
             <td className='att'>La demande :</td>
             <td>{assistance.message}</td>

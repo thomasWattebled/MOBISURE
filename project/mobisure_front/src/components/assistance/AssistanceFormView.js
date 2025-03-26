@@ -10,12 +10,13 @@ const AssistanceFormView = ({ formData, handleChange, handleSubmit, isModalVisib
   return (
     <div className="assistance-form-container">
       <div className="assistance-form-card">
-        <h2 className="assistance-form-title">Demande d'Assistance</h2>
+        <h2 htmlFor="type-assistance" className="assistance-form-title">Demande d'Assistance</h2>
         <form onSubmit={handleSubmit} className="assistance-form">
           <div className="form-group">
-            <label className="form-label">Type d'assistance :</label>
-            <select
-              name="type"
+		  <label htmlFor="type-assistance" className="form-label">Type d'assistance :</label>
+			<select
+			id="type-assistance"
+			name="type"
               value={formData.type}
               onChange={handleChange}
               className="form-control"
@@ -31,6 +32,91 @@ const AssistanceFormView = ({ formData, handleChange, handleSubmit, isModalVisib
               <option value="AUTRE">Autres demandes</option>
             </select>
           </div>
+		  {(formData.type === "AUTO" || formData.type === "ACCIDENT" ) && (
+		  	<div>
+		    	<div className="form-group">
+		         	<label htmlFor="ville" className="form-label">Ville :</label>
+		            <input
+		            	type="text"
+		            	id="ville"
+		            	name="ville"
+		            	value={formData.ville || ""}
+		            	onChange={handleChange}
+		            	placeholder="Entrez votre ville"
+		            	className="form-control"
+		            	required
+		            />
+		            </div>
+
+		                <div className="form-group">
+		                  <label htmlFor="rue" className="form-label">Rue :</label>
+		                  <input
+		                    type="text"
+		                    id="rue"
+		                    name="rue"
+		                    value={formData.rue || ""}
+		                    onChange={handleChange}
+		                    placeholder="Entrez votre rue"
+		                    className="form-control"
+		                    required
+		                  />
+		                </div>
+		              </div>
+		            )}
+					
+			{formData.type === "ACCIDENT" && (
+				<div>
+					<div className="form-group">
+						<label htmlFor="nbBlesse" className="form-label">Nombre de bléssés :</label>
+						<input
+							type="number"
+							id="nbBlesse"
+							name="nbBlesse"
+							value={formData.nbBlesse || 0}
+							onChange={handleChange}
+							placeholder="Entrez le nombre de bléssés"
+							className="form-control"
+							required
+						/>
+					</div>
+				</div>
+			)}
+				
+			{formData.type === "REMBOURSEMENT" && (
+				<div>
+					<div className="form-group">
+						<label htmlFor="montant" className="form-label">Montant du remboursement :</label>
+						<input
+							type="number"
+							id="montant"
+							name="montant"
+							value={formData.montant}
+							onChange={handleChange}
+							placeholder="Entrez le montant du remboursement"
+							className="form-control"
+							required
+						/>
+					</div>
+				</div>
+			)}
+			
+			{(formData.type === "REMBOURSEMENT" || formData.type === "MEDICAL")&& (
+				<div>
+					<div className="form-group">
+						<label htmlFor="motif" className="form-label">Entrer le motif de votre demande :</label>
+							<input
+								type="text"
+								id="motif"
+								name="motif"
+								value={formData.motif}
+								onChange={handleChange}
+								placeholder="Entrez le motif de la demande"
+								className="form-control"
+								required
+							/>
+					</div>
+				</div>
+			)}	
           <div className="form-group">
             <label htmlFor="message" className="form-label">
               Message :
@@ -56,7 +142,7 @@ const AssistanceFormView = ({ formData, handleChange, handleSubmit, isModalVisib
         </form>
         <p className="urgence-message">En cas d'urgence, merci de contacter le : 03 20 17 59 47</p>
       </div>
-      <SuccessDemande show={isModalVisible} onClose={handleModalClose} />
+      <SuccessDemande id='success-modal' show={isModalVisible} onClose={handleModalClose} />
     </div>
   );
   

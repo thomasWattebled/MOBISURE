@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,23 +42,18 @@ class UserServiceImplTest {
     private User user;
     
     @BeforeEach
-    void setUp() {
-    	
+    void setUp() throws ParseException {
     	MockitoAnnotations.openMocks(this);
     	
-    	userDto = new UserDto();
-        userDto.setId(1L);
-        userDto.setMail("benj@mail.com");
-        userDto.setMdp("mdp");
-        userDto.setNom("ALEXANDRE");
-        userDto.setPrenom("Benjamin");
-        user = new User();
-        user.setId(1L);
-        user.setMail("benj@mail.com");
-        user.setMdp("mdp");
-        user.setNom("ALEXANDRE");
-        user.setPrenom("Benjamin");
-    	
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateNaissance = dateFormat.parse("12/08/1990");
+		Date dateCreation = dateFormat.parse("16/01/2025");
+		Set<RoleName> roles = new HashSet<>();
+		user = new User("ALEXANDRE","Benjamin","benj@gmail.com","mdp", "Homme", dateNaissance, "39 rue de Lille", null, "0612234556", dateCreation, roles);
+    	user.setId(1L);
+		
+		userDto = new UserDto("ALEXANDRE","Benjamin","benj@gmail.com","mdp", "Homme", dateNaissance, "39 rue de Lille","0612234556", dateCreation);
+    	userDto.setId(1L);
     }
     
     @Test
@@ -131,18 +127,15 @@ class UserServiceImplTest {
     
     @Test
     void convertToEntity() {
-    	
-    	
     	User entity = userService.convertToEntity(userDto);
-    	
     	assertEquals(entity,user);
     }
     
     @Test
-    void testUpdateRoleUser_UserExists(){
+    void testUpdateRoleUser_UserExists_ADMIN(){
     	
     	long userId = 1L;
-        List<String> roles = List.of("USER", "ADMIN");
+        List<String> roles = List.of("ADMIN");
 
         User existingUser = new User();
         existingUser.setId(userId);
@@ -152,10 +145,64 @@ class UserServiceImplTest {
         
         userService.updateRoleUser(userId, roles);
             	
-        assertTrue(existingUser.getRoles().contains(RoleName.USER));
         assertTrue(existingUser.getRoles().contains(RoleName.ADMIN));
-        assertEquals(2, existingUser.getRoles().size());
+        assertEquals(1, existingUser.getRoles().size());
     }
+    
+    @Test
+    void testUpdateRoleUser_UserExists_PARTENAIRE(){
+    	
+    	long userId = 1L;
+        List<String> roles = List.of("PARTENAIRE");
+
+        User existingUser = new User();
+        existingUser.setId(userId);
+        existingUser.setRoles(new HashSet<>());
+        
+        when(repoUser.findById(userId)).thenReturn(Optional.of(existingUser));
+        
+        userService.updateRoleUser(userId, roles);
+            	
+        assertTrue(existingUser.getRoles().contains(RoleName.PARTENAIRE));
+        assertEquals(1, existingUser.getRoles().size());
+    }
+    
+    @Test
+    void testUpdateRoleUser_UserExists_MEDECIN(){
+    	
+    	long userId = 1L;
+        List<String> roles = List.of("MEDECIN");
+
+        User existingUser = new User();
+        existingUser.setId(userId);
+        existingUser.setRoles(new HashSet<>());
+        
+        when(repoUser.findById(userId)).thenReturn(Optional.of(existingUser));
+        
+        userService.updateRoleUser(userId, roles);
+            	
+        assertTrue(existingUser.getRoles().contains(RoleName.MEDECIN));
+        assertEquals(1, existingUser.getRoles().size());
+    }
+    
+    @Test
+    void testUpdateRoleUser_UserExists_Conseiller(){
+    	
+    	long userId = 1L;
+        List<String> roles = List.of("CONSEILLER");
+
+        User existingUser = new User();
+        existingUser.setId(userId);
+        existingUser.setRoles(new HashSet<>());
+        
+        when(repoUser.findById(userId)).thenReturn(Optional.of(existingUser));
+        
+        userService.updateRoleUser(userId, roles);
+            	
+        assertTrue(existingUser.getRoles().contains(RoleName.CONSEILLER));
+        assertEquals(1, existingUser.getRoles().size());
+    }
+    
     
     @Test
     void testUpdateRoleUser_UserNotFound() {
@@ -167,6 +214,24 @@ class UserServiceImplTest {
         userService.updateRoleUser(userId, roles);
 
         verify(repoUser, times(0)).save(any(User.class)); // Vérifie que save() n'est jamais appelé
+    }
+    
+    @Test
+    void testUpdateRoleUser_UserExists_USER(){
+    	
+    	long userId = 1L;
+        List<String> roles = List.of("USER");
+
+        User existingUser = new User();
+        existingUser.setId(userId);
+        existingUser.setRoles(new HashSet<>());
+        
+        when(repoUser.findById(userId)).thenReturn(Optional.of(existingUser));
+        
+        userService.updateRoleUser(userId, roles);
+            	
+        assertTrue(existingUser.getRoles().contains(RoleName.USER));
+        assertEquals(1, existingUser.getRoles().size());
     }
     
     @Test
@@ -243,5 +308,493 @@ class UserServiceImplTest {
         verify(passwordEncoder, times(0)).encode(any());
         verify(repoUser, times(0)).save(any());
     }
+    
+    @Test
+    void testGetUsersByRole_success() {
+    	user.addRole(RoleName.USER);
+        when(repoUser.findAll()).thenReturn(List.of(user));
+
+        List<UserDto> result = userService.getUsersByRole(RoleName.USER);
+
+        assertEquals(1, result.size());
+        assertEquals(userDto.getMail(), result.get(0).getMail());
+    }
+    
+    @Test
+    void testGetUsersByRole_failed() {
+        when(repoUser.findAll()).thenReturn(List.of(user));
+
+        List<UserDto> result = userService.getUsersByRole(RoleName.USER);
+
+        assertEquals(0, result.size());
+    }
+    
+    @Test
+    void testUpdateUser_Success_AllFields() throws ParseException {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date newDateNaissance = dateFormat.parse("15/08/2002");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        updatedUserDto.setDateNaissance(newDateNaissance);
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals(newDateNaissance,user.getDateNaissance());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Mdp_null() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp(null);
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("mdp", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Mdp_empty() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("mdp", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Sexe_null() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe(null);
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("Homme", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Sexe_empty() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("Homme", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Phone_null() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone(null);
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("0612234556", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Phone_empty() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("0612234556", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Adress_null() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse(null);
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("39 rue de Lille", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Adress_empty() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("39 rue de Lille", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Mail_Null() {
+    	when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail(null);
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("benj@gmail.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Mail_empty() {
+    	when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("benj@gmail.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+
+    @Test
+    void testUpdateUser_Success_Nom_Null() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom(null);
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("ALEXANDRE", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Nom_Empty() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("ALEXANDRE", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Prenom_null() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom(null);
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("Benjamin", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_Prenom_empty() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("");
+        
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("Benjamin", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+    }
+    
+    @Test
+    void testUpdateUser_Success_DateNaissance_null() {
+        when(repoUser.findById(1L)).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("updated@example.com");
+        updatedUserDto.setNom("UpdatedName");
+        updatedUserDto.setPrenom("UpdatedPrenom");
+        updatedUserDto.setDateNaissance(null);
+        updatedUserDto.setAdresse("Updated Address");
+        updatedUserDto.setTelephone("1234567890");
+        updatedUserDto.setSexe("M");
+        updatedUserDto.setMdp("newPassword");
+
+        userService.updateUser(1L, updatedUserDto);
+
+        verify(repoUser, times(1)).save(any(User.class));
+        
+        assertEquals("updated@example.com", user.getMail());
+        assertEquals("UpdatedName", user.getNom());
+        assertEquals("UpdatedPrenom", user.getPrenom());
+        assertEquals("Updated Address", user.getAdresse());
+        assertEquals("1234567890", user.getTelephone());
+        assertEquals("M", user.getSexe());
+        assertEquals("encodedNewPassword", user.getMdp());
+        assertEquals(userDto.getDateNaissance(),user.getDateNaissance());
+    }
+    
+	
+    
+    @Test
+    void testUpdateUser_UserNotFound() {
+        when(repoUser.findById(2L)).thenReturn(Optional.empty());
+
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMail("new@example.com");
+
+        Exception exception = assertThrows(RuntimeException.class, () -> userService.updateUser(2L, updatedUserDto));
+
+        assertEquals("Utilisateur non trouvé", exception.getMessage());
+    }
+
 
 }

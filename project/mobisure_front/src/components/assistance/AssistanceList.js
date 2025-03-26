@@ -195,7 +195,7 @@ const AssistanceList = () => {
         <tbody>
           {filteredList.map((assistance) => (
             <tr key={assistance.id}>
-			  <td>{assistance.num_dossier}</td>
+			  <td>{assistance.numDossier}</td>
               <td>{assistance.nom}</td>
               <td>{assistance.prenom}</td>
               <td>{assistance.type}</td>
@@ -216,12 +216,12 @@ const AssistanceList = () => {
 			  	</button>
 			  </td>
               <td>
-                <button id="btn-conversation" type="button" onClick={() => startConversation(assistance.id_client)}>
+                <button id="btn-conversation" type="button" onClick={() => startConversation(assistance.idClient)}>
                   Démarrer une conversation
                 </button>
               </td>
 			  <td>
-			  	<button onClick={() => openGestion(assistance.num_dossier)}>
+			  	<button onClick={() => openGestion(assistance.numDossier)}>
 			  		Gérer
 			  	</button>
 			  </td>

@@ -156,8 +156,11 @@ const AddSinistre = (props) => {
                   {/* Sélection du type de sinistre */}
                   <h5>Informations générales</h5>
                   <div className="mb-3">
-                    <label className="form-label">Catégorie de sinistre</label>
-                    <select
+                   <label htmlFor="categorieSinistre" className="form-label">
+                      Catégorie de sinistre
+                  </label>
+                  <select
+                      id="categorieSinistre"
                       className="form-control"
                       name="categorieSinistre"
                       value={formData.categorieSinistre}
@@ -214,19 +217,21 @@ const AddSinistre = (props) => {
                     <>
                       <h5>Informations du véhicule</h5>
                       <div className="mb-3">
-                        <label className="form-label">Immatriculation</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="immatriculation"
-                          value={formData.immatriculation}
-                          onChange={handleChange}
-                          required
-                        />
+                      <label htmlFor="immatriculation" className="form-label"> Immatriculation </label>
+                      <input
+                        id="immatriculation"
+                        type="text"
+                        className="form-control"
+                        name="immatriculation"
+                        value={formData.immatriculation}
+                        onChange={handleChange}
+                        required
+                      />
                       </div>
                       <div className="mb-3">
-                        <label className="form-label">Marque</label>
+                        <label  htmlFor="marque" className="form-label">Marque</label>
                         <input
+                          id="marque"
                           type="text"
                           className="form-control"
                           name="marque"
@@ -236,8 +241,9 @@ const AddSinistre = (props) => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label className="form-label">Modele</label>
+                        <label htmlFor="modele" className="form-label">Modele</label>
                         <input
+                          id="modele"
                           type="text"
                           className="form-control"
                           name="modele"
@@ -246,6 +252,19 @@ const AddSinistre = (props) => {
                           required
                         />
                       </div>
+                  <div className="mb-3">
+                    <label htmlFor="responsable" className="form-label">Responsable</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      rows="3"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      placeholder="Décrivez votre sinistre..."
+                      required
+                    ></textarea>
+                  </div>
                   <div className="mb-3">
                     <label className="form-label">Responsable</label>
                     <textarea
@@ -260,8 +279,9 @@ const AddSinistre = (props) => {
                     ></textarea>
                   </div>
                       <div className="mb-3">
-                        <label className="form-label">Constat (photo/PDF)</label>
+                        <label htmlFor="constat" className="form-label">Constat (photo/PDF)</label>
                         <input
+                        id="constat"
                           type="file"
                           className="form-control"
                           name="constat"
@@ -276,8 +296,9 @@ const AddSinistre = (props) => {
                     <>
                       <h5>Informations médicales</h5>
                       <div className="mb-3">
-                        <label className="form-label">Nature de la blessure</label>
+                        <label htmlFor="nature_blessure" className="form-label">Nature de la blessure</label>
                         <input
+                          id="nature_blessure"
                           type="text"
                           className="form-control"
                           name="natureBlessure"
@@ -287,8 +308,9 @@ const AddSinistre = (props) => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label className="form-label">Hôpital</label>
+                        <label htmlFor="hopital" className="form-label">Hôpital</label>
                         <input
+                        id="hopital"
                           type="text"
                           className="form-control"
                           name="hopital"
@@ -298,8 +320,9 @@ const AddSinistre = (props) => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label className="form-label">Ordonnance (photo/PDF)</label>
+                        <label htmlFor="ordonnance" className="form-label">Ordonnance (photo/PDF)</label>
                         <input
+                        id="ordonnance"
                           type="file"
                           className="form-control"
                           name="ordonnance"

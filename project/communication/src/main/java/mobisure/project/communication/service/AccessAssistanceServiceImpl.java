@@ -23,12 +23,13 @@ public class AccessAssistanceServiceImpl implements AccessAssistanceService {
 	
 	@Override
 	public boolean getPermissionOfUser(String idAssistance, Long idUser) {
-		AccessAssistance resultat = repo.findByIdAssistanceAndIdUser(idAssistance, idUser);
-		
-		if(!resultat.equals(null)) { return false; };
-		
-		return true;
+	    AccessAssistance resultat = repo.findByIdAssistanceAndIdUser(idAssistance, idUser);
+	    if (resultat != null) {
+	        return false;
+	    }
+	    return true;
 	}
+
 
 	@Override
 	public void addAccess(String idAssistance, Long idUser) {

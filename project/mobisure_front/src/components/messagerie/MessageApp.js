@@ -22,6 +22,7 @@ const MessageApp = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [allUsers, setAllUsers] = useState([]);
 
+  console.log(userId);
   useEffect(() => {
     // Charge les données de l'utilisateur connecté
     UserService.fetchUserByEmail(userDetails.unsername).then(data => {
@@ -139,6 +140,7 @@ const MessageApp = () => {
   };
 
   const sendMessage = async () => {
+
     if (!newMessage || !selectedUser || !user) return;
 
     // Vérifie si une conversation existe déjà
@@ -147,6 +149,7 @@ const MessageApp = () => {
     let conversationId;
     if (!conversationExists) {
       // Crée une nouvelle conversation si elle n'existe pas
+      console.log("la");
       const response = await fetch("http://localhost:8081/createConversation", {
         method: "POST",
         credentials: 'include',

@@ -30,7 +30,12 @@ const AssistanceForm = () => {
 	prenom : '',
 	mail : '',
 	mdp : '',
-	telephone : ''
+	telephone : '',
+	ville : '',
+	rue : '',
+	nbBlesse: null,
+	montant : 0,
+	motif : ''
   });
   
   // Met à jour formData une fois que l'utilisateur est chargé
