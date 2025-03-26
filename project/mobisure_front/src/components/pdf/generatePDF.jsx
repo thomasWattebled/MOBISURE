@@ -54,7 +54,7 @@ const GeneratePDF = ({ data, config, fileName = 'recapitulatif.pdf' }) => {
     yOffset += 10;
 
     const sinistreDetails = [
-      ["Type de sinistre", data.type || "N/A"],
+      ["Type de sinistre", data.categorieSinistre || "N/A"],
       ["Date du sinistre", data.date || "N/A"],
       ["Description", data.description || "N/A"],
     ];
