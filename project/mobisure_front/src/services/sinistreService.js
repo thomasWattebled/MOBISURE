@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:8080";
+const SERVER_URL = "http://localhost:8087";
 
 class SinistreService {
     
@@ -9,7 +9,6 @@ class SinistreService {
   async postCarSinitre (data) {
     return await fetch(`${SERVER_URL}/sinistres/car/save`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -20,7 +19,6 @@ class SinistreService {
   async postHealthSinitre (data) {
     return await fetch(`${SERVER_URL}/sinistres/health/save`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -33,7 +31,6 @@ class SinistreService {
     formData.append('file', file);
     return await fetch(`${SERVER_URL}/sinistres/file/${sinistreId}`, {
       method: 'POST',
-      credentials: 'include',
       body: formData
     })
   }
@@ -53,7 +50,6 @@ class SinistreService {
   async deleteSinistre (sinistreId) {
     return await fetch(`${SERVER_URL}/sinistres/${sinistreId}`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       }
