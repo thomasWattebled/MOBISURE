@@ -11,10 +11,15 @@ public class VacancesRequest {
 
 	private Long clientId;
     private TypeAssurance type;
-    private String paysdepart;
-	private String paysArrive;
+    private String paysDepart;
+    private String paysArrive;
+    private String villeDepart;
+    private String villeArrive;
 	private Date dateDepart;
 	private Date dateArrive;
+	private int transport;
+	private double distance;
+	private double co2;
 	private NombreVoyageurs nbPersonnes;
 	private Set<VacanceOptions> options;
 	
@@ -29,18 +34,6 @@ public class VacancesRequest {
 	}
 	public void setType(TypeAssurance type) {
 		this.type = type;
-	}
-	public String getPaysdepart() {
-		return paysdepart;
-	}
-	public void setPaysdepart(String paysdepart) {
-		this.paysdepart = paysdepart;
-	}
-	public String getPaysArrive() {
-		return paysArrive;
-	}
-	public void setPaysArrive(String paysArrive) {
-		this.paysArrive = paysArrive;
 	}
 	public Date getDateDepart() {
 		return dateDepart;
@@ -65,6 +58,48 @@ public class VacancesRequest {
 	}
 	public void setOptions(Set<VacanceOptions> options) {
 		this.options = options;
+	}
+	public int getTransport() {
+		return transport;
+	}
+	public void setTransport(int transport) {
+		this.transport = transport;
+	}
+	public double getDistance() {
+		return distance;
+	}
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	public double getCo2() {
+		return co2;
+	}
+	public void setCo2(double co2) {
+		this.co2 = co2;
+	}
+	public String getPaysDepart() {
+		return paysDepart;
+	}
+	public void setPaysDepart(String paysDepart) {
+		this.paysDepart = paysDepart;
+	}
+	public String getPaysArrive() {
+		return paysArrive;
+	}
+	public void setPaysArrive(String paysArrive) {
+		this.paysArrive = paysArrive;
+	}
+	public String getVilleDepart() {
+		return villeDepart;
+	}
+	public void setVilleDepart(String villeDepart) {
+		this.villeDepart = villeDepart;
+	}
+	public String getVilleArrive() {
+		return villeArrive;
+	}
+	public void setVilleArrive(String villeArrive) {
+		this.villeArrive = villeArrive;
 	}
 	
 }

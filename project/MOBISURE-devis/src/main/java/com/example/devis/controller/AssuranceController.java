@@ -62,7 +62,7 @@ public class AssuranceController {
 	@PostMapping("/devisVacances")
     public ResponseEntity<Double> calculerDevisVacances(@Valid @RequestBody VacancesRequest request){
 		
-		Vacances vacances = new Vacances(request.getClientId(),request.getPaysdepart(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive(),request.getNbPersonnes(),request.getOptions());
+		Vacances vacances = new Vacances(request.getClientId(),request.getPaysDepart(),request.getPaysArrive(),request.getVilleDepart(),request.getVilleArrive(),request.getDateDepart(),request.getDateArrive(),request.getNbPersonnes(),request.getOptions(),request.getTransport(),request.getDistance(),request.getCo2());
 		double prix = service.createVacancesDevis(vacances);  
 		return ResponseEntity.ok(prix);
 	}
@@ -70,7 +70,7 @@ public class AssuranceController {
 	@PostMapping("/devisProfessionnelle")
     public ResponseEntity<Double> calculerDevisProfessionnelle(@Valid @RequestBody ProfessionnelleRequest request){
 		
-		Professionnelle professionnelle = new Professionnelle(request.getClientId(),request.getEntreprise(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive(),request.getOptions());
+		Professionnelle professionnelle = new Professionnelle(request.getClientId(),request.getPaysDepart(),request.getPaysArrive(),request.getPaysDepart(),request.getPaysArrive(),request.getEntreprise(),request.getDateDepart(),request.getDateArrive(),request.getOptions(),request.getTransport(),request.getDistance(),request.getCo2());
 		double prix = service.createProfessionnelleDevis(professionnelle);  
 		return ResponseEntity.ok(prix);
 	}
@@ -98,14 +98,14 @@ public class AssuranceController {
 	
 	@PostMapping("/createVacances")
 	public ResponseEntity<Vacances> createVacances(@Valid @RequestBody VacancesRequest request){
-		Vacances vacances = new Vacances(request.getClientId(),request.getPaysdepart(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive(),request.getNbPersonnes(),request.getOptions());
+		Vacances vacances = new Vacances(request.getClientId(),request.getPaysDepart(),request.getPaysArrive(),request.getPaysDepart(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive(),request.getNbPersonnes(),request.getOptions(),request.getTransport(),request.getDistance(),request.getCo2());
 		service.createContratVacances(vacances);
 		return ResponseEntity.ok(vacances);
 	}
 	
 	@PostMapping("/createProfessionnelle")
 	public ResponseEntity<Professionnelle> createProfessionnelle(@Valid @RequestBody ProfessionnelleRequest request){
-		Professionnelle professionnelle = new Professionnelle(request.getClientId(),request.getEntreprise(),request.getPaysArrive(),request.getDateDepart(),request.getDateArrive(),request.getOptions());
+		Professionnelle professionnelle = new Professionnelle(request.getClientId(),request.getPaysDepart(),request.getPaysArrive(),request.getPaysDepart(),request.getPaysArrive(),request.getEntreprise(),request.getDateDepart(),request.getDateArrive(),request.getOptions(),request.getTransport(),request.getDistance(),request.getCo2());
 		service.createContratProfessionnelle(professionnelle);
 		return ResponseEntity.ok(professionnelle);
 	}
