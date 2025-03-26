@@ -140,20 +140,18 @@ public class AssuranceServiceImpl implements AssuranceService{
 		
 		double prix_distance = 40;
 		double prix_co2 = 40;
-		double multiplicateurKm = 1 + ((100 - 1000) / 1000.0) * 0.05; //a changer !
-        double multiplicateurCO2 = 1 + (25 - 1) * 0.05; // a changer !
+		
+		double multiplicateurKm = 1 + ((assurance.getDistance() - 1000) / 1000.0) * 0.05;
+		double multiplicateurCO2 = 1 + (assurance.getCo2() - 1) * 0.05;
 		
         prix_distance *= multiplicateurKm;
         prix_co2 *= multiplicateurCO2;
         
         double total = prix_distance + prix_co2;
         
-        int nbSemaine = 4; // a changer !
-        
-        total *= nbSemaine;
+        total *= assurance.getNbSemaine();
         
         total *= calculerMultiplicateurVoyageurs(assurance.getNbPersonnes());
-        
         
 		return total;
 	}
@@ -164,17 +162,17 @@ public class AssuranceServiceImpl implements AssuranceService{
 		
 		double prix_distance = 50;
 		double prix_co2 = 50;
-		double multiplicateurKm = 1 + ((100 - 1000) / 1000.0) * 0.05; //a changer !
-        double multiplicateurCO2 = 1 + (25 - 1) * 0.05; // a changer !
+		double multiplicateurKm = 1 + ((assurance.getDistance() - 1000) / 1000.0) * 0.05;
+        
+		//Appel a l'api co2
+		double multiplicateurCO2 = 1 + (assurance.getCo2() - 1) * 0.05; // a changer !
 		
         prix_distance *= multiplicateurKm;
         prix_co2 *= multiplicateurCO2;
         
         double total = prix_distance + prix_co2;
         
-        int nbSemaine = 4; // a changer !
-        
-        total *= nbSemaine;
+        total *= assurance.getNbSemaine();
 
 		return total;
 	}

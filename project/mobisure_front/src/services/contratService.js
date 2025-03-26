@@ -26,7 +26,7 @@ class contratService {
 	    .then((response) => response.text())  // Attendre la réponse en texte
 	    .then((data) => {
 	      console.log("Réponse du serveur :", data);
-	      setPrice(data);  // Mettre à jour le prix avec la réponse du serveur
+	      setPrice(parseFloat(data).toFixed(2));  // Mettre à jour le prix avec la réponse du serveur
 	    })
 	    .catch((error) => {
 	      console.error("Erreur :", error);  // En cas d'erreur, l'afficher

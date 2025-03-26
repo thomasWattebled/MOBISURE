@@ -1,31 +1,41 @@
 class CoordinateToAddress {
-    async translateToAddress (latitude, longitude) {
-        let address;
+    async translateToAddress(latitude, longitude) {
         try {
             const response = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
             );
-    
+
             if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`); // Handle HTTP errors
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
+
             const data = await response.json();
-    
+
             if (data.error) {
-              throw new Error(data.error);
+                throw new Error(data.error);
             }
-            
-            if (data) {
-              address = data.display_name;
+
+            if (data.address) {
+                return {
+                    formatted: data.display_name || "Adresse inconnue",
+                    country: data.address.country || "Pays inconnu",
+                    city: data.address.city || data.address.town || data.address.village || "Ville inconnue"
+                };
             } else {
-              address = "No address found for these coordinates.";
+                return {
+                    formatted: "Aucune adresse trouvée.",
+                    country: "Pays inconnu",
+                    city: "Ville inconnue"
+                };
             }
-    
         } catch (err) {
-                console.error("Error fetching address:", err);
+            console.error("Error fetching address:", err);
+            return {
+                formatted: "Erreur lors de la récupération de l'adresse",
+                country: "Pays inconnu",
+                city: "Ville inconnue"
+            };
         }
-        return address;
     }
 }
 
