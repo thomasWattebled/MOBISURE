@@ -19,14 +19,13 @@ import { WhenUserIsInRole } from './components/security/PrivateRoute.js';
 import MyInformation from './components/user/MyInformation.js';
 import MdpForm from './components/auth/MdpForm.js';
 import FormUpdateClient from './components/admin/formUpdateClient.js';
-import Sinistre from './pages/Sinistre.jsx';
 import MessageApp from './components/messagerie/MessageApp.js';
 import AssistanceList from './components/assistance/AssistanceList.js';
 import MyAssistance from './components/assistance/MyAssistance.js';
 import Payment from './pages/Payment.jsx';
 import MyFolder from './components/assistance/MyFolder.js';
 import MyContrat from './components/contrat/MyContrat.js';
-import SinistreList from './components/sinistre/SinistreList.jsx';
+import Sinistre from './pages/Sinistre.jsx';
 import RacapPlan from './pages/RecapPlan.jsx';
 import './assets/css/App.css';
 import VoyageForm from './components/devis/VoyageForm.jsx';
@@ -119,7 +118,7 @@ export default function App() {
             <Route path="/mesSinistres" element={<Sinistre />} />
             <Route path="/assistance/mesDossier" element={<MyFolder />} />
             <Route path="/mesContrats" element={<MyContrat />} />
-            <Route path="/mesSinistres" element={<SinistreList />} />
+            <Route path="/mesSinistres" element={<Sinistre />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/devisvoyage" element={<VoyageForm />} />
 			      <Route path="/devis" element={<RacapPlan />} />
