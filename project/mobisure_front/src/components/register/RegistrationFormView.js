@@ -37,7 +37,6 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
                   <div className="d-flex gap-3">
                     <div className="form-check">
                       <input
-                        className="form-check-input"
                         type="radio"
                         name="sexe"
                         id="homme"
@@ -50,7 +49,6 @@ const RegistrationFormView = ({ formData, handleChange, handleSubmit, isModalVis
                     </div>
                     <div className="form-check">
                       <input
-                        className="form-check-input"
                         type="radio"
                         name="sexe"
                         id="femme"

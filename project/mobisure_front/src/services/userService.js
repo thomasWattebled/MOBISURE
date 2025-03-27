@@ -21,6 +21,21 @@ class UserService {
     });
   }
   
+  async fetchUserById(id) {
+      return fetch(`${SERVER_URL}/users/${id}`, {
+  	  method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Erreur réseau');
+        }
+        return response.json();
+      });
+    }
+  
   
   async fetchUserChangeMdp(formData) {
   		return fetch(SERVER_URL + '/users/changeMdp', 	{

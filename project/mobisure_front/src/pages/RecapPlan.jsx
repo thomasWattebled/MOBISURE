@@ -86,7 +86,8 @@ const Recapitulatif = () => {
   else if (formData.type === "VELO"){
 	labels = {
 		type : "Votre type d'assurance",
-		motorisation: "Motorisation"
+		motorisation: "Motorisation",
+		options : "Vos options :"
 	};
   }
 		
@@ -107,16 +108,31 @@ const Recapitulatif = () => {
         <div className="recap-card">
           <h2 className="recap-title">Récapitulatif de votre demande</h2>
           
-          <div className="recap-details">
-            {Object.entries(formData)
-              .filter(([key]) => key !== "clientId" && key !== "co2" && key !== "coordDepart" && key !== "coordArrive" && key !== "transport" && key !== "distance")
-              .map(([key, value]) => (
-                <div key={key} className="recap-item">
-                  <span className="recap-label">{labels[key] || key}</span>
-                  <span className="recap-value">{value}</span>
-                </div>
-              ))}
-          </div>
+		  <div className="recap-details">
+		    {Object.entries(formData)
+		      .filter(([key]) => key !== "clientId" && key !== "co2" && key !== "coordDepart" && key !== "coordArrive" && key !== "transport" && key !== "distance")
+		      .map(([key, value]) => (
+		        <div key={key} className="recap-item">
+				<span className="recap-label">{labels[key] || key}</span>
+		          {key === "options" ? (
+		            Array.isArray(value) ? (
+		              value.map((option, index) => (
+		                <div key={index} className="recap-option">
+						<span className="recap-value">{option}</span>
+						</div>
+		              ))
+		            ) : (
+		              <span className="recap-value">{value}</span>
+		            )
+		          ) : (
+		            <>
+		              <span className="recap-value">{value}</span>
+		            </>
+		          )}
+		        </div>
+		      ))}
+		  </div>
+
 
           <div className="recap-summary">
             <div className="price-display">

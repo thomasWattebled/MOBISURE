@@ -86,3 +86,47 @@ body, html {
     background-image: url('../image/bg2.png');
 }
 
+input[type="radio"], input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Style pour le groupe de checkboxes */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Style des options supplémentaires */
+.checkbox-group div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  height: 18px;
+  margin: 0;
+}
+
+.checkbox-group label {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Style du bouton de soumission */
+button {
+  padding: 12px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

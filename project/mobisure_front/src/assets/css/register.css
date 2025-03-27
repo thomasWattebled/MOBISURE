@@ -11,7 +11,7 @@
 
 .card-title {
     font-size: 1.5rem;
-    color: #126347;
+    color: #007bff;
     margin-bottom: 1.5rem;
 }
 
@@ -37,14 +37,14 @@ button.btn {
 }
 
 button.btn-primary {
-    background-color: #126347;
-    border-color: #126347;
+    background-color: #007bff;
+    border-color: #007bff;
     transition: background-color 0.3s;
 }
 
 button.btn-primary:hover {
-    background-color: #62984c;
-    border-color: #62984c;
+    background-color: rgb(1, 153, 254);
+    border-color: rgb(1, 153, 254);
 }
 
 /* Spacing between input fields */
@@ -77,4 +77,31 @@ button.btn {
 
 .row.justify-content-center {
     margin-top: 50px;
+}
+
+input[type="radio"] {
+    width: 30px;
+    height: 20px;
+    border: 2px solid #007BFF;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+input[type="radio"]:checked {
+    border-color: #0056b3;
+    background-color: #007BFF;
+}
+
+input[type="radio"]:checked::before {
+    width: 30px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
