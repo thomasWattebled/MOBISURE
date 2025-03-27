@@ -149,7 +149,9 @@ public class AssuranceServiceImpl implements AssuranceService{
         
         double total = prix_distance + prix_co2;
         
-        total *= assurance.getNbSemaine();
+        if(assurance.getNbSemaine() >= 1 ) {
+        	total *= assurance.getNbSemaine();
+        }
         
         total *= calculerMultiplicateurVoyageurs(assurance.getNbPersonnes());
         
@@ -172,7 +174,9 @@ public class AssuranceServiceImpl implements AssuranceService{
         
         double total = prix_distance + prix_co2;
         
-        total *= assurance.getNbSemaine();
+        if(assurance.getNbSemaine() >= 1 ) {
+        	total *= assurance.getNbSemaine();
+        }
 
 		return total;
 	}

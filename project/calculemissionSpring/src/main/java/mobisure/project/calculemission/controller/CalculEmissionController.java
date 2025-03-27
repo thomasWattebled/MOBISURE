@@ -23,7 +23,7 @@ public class CalculEmissionController {
 		double emission = -1.0;
 
 		double distance = 0.0;
-
+		
 		if (transport == 1) {
 			distance = this.distanceService.crowDistance(gpsStart, gpsEnd);
 		} else {
