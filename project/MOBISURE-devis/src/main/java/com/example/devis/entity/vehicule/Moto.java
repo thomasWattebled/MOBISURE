@@ -26,7 +26,9 @@ public class Moto extends Assurance{
 	private String plaque;
 	private Set<MotoOptions> options;
 	
-	public Moto() {}
+	public Moto() {
+		super(null,TypeAssurance.MOTO);
+	}
 
 	public Moto(Long clientId,MarqueMoto marque, Motorisation electrique, Long fabrication, UtilisationVehicule utilisation,
 			DureeAssurance duree,String modele,String plaque, Set<MotoOptions> options) {
