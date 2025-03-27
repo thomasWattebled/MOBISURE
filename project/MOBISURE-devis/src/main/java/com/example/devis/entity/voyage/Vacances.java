@@ -39,7 +39,7 @@ public class Vacances extends Assurance {
 		this.paysDepart = paysDepart;
 		this.paysArrive = paysArrive;
 		this.villeDepart = villeDepart;
-		this.villeDepart = villeArrive;
+		this.villeArrive = villeArrive;
 		this.dateDepart = dateDepart;
 		this.dateArrive = dateArrive;
 		this.nbPersonnes = nbPersonnes;
