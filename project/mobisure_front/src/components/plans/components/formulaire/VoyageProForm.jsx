@@ -8,6 +8,8 @@ import coordinateToAddressInstance from '../../../../services/CoordinateToAddres
 import calculateEmissionService from '../../../../services/CalculateEmissionService';
 import TransportSelection from '../../../emission/TransportSelection';
 import '../../style/form.css';
+import { Tooltip, Toast, Popover } from 'bootstrap';
+
 
 const VoyageProfessionnelForm = ({ userData, setUserData, handleChange, isModalVisible, setModalVisible }) => {
 	const navigate = useNavigate();
@@ -36,6 +38,10 @@ const VoyageProfessionnelForm = ({ userData, setUserData, handleChange, isModalV
 		dateArrive: '',
 		co2: '',
 		options: []
+	});
+
+	document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((tooltipNode) => {
+		new Tooltip(tooltipNode);
 	});
 
 	useEffect(() => {
@@ -102,34 +108,34 @@ const VoyageProfessionnelForm = ({ userData, setUserData, handleChange, isModalV
 	}, [startCoordinates, endCoordinates, formData.transport]);
 
 	const fetchEmission = async () => {
-			if (startCoordinates && endCoordinates) {
-				try {
-					const emissionValue = await calculateEmissionService.calculate(startCoordinates, endCoordinates, formData.transport);
-					setEmissions(emissionValue); // Met à jour l'état des émissions
-					setFormData((prevData) => ({
-						...prevData,
-						co2: emissionValue
-					}));
-				} catch (error) {
-					console.error("Erreur lors du calcul des émissions :", error);
-				}
+		if (startCoordinates && endCoordinates) {
+			try {
+				const emissionValue = await calculateEmissionService.calculate(startCoordinates, endCoordinates, formData.transport);
+				setEmissions(emissionValue); // Met à jour l'état des émissions
+				setFormData((prevData) => ({
+					...prevData,
+					co2: emissionValue
+				}));
+			} catch (error) {
+				console.error("Erreur lors du calcul des émissions :", error);
 			}
-		};
-		
-		const fetchDistance = async () => {
-				if (startCoordinates && endCoordinates) {
-					try {
-						const distanceValue = await calculateEmissionService.calculateDistance(startCoordinates, endCoordinates, formData.transport);
-						setDistance(distanceValue); // Met à jour l'état des émissions
-						setFormData((prevData) => ({
-							...prevData,
-							distance: distanceValue / 1000
-						}));
-					} catch (error) {
-						console.error("Erreur lors du calcul des émissions :", error);
-					}
-				}
-			};
+		}
+	};
+
+	const fetchDistance = async () => {
+		if (startCoordinates && endCoordinates) {
+			try {
+				const distanceValue = await calculateEmissionService.calculateDistance(startCoordinates, endCoordinates, formData.transport);
+				setDistance(distanceValue); // Met à jour l'état des émissions
+				setFormData((prevData) => ({
+					...prevData,
+					distance: distanceValue / 1000
+				}));
+			} catch (error) {
+				console.error("Erreur lors du calcul des émissions :", error);
+			}
+		}
+	};
 
 	function MapEvents() {
 		useMapEvents({
@@ -248,19 +254,43 @@ const VoyageProfessionnelForm = ({ userData, setUserData, handleChange, isModalV
 				<div className="form-group">
 					<label>Options supplémentaires :</label>
 					<div className="checkbox-group">
-						{optionsDisponibles.map((option) => (
-							<div key={option}>
-								<input
-									type="checkbox"
-									id={option}
-									name="options"
-									value={option}
-									checked={selectedOptions.has(option)}
-									onChange={() => handleOptionChange(option)}
-								/>
-								<label htmlFor={option}>{option}</label>
-							</div>
-						))}
+						{optionsDisponibles.map((option) => {
+							let prixOption = "pas de prix affiché";
+
+							switch (option) {
+								case "Perte de documents":
+									prixOption = "4€ par mois";
+									break;
+								case "Matériel pro couvert":
+									prixOption = "8€ par mois";
+									break;
+								case "Assistance juridique à l’étranger":
+									prixOption = "6€ par mois";
+									break;
+								default:
+									prixOption = "pas de prix affiché";
+							}
+
+							return (
+								<div key={option}>
+									<input
+										type="checkbox"
+										id={option}
+										name="options"
+										value={option}
+										checked={selectedOptions.has(option)}
+										onChange={() => handleOptionChange(option)}
+									/>
+									<label
+										htmlFor={option}
+										data-bs-toggle="tooltip"
+										title={`Prix de l'option : ${prixOption}`}
+									>
+										{option}
+									</label>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 				<button type="submit">Soumettre</button>

@@ -8,6 +8,8 @@ import CoordinateInput from '../../../emission/CoordinateInput'
 import coordinateToAddressInstance from '../../../../services/CoordinateToAddressService';
 import calculateEmissionService from '../../../../services/CalculateEmissionService';
 import TransportSelection from '../../../emission/TransportSelection';
+import { Tooltip, Toast, Popover } from 'bootstrap';
+
 
 const VoyageVacanceForm = ({ userData, setUserData, isModalVisible, setModalVisible }) => {
 
@@ -41,6 +43,10 @@ const VoyageVacanceForm = ({ userData, setUserData, isModalVisible, setModalVisi
 		nbPersonnes: "",
 		co2: "",
 		options: []
+	});
+
+	document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((tooltipNode) => {
+		new Tooltip(tooltipNode);
 	});
 
 	useEffect(() => {
@@ -272,19 +278,43 @@ const VoyageVacanceForm = ({ userData, setUserData, isModalVisible, setModalVisi
 				<div className="form-group">
 					<label>Options supplémentaires :</label>
 					<div className="checkbox-group">
-						{optionsDisponibles.map((option) => (
-							<div key={option}>
-								<input
-									type="checkbox"
-									id={option}
-									name="options"
-									value={option}
-									checked={selectedOptions.has(option)}
-									onChange={() => handleOptionChange(option)}
-								/>
-								<label htmlFor={option}>{option}</label>
-							</div>
-						))}
+						{optionsDisponibles.map((option) => {
+							let prixOption = "pas de prix affiché";
+
+							switch (option) {
+								case "Annulation toutes causes":
+									prixOption = "10€ par mois";
+									break;
+								case "Bagages assurés":
+									prixOption = "5€ par mois";
+									break;
+								case "Frais médicaux à l’étranger":
+									prixOption = "15€ par mois";
+									break;
+								default:
+									prixOption = "pas de prix affiché";
+							}
+
+							return (
+								<div key={option}>
+									<input
+										type="checkbox"
+										id={option}
+										name="options"
+										value={option}
+										checked={selectedOptions.has(option)}
+										onChange={() => handleOptionChange(option)}
+									/>
+									<label
+										htmlFor={option}
+										data-bs-toggle="tooltip"
+										title={`Prix de l'option : ${prixOption}`}
+									>
+										{option}
+									</label>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 
