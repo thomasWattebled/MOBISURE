@@ -51,6 +51,25 @@
     flex-wrap: wrap; 
     gap: 30px; 
   }*/
+  
+  .recap-container {
+    
+    align-items: flex-start; /* Aligne les éléments sur le côté gauche */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+	
+	.recap-container p {
+	    margin: 5px 0; /* Ajoute de l'espace entre les paragraphes */
+	}
+	
+	.recap-container strong {
+	    color: #007bff; /* Couleur pour mettre en valeur les options sélectionnées */
+	}
+  
+  
   .sub-options-container {
     display: flex;
     align-items: center;

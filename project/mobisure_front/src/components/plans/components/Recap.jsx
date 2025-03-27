@@ -3,17 +3,19 @@ import PropTypes from 'prop-types';
 
 const Recap = ({ selectedPlan, subOptionType }) => {
   return (
-    <div className="recap-container">
-      <h3>Récapitulatif</h3>
-      {selectedPlan ? (
-        <div>
-          <p>Vous avez choisi : <strong>{selectedPlan}</strong></p>
-          {subOptionType && <p>Type : <strong>{subOptionType}</strong></p>}
-        </div>
-      ) : (
-        <p>Aucun plan sélectionné.</p>
-      )}
-    </div>
+	<div>
+		<h3>Récapitulatif : </h3>
+	    <div className="recap-container">
+	      {selectedPlan ? (
+	        <div>
+	          <p>Vous avez choisi : <strong>{selectedPlan}</strong></p>
+	          {subOptionType && <p>Type : <strong>{subOptionType}</strong></p>}
+	        </div>
+	      ) : (
+	        <p>Aucun plan sélectionné.</p>
+	      )}
+	    </div>
+	</div>
   );
 };
 

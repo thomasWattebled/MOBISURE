@@ -33,7 +33,6 @@ const MyInformation = () => {
           <Col md={6} lg={4} className="mx-auto">
             <Card className="shadow-lg border-light rounded">
               <Card.Body>
-                <Card.Title className="text-center mb-3"></Card.Title>
                 <ul className="list-unstyled">
                   <li className="mb-3">
                     <strong>Nom : </strong>{user.nom}
