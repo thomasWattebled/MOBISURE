@@ -1,10 +1,15 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../style/form.css";
+import { Tooltip, Toast, Popover } from 'bootstrap';
 
 const AssuranceVeloForm = ({userData,setUserData,isModalVisible, setModalVisible}) =>  {
       const [selectedOptions, setSelectedOptions] = useState(new Set());
 	  const navigate = useNavigate();
+	  
+	  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((tooltipNode) => {
+	  	  new Tooltip(tooltipNode);
+	  	});
 	  
 	
 	 const [formData, setFormData] = useState({
@@ -92,19 +97,40 @@ const AssuranceVeloForm = ({userData,setUserData,isModalVisible, setModalVisible
 			<div className="form-group">
 					   <label>Options supplémentaires :</label>
 					   <div className="checkbox-group">
-					     {optionsDisponibles.map((option) => (
-					       <div key={option}>
-					         <input
-					           type="checkbox"
-					           id={option}
-					           name="options"
-					           value={option}
-					           checked={selectedOptions.has(option)}
-					           onChange={() => handleOptionChange(option)}
-					         />
-					         <label htmlFor={option}>{option}</label>
-					       </div>
-					     ))}
+					     {optionsDisponibles.map((option) => {
+					       let prixOption = "pas de prix affiché";
+
+					       switch(option) {
+					         case"Protection contre le vandalisme":
+					           prixOption = "8€ par mois";
+					           break;
+					         case "Assistance crevaison":
+					           prixOption = "5€ par mois";
+					           break;
+					         default:
+					           prixOption = "pas de prix affiché";
+					       }
+
+					       return (
+					         <div key={option}>
+					           <input
+					             type="checkbox"
+					             id={option}
+					             name="options"
+					             value={option}
+					             checked={selectedOptions.has(option)}
+					             onChange={() => handleOptionChange(option)}
+					           />
+					           <label
+					             htmlFor={option}
+					             data-bs-toggle="tooltip"
+					             title={`Prix de l'option : ${prixOption}`}
+					           >
+					             {option}
+					           </label>
+					         </div>
+					       );
+					     })}
 					   </div>
 					 </div>
             

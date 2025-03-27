@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.devis.Enum.DevisVoyage.NombreVoyageurs;
+import com.example.devis.Enum.Options.MotoOptions;
+import com.example.devis.Enum.Options.ProfessionelleOptions;
+import com.example.devis.Enum.Options.VacanceOptions;
+import com.example.devis.Enum.Options.VeloOptions;
+import com.example.devis.Enum.Options.VoitureOptions;
 import com.example.devis.entity.Assurance;
 import com.example.devis.entity.vehicule.Moto;
 import com.example.devis.entity.vehicule.Velo;
@@ -38,12 +43,19 @@ public class AssuranceServiceImpl implements AssuranceService{
 			case THERMIQUE -> multipliccateur *= 1;
 		}
 		
+		int nombreMois = 1;
 		switch(assurance.getDuree()) {
 			case SEMAINE ->  {multipliccateur *= 1.4;}
 			case DEUX_SEMAINES -> {multipliccateur *= 1.3; prix_total *= 2;}
 			case UN_MOIS -> {multipliccateur *= 1.2; prix_total *= 4;}
-			case SIX_MOIS -> {multipliccateur *= 1.1; prix_total *= 24;}
-			case UN_AN -> {multipliccateur *=  1; prix_total *= 48;}
+			case SIX_MOIS -> {multipliccateur *= 1.1; prix_total *= 24; nombreMois = 6;}
+			case UN_AN -> {multipliccateur *=  1; prix_total *= 48; nombreMois = 12;}
+		}
+		
+		if(assurance.getOptions() != null) {
+			for(VoitureOptions option : assurance.getOptions()) {
+				prix_total += (option.getPrix() * nombreMois);
+			}
 		}
 				
 		return prix_total * multipliccateur;
@@ -68,12 +80,19 @@ public class AssuranceServiceImpl implements AssuranceService{
 			case THERMIQUE -> multipliccateur *= 1;
 		}
 	
+		int nombreMois = 1;
 		switch(assurance.getDuree()) {
 			case SEMAINE ->  {multipliccateur *= 1.4;}
 			case DEUX_SEMAINES -> {multipliccateur *= 1.3; prix_total *= 2;}
 			case UN_MOIS -> {multipliccateur *= 1.2; prix_total *= 4;}
-			case SIX_MOIS -> {multipliccateur *= 1.1; prix_total *= 24;}
-			case UN_AN -> {multipliccateur *=  1; prix_total *= 48;}
+			case SIX_MOIS -> {multipliccateur *= 1.1; prix_total *= 24; nombreMois = 6;}
+			case UN_AN -> {multipliccateur *=  1; prix_total *= 48; nombreMois = 12;}
+		}
+		
+		if(assurance.getOptions() != null) {
+			for(MotoOptions option : assurance.getOptions()) {
+				prix_total += (option.getPrix() * nombreMois);
+			}
 		}
 			
 		return prix_total * multipliccateur;
@@ -88,7 +107,13 @@ public class AssuranceServiceImpl implements AssuranceService{
 			case THERMIQUE -> prix_total = 100;
 			case ELECTRIQUE -> prix_total = 150;
 		}
-				
+			
+		if(assurance.getOptions() != null) {
+			for(VeloOptions option : assurance.getOptions()) {
+				prix_total += (option.getPrix() * 12);
+			}
+		}
+		
 		return prix_total;
 	}
 
@@ -149,8 +174,18 @@ public class AssuranceServiceImpl implements AssuranceService{
         
         double total = prix_distance + prix_co2;
         
+        long nbMois = assurance.getNbSemaine() / 4;
+        
+        if(nbMois < 1) { nbMois = 1;}
+        
         if(assurance.getNbSemaine() >= 1 ) {
         	total *= assurance.getNbSemaine();
+        }
+        
+        if(assurance.getOptions() != null) {
+        	for (VacanceOptions option : assurance.getOptions()) {
+        		total += (option.getPrix()*nbMois);
+        	}
         }
         
         total *= calculerMultiplicateurVoyageurs(assurance.getNbPersonnes());
@@ -174,8 +209,17 @@ public class AssuranceServiceImpl implements AssuranceService{
         
         double total = prix_distance + prix_co2;
         
+        long nbMois = assurance.getNbSemaine() / 4;
+        if(nbMois < 1) { nbMois = 1;}
+        
         if(assurance.getNbSemaine() >= 1 ) {
         	total *= assurance.getNbSemaine();
+        }
+        
+        if(assurance.getOptions() != null) {
+        	for (ProfessionelleOptions option : assurance.getOptions()) {
+        		total += (option.getPrix()*nbMois);
+        	}
         }
 
 		return total;

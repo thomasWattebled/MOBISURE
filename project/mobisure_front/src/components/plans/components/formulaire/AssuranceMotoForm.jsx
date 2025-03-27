@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../style/form.css";
+import { Tooltip, Toast, Popover } from 'bootstrap';
 
 const AssuranceMotoForm = ({ userData, setUserData, isModalVisible, setModalVisible }) => {
 	const [selectedMarque, setSelectedMarque] = useState("");
@@ -16,6 +17,10 @@ const AssuranceMotoForm = ({ userData, setUserData, isModalVisible, setModalVisi
 		dure: "",
 		plaque: "",
 		options: []
+	});
+
+	document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((tooltipNode) => {
+		new Tooltip(tooltipNode);
 	});
 
 	useEffect(() => {
@@ -207,19 +212,43 @@ const AssuranceMotoForm = ({ userData, setUserData, isModalVisible, setModalVisi
 				<div className="form-group">
 					<label>Options supplémentaires :</label>
 					<div className="checkbox-group">
-						{optionsDisponibles.map((option) => (
-							<div key={option}>
-								<input
-									type="checkbox"
-									id={option}
-									name="options"
-									value={option}
-									checked={selectedOptions.has(option)}
-									onChange={() => handleOptionChange(option)}
-								/>
-								<label htmlFor={option}>{option}</label>
-							</div>
-						))}
+						{optionsDisponibles.map((option) => {
+							let prixOption = "pas de prix affiché";
+
+							switch (option) {
+								case "Assistance zéro km":
+									prixOption = "8€ par mois";
+									break;
+								case "Équipements protégés":
+									prixOption = "5€ par mois";
+									break;
+								case "Garantie tous risques":
+									prixOption = "10€ par mois";
+									break;
+								default:
+									prixOption = "pas de prix affiché";
+							}
+
+							return (
+								<div key={option}>
+									<input
+										type="checkbox"
+										id={option}
+										name="options"
+										value={option}
+										checked={selectedOptions.has(option)}
+										onChange={() => handleOptionChange(option)}
+									/>
+									<label
+										htmlFor={option}
+										data-bs-toggle="tooltip"
+										title={`Prix de l'option : ${prixOption}`}
+									>
+										{option}
+									</label>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 				<button type="submit">Soumettre</button>

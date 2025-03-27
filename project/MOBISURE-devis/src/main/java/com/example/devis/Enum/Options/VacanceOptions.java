@@ -5,19 +5,25 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum VacanceOptions {
 
-	ANNULATION("Annulation toutes causes"),
-	BAGGAGE("Bagages assurés"),
-	FRAIS_MEDICAUX_ETRANGER("Frais médicaux à l’étranger");
+	ANNULATION("Annulation toutes causes",10.0),
+	BAGGAGE("Bagages assurés",5.0),
+	FRAIS_MEDICAUX_ETRANGER("Frais médicaux à l’étranger",15.0);
 	
 	private String option;
+	private double prix;
 
-	private VacanceOptions(String option) {
+	private VacanceOptions(String option, double prix) {
 		this.option = option;
+		this.prix = prix;
 	}
 	
 	@JsonValue
 	public String getOption() {
 		return option;
+	}
+	
+	public double getPrix() {
+		return this.prix;
 	}
 	
 	@JsonCreator
