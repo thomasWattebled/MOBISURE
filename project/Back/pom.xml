@@ -35,9 +35,9 @@
     <properties>
         <java.version>17</java.version>
         <sonar.host.url>http://localhost:9000</sonar.host.url>
-    	<sonar.login>sqp_bc85139da80c60aba6316ef197fd5b8ddbdaa73d</sonar.login>
-    	<sonar.projectKey>Mobisure</sonar.projectKey>
-    	<sonar.projectName>Mobisure</sonar.projectName>
+    	<sonar.login>sqp_aa794333130ada97a3caa36a7e1dcdaa848f2b18</sonar.login>
+    	<sonar.projectKey>Back</sonar.projectKey>
+    	<sonar.projectName>Back</sonar.projectName>
     </properties>
     
     <dependencies>
